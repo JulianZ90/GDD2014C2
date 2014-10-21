@@ -28,7 +28,7 @@ insert into GAME_OF_QUERYS.cliente (tipo_identidad_id, nro_identidad, apellido,n
 					fecha_nac, mail, calle, nro_calle, piso,
 					depto,nacionalidad,permitido_ingreso)
 select distinct (select id from GAME_OF_QUERYS.tipo_identidad where nombre='Pasaporte'),Cliente_Pasaporte_Nro, Cliente_Apellido,
-				Cliente_Nombre, Cliente_Fecha_Nac, Cliente_Mail,
+				Cliente_Nombre,cast(Cliente_Fecha_Nac as Date), Cliente_Mail,
 				Cliente_Dom_Calle, Cliente_Nro_Calle, Cliente_Piso,
 				Cliente_Depto,Cliente_Nacionalidad,'1'
 from gd_esquema.Maestra
@@ -39,6 +39,7 @@ insert into GAME_OF_QUERYS.tipo_habitacion (id, descripcion, porcentual)
 select distinct Habitacion_Tipo_Codigo, Habitacion_Tipo_Descripcion ,
 				 Habitacion_Tipo_Porcentual
 from gd_esquema.Maestra
+set identity_insert GD2C2014.GAME_OF_QUERYS.tipo_habitacion off
 
 /*cargo las habitaciones (345 en total)*/
 
@@ -58,23 +59,13 @@ insert into GAME_OF_QUERYS.estado_reserva (descripcion)values('cancelada por cli
 insert into GAME_OF_QUERYS.estado_reserva (descripcion)values('cancelada por No-Show')
 insert into GAME_OF_QUERYS.estado_reserva (descripcion)values('con ingreso')
 
-							
-/*cargo las reservas, 1 cliente no tiene mas de 1 reserva en la tabla (casualidad),
-pero hay reservas con mas de un cliente
+/*cargo las reservas */
 
-con las reservas que tienen mas de un cliente  , atajar el error,
-el problema puede ser que hayan id de reservas repetidos
-
-y ver de que manera saber si se puede en que estado esta la reserva 
-seguro que lo mas facil va a ser ver las finalizadas  */
-
-insert into reserva (id,cliente_id /*,regimen_idfecha_inicio,fecha_fin*/)
-select distinct m.Reserva_Codigo, c.id, r.id
-				/*m.Reserva_Fecha_Inicioobtener fecha fin*/
+set identity_insert GD2C2014.GAME_OF_QUERYS.reserva on
+insert into GAME_OF_QUERYS.reserva(id,cliente_id,regimen_id, fecha_inicio, fecha_fin)
+select distinct m.Reserva_Codigo, c.id, r.id, cast(m.Reserva_Fecha_Inicio as Date), DATEADD (day ,m.Reserva_Cant_Noches , cast(m.Reserva_Fecha_Inicio as Date) )
 from gd_esquema.Maestra m
-						join cliente c on m.cliente_pasaporte_nro=c.nro_identidad
-						join regimen r on r.descripcion = m.regimen_descripcion
-
-select distinct m.reserva_codigo, c.id
-from gd_esquema.Maestra m
-						join cliente c on m.cliente_pasaporte_nro=c.nro_identidad
+						join GAME_OF_QUERYS.cliente c on m.cliente_pasaporte_nro=c.nro_identidad and
+														m.Cliente_Mail=c.mail
+						join GAME_OF_QUERYS.regimen r on r.descripcion = m.regimen_descripcion
+set identity_insert GD2C2014.GAME_OF_QUERYS.reserva off	
