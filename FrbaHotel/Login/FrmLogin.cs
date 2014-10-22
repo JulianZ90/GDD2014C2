@@ -18,6 +18,7 @@ namespace FrbaHotel.Login
         public FrmLogin()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void FrmLogin_Load(object sender, EventArgs e)
@@ -28,7 +29,7 @@ namespace FrbaHotel.Login
 
         private void btnGuest_Click(object sender, EventArgs e)
         {
-            new FrmPrincipal().ShowDialog();
+            new FrmGuest().ShowDialog();
         }
 
         int accesos = 0;
@@ -37,7 +38,7 @@ namespace FrbaHotel.Login
         {
             SqlConnection objConexion = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
 
-
+            /* EJECUTAR EL SCRIPT CON ESTA PARTE LA 1ra VEZ Y DESPUES VOLVERLO A COMENTAR
             string clavePrueba = "1992flor";
             StringBuilder SbPrueba = new StringBuilder();
             using (SHA256 hashPrueba = SHA256Managed.Create())
@@ -60,14 +61,12 @@ namespace FrbaHotel.Login
             prueba.ExecuteNonQuery();
             objConexion.Close();
 
+             */
+
             SqlCommand query = new SqlCommand("SELECT id, password, estado FROM GAME_OF_QUERYS.usuario WHERE username = @username", objConexion);
             query.Parameters.AddWithValue("@username", this.txtBoxUser.Text);
 
-            objConexion.Open();
-
- 
-
-
+            objConexion.Open();         
             SqlDataReader objReader = query.ExecuteReader();
             objReader.Read();
 

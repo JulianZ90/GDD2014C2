@@ -10,3 +10,4 @@ C:\Documents and Settings\Ezequiel\GDD2014C2\FrbaHotel\obj\Debug\FrbaHotel.Prope
 C:\Documents and Settings\Ezequiel\GDD2014C2\FrbaHotel\obj\Debug\FrbaHotel.csproj.GenerateResource.Cache
 C:\Documents and Settings\Ezequiel\GDD2014C2\FrbaHotel\obj\Debug\FrbaHotel.exe
 C:\Documents and Settings\Ezequiel\GDD2014C2\FrbaHotel\obj\Debug\FrbaHotel.pdb
+C:\Documents and Settings\Ezequiel\GDD2014C2\FrbaHotel\obj\Debug\FrbaHotel.FrmGuest.resources

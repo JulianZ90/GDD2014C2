@@ -16,6 +16,7 @@ namespace FrbaHotel
         public FrmPrincipal()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         private void ShowNewForm(object sender, EventArgs e)
