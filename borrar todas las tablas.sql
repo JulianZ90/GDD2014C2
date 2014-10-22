@@ -1,6 +1,12 @@
 /* limpiar tablas
 hay que hacerlo en el orden inverso que las creas por las fk */
 
+delete from GAME_OF_QUERYS.factura
+delete from GAME_OF_QUERYS.cliente_estadia
+delete from GAME_OF_QUERYS.consumible_estadia
+delete from GAME_OF_QUERYS.estadia
+delete from GAME_OF_QUERYS.consumible
+delete from GAME_OF_QUERYS.reserva_habitacion
 delete from GAME_OF_QUERYS.reserva
 delete from GAME_OF_QUERYS.estado_reserva
 delete from GAME_OF_QUERYS.habitacion
