@@ -102,21 +102,47 @@ where Estadia_Fecha_Inicio is not null
 
 insert into GAME_OF_QUERYS.consumible_estadia (consumible_id,estadia_id,cantidad)
 select distinct c.id, e.id, COUNT(m.Consumible_Descripcion)
-from gd_esquema.Maestra m join GAME_OF_QUERYS.consumible c on m.Consumible_Codigo= c.id
-							join GAME_OF_QUERYS.estadia e on m.Reserva_Codigo=e.reserva_id
+from gd_esquema.Maestra m 
+join GAME_OF_QUERYS.consumible c	on m.Consumible_Codigo= c.id
+join GAME_OF_QUERYS.estadia e		on m.Reserva_Codigo=e.reserva_id
 group by c.id,e.id
 
 /* cargar cliente_estadia (89603) */
 
 insert into GAME_OF_QUERYS.cliente_estadia (cliente_id,estadia_id)
 select distinct c.id, e.id
-from gd_esquema.Maestra m join GAME_OF_QUERYS.cliente c 
+from gd_esquema.Maestra m 
+join GAME_OF_QUERYS.cliente c 
 							on m.cliente_pasaporte_nro=c.nro_identidad and
 														m.Cliente_Mail=c.mail
-						join GAME_OF_QUERYS.estadia e on m.Reserva_Codigo=e.reserva_id
+join GAME_OF_QUERYS.estadia e on m.Reserva_Codigo=e.reserva_id
 
 /*cargar factura (89603)*/
 insert into GAME_OF_QUERYS.factura (fecha,estadia_id)
 select distinct CAST(m.Factura_Fecha as DATE), e.id
-from gd_esquema.Maestra m join GAME_OF_QUERYS.estadia e on m.Reserva_Codigo=e.reserva_id
+from gd_esquema.Maestra m 
+join GAME_OF_QUERYS.estadia e on m.Reserva_Codigo=e.reserva_id
 where m.Factura_Fecha is not null
+
+
+
+insert into GAME_OF_QUERYS.rol (descripcion, estado) values ('Administrador',1)
+insert into GAME_OF_QUERYS.rol (descripcion, estado) values ('Recepcionista',1)
+insert into GAME_OF_QUERYS.rol (descripcion, estado) values ('Guest',1)
+insert into GAME_OF_QUERYS.rol (descripcion, estado) values ('admin',1)
+
+
+insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('abmRol')
+insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('ambUsuario')
+insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('abmCliente')
+insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('abmHabitacion')
+insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('abmRegimen')
+insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('generarReserva')
+insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('cancelarReserva')
+insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('registrarEstadia')
+insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('facturar')
+insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('estadistico')
+
+insert into GAME_OF_QUERYS.usuario (username) values ('guest' )
+insert into GAME_OF_QUERYS.usuario (username,password, nombre) values ('admin', HASHBYTES('SHA2_256', 'w23e' ), 'Administrador General')
+
