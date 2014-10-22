@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 
+
+
 namespace FrbaHotel.Login
 {
     public partial class FrmLogin : Form
@@ -35,10 +37,37 @@ namespace FrbaHotel.Login
         {
             SqlConnection objConexion = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
 
+
+            string clavePrueba = "1992flor";
+            StringBuilder SbPrueba = new StringBuilder();
+            using (SHA256 hashPrueba = SHA256Managed.Create())
+            {
+                Encoding encPrueba = Encoding.UTF8;
+                Byte[] resultPrueba = hashPrueba.ComputeHash(encPrueba.GetBytes(clavePrueba));
+
+                foreach (Byte bit in resultPrueba)
+                    SbPrueba.Append(bit.ToString("x2"));
+            }
+            string passPrueba = SbPrueba.ToString();
+
+            SqlCommand prueba = new SqlCommand("INSERT INTO GAME_OF_QUERYS.usuario (username, password, estado) VALUES (@user, @clave, @state)", objConexion);
+            prueba.Parameters.AddWithValue("@user", "flormarca");
+           // prueba.Parameters.AddWithValue("@id", 1);
+            prueba.Parameters.AddWithValue("@state", true);
+            prueba.Parameters.AddWithValue("@clave", passPrueba);
+
+            objConexion.Open();
+            prueba.ExecuteNonQuery();
+            objConexion.Close();
+
             SqlCommand query = new SqlCommand("SELECT id, password, estado FROM GAME_OF_QUERYS.usuario WHERE username = @username", objConexion);
             query.Parameters.AddWithValue("@username", this.txtBoxUser.Text);
 
             objConexion.Open();
+
+ 
+
+
             SqlDataReader objReader = query.ExecuteReader();
             objReader.Read();
 
