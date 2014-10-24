@@ -90,13 +90,20 @@ from gd_esquema.Maestra
 where Consumible_Codigo is not null
 set identity_insert GD2C2014.GAME_OF_QUERYS.consumible off	
 
-/*cargar estadia (89603)*/
+/*cargar estadia (89603) despues sacarle campos al join de la habitacion*/
 
-insert into GAME_OF_QUERYS.estadia (check_in, check_out, reserva_id)
-select distinct cast(Estadia_Fecha_Inicio as date),
-			 DATEADD (day ,estadia_Cant_Noches , cast(estadia_Fecha_Inicio as Date) ),Reserva_Codigo
-from gd_esquema.Maestra
-where Estadia_Fecha_Inicio is not null
+insert into GAME_OF_QUERYS.estadia (check_in, check_out, reserva_id,habitacion_id)
+select distinct cast(m.Estadia_Fecha_Inicio as date),
+			 DATEADD (day ,m.estadia_Cant_Noches , cast(m.estadia_Fecha_Inicio as Date) ),m.Reserva_Codigo,
+			 h.id
+from gd_esquema.Maestra m join GAME_OF_QUERYS.habitacion h on h.nro=m.Habitacion_Numero and
+															h.piso=m.Habitacion_Piso
+						  join GAME_OF_QUERYS.hotel ho on ho.ciudad=m.Hotel_Ciudad and
+														ho.calle=m.Hotel_Calle and
+														ho.nro_calle= m.Hotel_Nro_Calle
+															
+where Estadia_Fecha_Inicio is not null and
+	 ho.id = h.hotel_id
 
 /*cargar consumible_estadia (207341)*/
 
