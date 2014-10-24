@@ -151,5 +151,5 @@ insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('facturar')
 insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('estadistico')
 
 insert into GAME_OF_QUERYS.usuario (username) values ('guest' )
-insert into GAME_OF_QUERYS.usuario (username,password, nombre) values ('admin', HASHBYTES('SHA2_256', 'w23e' ), 'Administrador General')
+insert into GAME_OF_QUERYS.usuario (username,password, nombre,estado) values ('admin', HASHBYTES('SHA1', 'w23e' ), 'Administrador General','1')
 
