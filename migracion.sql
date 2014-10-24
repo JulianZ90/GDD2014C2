@@ -90,7 +90,7 @@ from gd_esquema.Maestra
 where Consumible_Codigo is not null
 set identity_insert GD2C2014.GAME_OF_QUERYS.consumible off	
 
-/*cargar estadia (89603) despues sacarle campos al join de la habitacion*/
+/*cargar estadia (89603)*/
 
 insert into GAME_OF_QUERYS.estadia (check_in, check_out, reserva_id,habitacion_id)
 select distinct cast(m.Estadia_Fecha_Inicio as date),
