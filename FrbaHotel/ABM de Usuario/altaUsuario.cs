@@ -17,27 +17,64 @@ namespace FrbaHotel.ABM_de_Usuario
         public altaUsuario()
         {
             InitializeComponent();
+            llenarCombo(comboBox1);
+            llenarCombo(comboBox2);
+
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
-            SqlCommand query = new SqlCommand("insert into GAME_OF_QUERYS.usuarios (username, password, nombre, apellido, mail, tel , dir, fec_nac, estado, dni) values (@username, @password, @nombre, @apellido, @mail, @tel , @dir, @fec_nac, @estado, @dni)", connect);
-            query.Parameters.AddWithValue("username", textBox1.Text);
-            query.Parameters.AddWithValue("password", textBox2.Text);
-            query.Parameters.AddWithValue("nombre", textBox3.Text);
-            query.Parameters.AddWithValue("apellido", textBox4.Text);
-            query.Parameters.AddWithValue("mail", textBox5.Text);
-            query.Parameters.AddWithValue("tel", textBox6.Text);
-            query.Parameters.AddWithValue("dir", textBox7.Text);
-            query.Parameters.AddWithValue("fec_nac", dateTimePicker1.Value.Date);
-            query.Parameters.AddWithValue("estado", checkBox1.Checked);
-            //query.Parameters.AddWithValue("tipo_doc", comboBox1.SelectedValue);
-            query.Parameters.AddWithValue("dni", textBox9.Text);
+            Usuario usr = new Usuario();
+            usr.username = textBox1.Text;
+            usr.password = textBox2.Text;
+            usr.nombre = textBox3.Text;
+            usr.apellido = textBox4.Text;
+            usr.mail = textBox5.Text;
+            usr.tel = Int32.Parse(textBox6.Text);
+            usr.direccion = textBox7.Text;
+            usr.fecha_nac = dateTimePicker1.Value.Date;
+            //usr.tipo_identidad = textBox1.Text;
+            usr.nro_identidad = Int32.Parse(textBox9.Text);
 
+            usr.guardar();           
+        }
+
+        public bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private void llenarCombo(ComboBox combo)
+        {
+            combo.DisplayMember = "nombre";
+            combo.ValueMember = "id";
+
+            List<TipoIdentidad> lista = new List<TipoIdentidad>();
+            SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
+            SqlCommand query = new SqlCommand("select * from GAME_OF_QUERYS.tipo_identidad", connect);
+            
             connect.Open();
-            query.ExecuteNonQuery();
+            SqlDataReader objReader = query.ExecuteReader();
+
+            while (objReader.Read())
+            {
+                TipoIdentidad Item = new TipoIdentidad();
+                Item.id = (int) objReader["id"];
+                Item.nombre = (string) objReader["nombre"];
+                lista.Add(Item);
+            }
+
             connect.Close();
+            combo.DataSource = lista; 
         }
     }
 }

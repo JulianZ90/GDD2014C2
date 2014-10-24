@@ -66,7 +66,7 @@ namespace FrbaHotel.Login
 
                 string pass = (string)objReader["password"];
                 bool estado = (bool)objReader["estado"];
-                decimal id = (decimal)objReader["id"];      //no es medio raro que el "id" sea un decimal?
+                int id = (int)objReader["id"];      //no es medio raro que el "id" sea un decimal?
             
            
             
@@ -86,7 +86,6 @@ namespace FrbaHotel.Login
                         Sb.Append(b.ToString("x2"));
                 }
                 string claveHash = Sb.ToString();
-
 
                 if (pass == claveHash)
                 {
