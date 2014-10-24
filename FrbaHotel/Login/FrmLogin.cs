@@ -64,7 +64,7 @@ namespace FrbaHotel.Login
                 objReader = query.ExecuteReader();
                 objReader.Read();
 
-                string pass = (string)objReader["password"];
+                byte[] pass = (byte[])objReader["password"];
                 bool estado = (bool)objReader["estado"];
                 int id = (int)objReader["id"];      //no es medio raro que el "id" sea un decimal?
             
@@ -77,18 +77,23 @@ namespace FrbaHotel.Login
             {
                 //hasheo la contraseña que se ingreso y comparo los hashes
                 StringBuilder Sb = new StringBuilder();
-                using (SHA256 hash = SHA256Managed.Create())
+                //using (SHA256 hash = SHA256Managed.Create())
+                Byte[] result;
+                using (SHA1 hash = SHA1.Create())
                 {
                     Encoding enc = Encoding.UTF8;
-                    Byte[] result = hash.ComputeHash(enc.GetBytes(this.txtBoxPass.Text));
+                    //Byte[] result = hash.ComputeHash(enc.GetBytes(this.txtBoxPass.Text));
+                    result = hash.ComputeHash(enc.GetBytes(this.txtBoxPass.Text));
 
-                    foreach (Byte b in result)
-                        Sb.Append(b.ToString("x2"));
+                    //foreach (Byte b in result)
+                        //Sb.Append(b.ToString("x2"));
                 }
-                string claveHash = Sb.ToString();
+                //string claveHash = Sb.ToString();
 
-                if (pass == claveHash)
+                //if (pass == claveHash)
+                if(  pass == result)
                 {
+                    MessageBox.Show(pass.ToString() + " " + result.ToString() ) ;  
                     accesos = 0;
                     this.lblIncorrecta.Hide();
                     //mas de un rol?
