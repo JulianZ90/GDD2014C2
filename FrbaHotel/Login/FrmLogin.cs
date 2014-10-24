@@ -25,6 +25,7 @@ namespace FrbaHotel.Login
         {
             this.lblIncorrecta.Hide();
             this.lblInhabilitado.Hide();
+            this.lblUserIncorrecto.Hide();
         }
 
         private void btnGuest_Click(object sender, EventArgs e)
@@ -38,47 +39,41 @@ namespace FrbaHotel.Login
         {
             SqlConnection objConexion = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
 
-            /* EJECUTAR EL SCRIPT CON ESTA PARTE LA 1ra VEZ Y DESPUES VOLVERLO A COMENTAR
-            string clavePrueba = "1992flor";
-            StringBuilder SbPrueba = new StringBuilder();
-            using (SHA256 hashPrueba = SHA256Managed.Create())
-            {
-                Encoding encPrueba = Encoding.UTF8;
-                Byte[] resultPrueba = hashPrueba.ComputeHash(encPrueba.GetBytes(clavePrueba));
 
-                foreach (Byte bit in resultPrueba)
-                    SbPrueba.Append(bit.ToString("x2"));
-            }
-            string passPrueba = SbPrueba.ToString();
-
-            SqlCommand prueba = new SqlCommand("INSERT INTO GAME_OF_QUERYS.usuario (username, password, estado) VALUES (@user, @clave, @state)", objConexion);
-            prueba.Parameters.AddWithValue("@user", "flormarca");
-           // prueba.Parameters.AddWithValue("@id", 1);
-            prueba.Parameters.AddWithValue("@state", true);
-            prueba.Parameters.AddWithValue("@clave", passPrueba);
-
-            objConexion.Open();
-            prueba.ExecuteNonQuery();
-            objConexion.Close();
-
-             */
-
-            SqlCommand query = new SqlCommand("SELECT id, password, estado FROM GAME_OF_QUERYS.usuario WHERE username = @username", objConexion);
-            query.Parameters.AddWithValue("@username", this.txtBoxUser.Text);
-
+            SqlCommand queryValidation = new SqlCommand("SELECT COUNT (*) AS cant FROM GAME_OF_QUERYS.usuario WHERE username = @username", objConexion);
+            queryValidation.Parameters.AddWithValue("@username", this.txtBoxUser.Text);
             objConexion.Open();         
-            SqlDataReader objReader = query.ExecuteReader();
+
+            SqlDataReader objReader = queryValidation.ExecuteReader();
             objReader.Read();
+            int cantidad = (int)objReader["cant"];
+           
+            if (cantidad == 0)
+            {
+                this.txtBoxUser.Text = string.Empty;
+                this.txtBoxPass.Text = string.Empty;
+                this.lblUserIncorrecto.Show();
+            }
+            else
+            {
+                objReader.Close();
+                objConexion.Close();
+                SqlCommand query = new SqlCommand("SELECT id, password, estado FROM GAME_OF_QUERYS.usuario WHERE username = @username", objConexion);
+                query.Parameters.AddWithValue("@username", this.txtBoxUser.Text);
+                objConexion.Open();
+                objReader = query.ExecuteReader();
+                objReader.Read();
 
-            //todavia no estoy tomando en cuenta que el username no exista
-            string pass = (string)objReader["password"];
-            bool estado = (bool)objReader["estado"];
-            decimal id = (decimal)objReader["id"];      //no es medio raro que el "id" sea un decimal?
-
+                string pass = (string)objReader["password"];
+                bool estado = (bool)objReader["estado"];
+                decimal id = (decimal)objReader["id"];      //no es medio raro que el "id" sea un decimal?
+            
+           
+            
             objConexion.Close();
 
             //usuario inhabilitado?
-            if (estado)    //false: inhabilitado - true: habilitado
+            if (estado)    
             {
                 //hasheo la contraseña que se ingreso y comparo los hashes
                 StringBuilder Sb = new StringBuilder();
@@ -129,6 +124,17 @@ namespace FrbaHotel.Login
             {
                 this.lblInhabilitado.Show();
             }
+        }}
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+      
+        }
+
     }
 }

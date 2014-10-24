@@ -39,6 +39,7 @@
             this.txtBoxUser = new System.Windows.Forms.TextBox();
             this.txtBoxPass = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.lblUserIncorrecto = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -153,12 +154,25 @@
             this.label7.TabIndex = 10;
             this.label7.Text = "Por favor ingrese sus datos para acceder al sistema:";
             // 
+            // lblUserIncorrecto
+            // 
+            this.lblUserIncorrecto.AutoSize = true;
+            this.lblUserIncorrecto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserIncorrecto.ForeColor = System.Drawing.Color.Red;
+            this.lblUserIncorrecto.Location = new System.Drawing.Point(350, 190);
+            this.lblUserIncorrecto.Name = "lblUserIncorrecto";
+            this.lblUserIncorrecto.Size = new System.Drawing.Size(129, 16);
+            this.lblUserIncorrecto.TabIndex = 11;
+            this.lblUserIncorrecto.Text = "No Existe el Usuario";
+            this.lblUserIncorrecto.Click += new System.EventHandler(this.label5_Click);
+            // 
             // FrmLogin
             // 
             this.AcceptButton = this.btnLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(526, 444);
+            this.Controls.Add(this.lblUserIncorrecto);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtBoxPass);
             this.Controls.Add(this.txtBoxUser);
@@ -191,5 +205,6 @@
         private System.Windows.Forms.TextBox txtBoxUser;
         private System.Windows.Forms.TextBox txtBoxPass;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblUserIncorrecto;
     }
 }
