@@ -47,8 +47,9 @@ namespace FrbaHotel.Login
             SqlDataReader objReader = queryValidation.ExecuteReader();
             objReader.Read();
             int cantidad = (int)objReader["cant"];
+            objConexion.Close();
            
-            if (cantidad == 0)
+            if (cantidad == '0')
             {
                 this.txtBoxUser.Text = string.Empty;
                 this.txtBoxPass.Text = string.Empty;
@@ -56,20 +57,17 @@ namespace FrbaHotel.Login
             }
             else
             {
-                objReader.Close();
-                objConexion.Close();
                 SqlCommand query = new SqlCommand("SELECT id, password, estado FROM GAME_OF_QUERYS.usuario WHERE username = @username", objConexion);
                 query.Parameters.AddWithValue("@username", this.txtBoxUser.Text);
                 objConexion.Open();
                 objReader = query.ExecuteReader();
                 objReader.Read();
 
-                byte[] pass = (byte[])objReader["password"];
+                byte[] pass = new byte[((string)objReader["password"]).Length * sizeof(char)];
+                System.Buffer.BlockCopy(((string)objReader["password"]).ToCharArray(), 0, pass, 0, pass.Length);
                 bool estado = (bool)objReader["estado"];
-                int id = (int)objReader["id"];      //no es medio raro que el "id" sea un decimal?
-            
-           
-            
+                int id = (int)objReader["id"];       
+        
             objConexion.Close();
 
             //usuario inhabilitado?
@@ -81,15 +79,16 @@ namespace FrbaHotel.Login
                 {
                     result = hash.ComputeHash(Encoding.UTF8.GetBytes(this.txtBoxPass.Text.ToString()));
                 }
-                using(SqlCommand cmd = new SqlCommand("SELECT COUNT(*)Existe FROM GAME_OF_QUERYS.usuarios WHERE username = @username AND password = @pswd", objConexion));
-                {
+                SqlCommand cmd = new SqlCommand("SELECT COUNT(*) AS Existe FROM GAME_OF_QUERYS.usuario WHERE username = @username AND password = @pswd", objConexion);
                 cmd.Parameters.Add("@pswd", SqlDbType.VarBinary, 255).Value = result;
                 cmd.Parameters.AddWithValue("@username", this.txtBoxUser.Text);
+                objConexion.Open();
                 objReader = cmd.ExecuteReader();
                 objReader.Read();
-                }
+                int exist = (int)objReader["Existe"];
+                objConexion.Close();
 
-                if( objReader["Existe"]);
+                if(exist == '1')
                 {
                     MessageBox.Show(pass.ToString() + " " + result.ToString() ) ;  
                     accesos = 0;
