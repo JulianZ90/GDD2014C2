@@ -135,6 +135,7 @@
             this.txtBoxUser.Name = "txtBoxUser";
             this.txtBoxUser.Size = new System.Drawing.Size(100, 20);
             this.txtBoxUser.TabIndex = 8;
+            this.txtBoxUser.Text = "admin";
             // 
             // txtBoxPass
             // 
@@ -143,6 +144,7 @@
             this.txtBoxPass.PasswordChar = '*';
             this.txtBoxPass.Size = new System.Drawing.Size(100, 20);
             this.txtBoxPass.TabIndex = 9;
+            this.txtBoxPass.Text = "w23e";
             // 
             // label7
             // 
@@ -184,6 +186,8 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "FrmLogin";
             this.Text = "Login";
             this.Load += new System.EventHandler(this.FrmLogin_Load);
