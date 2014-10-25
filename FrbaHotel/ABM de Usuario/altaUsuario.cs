@@ -19,7 +19,7 @@ namespace FrbaHotel.ABM_de_Usuario
         {
             InitializeComponent();
             llenarCombo(comboBox1);
-            llenarCombo(comboBox2);
+            //llenarCombo(comboBox2);
         }
 
         private void button1_Click(object sender, EventArgs e)
