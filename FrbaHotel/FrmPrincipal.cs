@@ -80,5 +80,13 @@ namespace FrbaHotel
             childForm.Show();
 
         }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            //listar usuarios
+            Form childForm = new ABM_de_Usuario.listadoUsuario();
+            childForm.MdiParent = this;
+            childForm.Show();
+        }
     }
 }

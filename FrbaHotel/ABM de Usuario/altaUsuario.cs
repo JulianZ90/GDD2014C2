@@ -13,14 +13,13 @@ namespace FrbaHotel.ABM_de_Usuario
     public partial class altaUsuario : Form
     {
        
-        
+        SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
+
         public altaUsuario()
         {
             InitializeComponent();
             llenarCombo(comboBox1);
             llenarCombo(comboBox2);
-
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -58,8 +57,8 @@ namespace FrbaHotel.ABM_de_Usuario
             combo.DisplayMember = "nombre";
             combo.ValueMember = "id";
 
-            List<TipoIdentidad> lista = new List<TipoIdentidad>();
-            SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
+            List<TipoIdentidad> lista = new List<TipoIdentidad>();  
+
             SqlCommand query = new SqlCommand("select * from GAME_OF_QUERYS.tipo_identidad", connect);
             
             connect.Open();

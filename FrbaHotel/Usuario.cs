@@ -8,7 +8,7 @@ namespace FrbaHotel
 {
     class Usuario
     {
-        //public int id { get; set; }
+        public int id { get; set; }
         public string username { get; set; }
         public string password { get; set; }
         public string  nombre { get; set; }
@@ -34,7 +34,7 @@ namespace FrbaHotel
                 query.Parameters.AddWithValue("dir", direccion);
                 query.Parameters.AddWithValue("fec_nac", fecha_nac.Date );
                 query.Parameters.AddWithValue("estado", estado);
-                query.Parameters.AddWithValue("tipo_doc", tipo_identidad);
+                query.Parameters.AddWithValue("tipo_doc", tipo_identidad.id);
                 query.Parameters.AddWithValue("dni", nro_identidad);
 
                 connect.Open();
