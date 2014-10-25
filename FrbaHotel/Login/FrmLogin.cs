@@ -81,9 +81,9 @@ namespace FrbaHotel.Login
                 Byte[] result;
                 using (SHA1 hash = SHA1.Create())
                 {
-                    Encoding enc = Encoding.UTF8;
+                 //   Encoding enc = Encoding.UTF8;
                     //Byte[] result = hash.ComputeHash(enc.GetBytes(this.txtBoxPass.Text));
-                    result = hash.ComputeHash(enc.GetBytes(this.txtBoxPass.Text));
+                    result = hash.ComputeHash(Encoding.UTF8.GetBytes(this.txtBoxPass.Text.ToString()));
 
                     //foreach (Byte b in result)
                         //Sb.Append(b.ToString("x2"));
