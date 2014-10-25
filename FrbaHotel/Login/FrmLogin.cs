@@ -75,23 +75,21 @@ namespace FrbaHotel.Login
             //usuario inhabilitado?
             if (estado)    
             {
-                //hasheo la contraseña que se ingreso y comparo los hashes
                 StringBuilder Sb = new StringBuilder();
-                //using (SHA256 hash = SHA256Managed.Create())
                 Byte[] result;
                 using (SHA1 hash = SHA1.Create())
                 {
-                 //   Encoding enc = Encoding.UTF8;
-                    //Byte[] result = hash.ComputeHash(enc.GetBytes(this.txtBoxPass.Text));
                     result = hash.ComputeHash(Encoding.UTF8.GetBytes(this.txtBoxPass.Text.ToString()));
-
-                    //foreach (Byte b in result)
-                        //Sb.Append(b.ToString("x2"));
                 }
-                //string claveHash = Sb.ToString();
+                using(SqlCommand cmd = new SqlCommand("SELECT COUNT(*)Existe FROM GAME_OF_QUERYS.usuarios WHERE username = @username AND password = @pswd", objConexion));
+                {
+                cmd.Parameters.Add("@pswd", SqlDbType.VarBinary, 255).Value = result;
+                cmd.Parameters.AddWithValue("@username", this.txtBoxUser.Text);
+                objReader = cmd.ExecuteReader();
+                objReader.Read();
+                }
 
-                //if (pass == claveHash)
-                if(  pass == result)
+                if( objReader["Existe"]);
                 {
                     MessageBox.Show(pass.ToString() + " " + result.ToString() ) ;  
                     accesos = 0;
