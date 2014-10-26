@@ -26,6 +26,7 @@ namespace FrbaHotel.ABM_de_Usuario
             dataGridView1.DataMember = "USUARIOS";
             */
 
+            llenarCombo(comboBox1, "nombre", "id", "select id, nombre from GAME_OF_QUERYS.tipo_identidad");
 
         }
 
@@ -33,9 +34,48 @@ namespace FrbaHotel.ABM_de_Usuario
         {
             List<Usuario> lista = new List<Usuario>();
 
-            SqlCommand query = new SqlCommand("select usuario.*, tipo_identidad.nombre as tipo from GAME_OF_QUERYS.usuario left join GAME_OF_QUERYS.tipo_identidad on tipo_identidad.id = usuario.tipo_identidad_id", connect);
+            StringBuilder query = new StringBuilder();
+            query.Append("select usuario.*, tipo_identidad.nombre as tipo from GAME_OF_QUERYS.usuario left join GAME_OF_QUERYS.tipo_identidad on tipo_identidad.id = usuario.tipo_identidad_id where 1=1 ");
+
+            if (textBox1.Text != "")
+                query.Append("and usuario.username like '%" + textBox1.Text + "%'");
+
+            /*if (textBox2.Text != "")
+                query.Append("and usuario.username like '%" + textBox1.Text + "%'");*/
+
+            if (textBox3.Text != "")
+                query.Append("and usuario.nombre like '%" + textBox3.Text + "%'");
+
+            if (textBox4.Text != "")
+                query.Append("and usuario.apellido like '%" + textBox4.Text + "%'");
+
+            if (textBox5.Text != "")
+                query.Append("and usuario.mail like '%" + textBox1.Text + "%'");
+
+            if (textBox6.Text != "")
+                query.Append("and usuario.tel like '%" + textBox6.Text + "%'");
+
+            if (textBox7.Text != "")
+                query.Append("and usuario.direccion like '%" + textBox7.Text + "%'");
+
+            if (checkBox2.Checked)
+                query.Append("and usuario.fecha_nac = '" + dateTimePicker1.Value.Date + "'");
+
+            if (checkBox3.Checked)
+                query.Append("and usuario.tipo_identidad_id = '" + ((TipoIdentidad)comboBox1.SelectedItem).id+ "'");
+
+            if (textBox9.Text != "")
+                query.Append("and usuario.nro_identidad like '%" + textBox9.Text + "%'");
+
+
+
+
+
+
+            SqlCommand objComando = new SqlCommand(query.ToString(), connect);
+
             connect.Open();
-            SqlDataReader objReader = query.ExecuteReader();
+            SqlDataReader objReader = objComando.ExecuteReader();
             while (objReader.Read())
             {
                 Usuario user = new Usuario();
@@ -60,5 +100,48 @@ namespace FrbaHotel.ABM_de_Usuario
             connect.Close();
             dataGridView1.DataSource = lista; 
         }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if(checkBox2.Checked)
+                dateTimePicker1.Enabled = true;
+            else
+                dateTimePicker1.Enabled = false;
+        }
+
+
+        private void llenarCombo(ComboBox combo, string desc, string id, string sql )
+        {
+            combo.DisplayMember = desc;
+            combo.ValueMember = id;
+
+            List<TipoIdentidad> lista = new List<TipoIdentidad>();
+
+            SqlCommand query = new SqlCommand(sql , connect);
+
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+
+            while (objReader.Read())
+            {
+                TipoIdentidad Item = new TipoIdentidad();
+                Item.id = (int)objReader[id];
+                Item.nombre = (string)objReader[desc];
+                lista.Add(Item);
+            }
+
+            connect.Close();
+            combo.DataSource = lista;
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox3.Checked)
+                comboBox1.Enabled = true;
+            else
+                comboBox1.Enabled = false;
+        }
+
+      
     }
 }
