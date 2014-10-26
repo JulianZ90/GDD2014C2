@@ -108,6 +108,7 @@
     <Compile Include="FrmGuest.Designer.cs">
       <DependentUpon>FrmGuest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Funcionalidad.cs" />
     <Compile Include="Generar Modificar Reserva\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
