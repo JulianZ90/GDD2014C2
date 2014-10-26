@@ -12,7 +12,10 @@ namespace FrbaHotel
 
         public override string ToString()
         {
-            return this.nombre;
+            if (String.IsNullOrEmpty(nombre))
+                return "";
+            else
+                return nombre;
         }
     }
 }

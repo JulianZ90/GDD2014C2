@@ -26,7 +26,9 @@ namespace FrbaHotel.ABM_de_Usuario
             dataGridView1.DataMember = "USUARIOS";
             */
 
-            llenarCombo(comboBox1, "nombre", "id", "select id, nombre from GAME_OF_QUERYS.tipo_identidad");
+            llenarComboIdentidad();
+            llenarComboHotel();
+            llenarComboRol();
 
         }
 
@@ -35,7 +37,10 @@ namespace FrbaHotel.ABM_de_Usuario
             List<Usuario> lista = new List<Usuario>();
 
             StringBuilder query = new StringBuilder();
-            query.Append("select usuario.*, tipo_identidad.nombre as tipo from GAME_OF_QUERYS.usuario left join GAME_OF_QUERYS.tipo_identidad on tipo_identidad.id = usuario.tipo_identidad_id where 1=1 ");
+            query.Append("select distinct usuario.*, tipo_identidad.nombre as tipo from GAME_OF_QUERYS.usuario ");
+            query.Append(" left join GAME_OF_QUERYS.tipo_identidad on tipo_identidad.id = usuario.tipo_identidad_id ");
+            query.Append(" left join GAME_OF_QUERYS.hotel_usuario_rol on hotel_usuario_rol.usuario_id= usuario.id ");
+            query.Append(" where 1=1 ");
 
             if (textBox1.Text != "")
                 query.Append("and usuario.username like '%" + textBox1.Text + "%'");
@@ -67,6 +72,11 @@ namespace FrbaHotel.ABM_de_Usuario
             if (textBox9.Text != "")
                 query.Append("and usuario.nro_identidad like '%" + textBox9.Text + "%'");
 
+            if (checkBox4.Checked)
+                query.Append("and hotel_usuario_rol.hotel_id = '" + ((Hotel)comboBox2.SelectedItem).id + "'");
+
+            if (checkBox5.Checked)
+                query.Append("and hotel_usuario_rol.rol_id = '" + ((Rol)comboBox3.SelectedItem).Id + "'");
 
 
 
@@ -88,7 +98,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 user.tel = objReader["tel"] as int?;
                 user.direccion = objReader["direccion"] as string;
                 user.fecha_nac = objReader["fecha_nac"] as DateTime?;
-                user.estado= (bool)objReader["estado"];
+                user.estado = (bool)objReader["estado"]; 
                 user.nro_identidad = objReader["nro_identidad"] as int?;
 
                 TipoIdentidad tipo = new TipoIdentidad();
@@ -110,14 +120,14 @@ namespace FrbaHotel.ABM_de_Usuario
         }
 
 
-        private void llenarCombo(ComboBox combo, string desc, string id, string sql )
+        private void llenarComboIdentidad()
         {
-            combo.DisplayMember = desc;
-            combo.ValueMember = id;
+            comboBox1.DisplayMember = "nombre";
+            comboBox1.ValueMember = "id";
 
             List<TipoIdentidad> lista = new List<TipoIdentidad>();
 
-            SqlCommand query = new SqlCommand(sql , connect);
+            SqlCommand query = new SqlCommand("select id, nombre from GAME_OF_QUERYS.tipo_identidad", connect);
 
             connect.Open();
             SqlDataReader objReader = query.ExecuteReader();
@@ -125,13 +135,62 @@ namespace FrbaHotel.ABM_de_Usuario
             while (objReader.Read())
             {
                 TipoIdentidad Item = new TipoIdentidad();
-                Item.id = (int)objReader[id];
-                Item.nombre = (string)objReader[desc];
+                Item.id = (int)objReader["id"];
+                Item.nombre = (string)objReader["nombre"];
                 lista.Add(Item);
             }
 
             connect.Close();
-            combo.DataSource = lista;
+            comboBox1.DataSource = lista;
+        }
+
+        private void llenarComboHotel()
+        {
+            comboBox2.DisplayMember = "nombre";
+            comboBox2.ValueMember = "id";
+
+            List<Hotel> lista = new List<Hotel>();
+
+            SqlCommand query = new SqlCommand("select id, nombre from GAME_OF_QUERYS.hotel", connect);
+
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+
+            while (objReader.Read())
+            {
+                Hotel Item = new Hotel();
+                Item.id = (int)objReader["id"];
+                Item.nombre = (string)objReader["nombre"];
+                lista.Add(Item);
+            }
+
+            connect.Close();
+            comboBox2.DataSource = lista;
+        }
+
+
+        private void llenarComboRol()
+        {
+            comboBox3.DisplayMember = "Descripcion";
+            comboBox3.ValueMember = "Id";
+
+            List<Rol> lista = new List<Rol>();
+
+            SqlCommand query = new SqlCommand("select id, descripcion from GAME_OF_QUERYS.rol", connect);
+
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+
+            while (objReader.Read())
+            {
+                Rol Item = new Rol();
+                Item.Id = (int)objReader["id"];
+                Item.Descripcion = (string)objReader["descripcion"];
+                lista.Add(Item);
+            }
+
+            connect.Close();
+            comboBox3.DataSource = lista;
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
@@ -140,6 +199,22 @@ namespace FrbaHotel.ABM_de_Usuario
                 comboBox1.Enabled = true;
             else
                 comboBox1.Enabled = false;
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox4.Checked)
+                comboBox2.Enabled = true;
+            else
+                comboBox2.Enabled = false;
+        }
+
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox5.Checked)
+                comboBox3.Enabled = true;
+            else
+                comboBox3.Enabled = false;
         }
 
       
