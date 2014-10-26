@@ -97,5 +97,18 @@ namespace FrbaHotel
         {
             new FrmPassword(Log).ShowDialog();
         }
+
+        private void nuevoRolToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ABM_de_Rol.FrmRol().ShowDialog();
+
+        }
+
+        private void modificarOEliminarRolToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ABM_de_Rol.FrmListaRoles().ShowDialog();
+        }
+
+
     }
 }

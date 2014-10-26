@@ -53,6 +53,8 @@ namespace FrbaHotel
                 objConexion.Open();
                 query.ExecuteNonQuery();
                 objConexion.Close();
+
+                this.Close();
             }
         }
 

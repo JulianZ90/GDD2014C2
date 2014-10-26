@@ -66,11 +66,17 @@
     <Compile Include="ABM de Regimen\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM de Rol\altaRol.cs">
+    <Compile Include="ABM de Rol\FrmListaRoles.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM de Rol\altaRol.Designer.cs">
-      <DependentUpon>altaRol.cs</DependentUpon>
+    <Compile Include="ABM de Rol\FrmListaRoles.Designer.cs">
+      <DependentUpon>FrmListaRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Rol\FrmRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Rol\FrmRol.Designer.cs">
+      <DependentUpon>FrmRol.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Usuario\altaUsuario.cs">
       <SubType>Form</SubType>
@@ -136,8 +142,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ABM de Rol\altaRol.resx">
-      <DependentUpon>altaRol.cs</DependentUpon>
+    <EmbeddedResource Include="ABM de Rol\FrmListaRoles.resx">
+      <DependentUpon>FrmListaRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Rol\FrmRol.resx">
+      <DependentUpon>FrmRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Usuario\altaUsuario.resx">
       <DependentUpon>altaUsuario.cs</DependentUpon>
@@ -187,6 +196,7 @@
     <Compile Include="Registrar Estadia\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Rol.cs" />
     <Compile Include="TipoIdentidad.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>
