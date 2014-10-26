@@ -151,7 +151,7 @@ insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('registrarEstadia
 insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('facturar')
 insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('estadistico')
 
-insert into GAME_OF_QUERYS.usuario (username) values ('guest' )
+insert into GAME_OF_QUERYS.usuario (username,estado) values ('guest', 1 )
 insert into GAME_OF_QUERYS.usuario (username,password, nombre,estado) values ('admin', 'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7', 'Administrador General','1')
 
 /* (por ahora) Para que ande el login el usuario tiene que tener un registro en la tabla hotel_usuario_rol */
