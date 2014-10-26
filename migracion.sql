@@ -5,7 +5,8 @@ insert into GAME_OF_QUERYS.pais (nombre) values ('Argentina')
 insert into GAME_OF_QUERYS.hotel (ciudad, calle, nro_calle, cantidad_estrella, recarga_estrella,
 								 pais_id)
 select distinct Hotel_Ciudad, Hotel_Calle, Hotel_Nro_Calle, Hotel_CantEstrella,Hotel_Recarga_Estrella,
-				(select id from GAME_OF_QUERYS.pais where nombre='Argentina')
+				(select id from GAME_OF_QUERYS.pais where nombre='Argentina'),
+				( ltrim(rtrim(Hotel_Ciudad)) + ' ' + ltrim(rtrim(Hotel_Calle)) )
 from gd_esquema.Maestra 
 
 insert into GAME_OF_QUERYS.regimen(descripcion, precio_base,estado)
