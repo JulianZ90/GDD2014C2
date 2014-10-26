@@ -37,6 +37,8 @@ namespace FrbaHotel.Login
             SqlDataReader objReader = queryValidation.ExecuteReader();
             objReader.Read();
             int cantidad = (int)objReader["cant"];
+            objConexion.Close();
+
             if (cantidad == 0)
             {
                 this.txtBoxUser.Text = string.Empty;
@@ -44,9 +46,7 @@ namespace FrbaHotel.Login
                 this.lblUserIncorrecto.Show();
             }
             else
-            {
-                objReader.Close();
-                objConexion.Close();
+            {                
                 SqlCommand query = new SqlCommand("SELECT id, password, estado FROM GAME_OF_QUERYS.usuario WHERE username = @username", objConexion);
                 query.Parameters.AddWithValue("@username", this.txtBoxUser.Text);
                 objConexion.Open();
@@ -54,7 +54,7 @@ namespace FrbaHotel.Login
                 objReader.Read();
                 string pass = (string)objReader["password"];
                 bool estado = (bool)objReader["estado"];
-                int id = (int)objReader["id"]; //no es medio raro que el "id" sea un decimal?
+                int id = (int)objReader["id"];
                 objConexion.Close();
                 //usuario inhabilitado?
                 if (estado)
@@ -75,6 +75,7 @@ namespace FrbaHotel.Login
                         this.lblIncorrecta.Hide();
                         //mas de un rol?
                         //mas de un hotel?
+                        //new ABM_de_Rol.altaRol().ShowDialog();        //lo uso para probar el altaRol, ni bien ingresa va a ese formulario
                         new FrmPrincipal().ShowDialog();
                         this.txtBoxPass.Text = string.Empty;
                         this.txtBoxUser.Text = string.Empty;
