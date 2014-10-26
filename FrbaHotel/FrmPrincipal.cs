@@ -12,11 +12,15 @@ namespace FrbaHotel
     public partial class FrmPrincipal : Form
     {
         private int childFormNumber = 0;
+        LoginId Log = new LoginId();
 
-        public FrmPrincipal()
+        public FrmPrincipal(LoginId IdLog)
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterParent;
+            Log.Hotel_Id = IdLog.Hotel_Id;
+            Log.Rol_Id = IdLog.Rol_Id;
+            Log.Usuario_Id = IdLog.Usuario_Id;
         }
 
         private void ShowNewForm(object sender, EventArgs e)
@@ -87,6 +91,11 @@ namespace FrbaHotel
             Form childForm = new ABM_de_Usuario.listadoUsuario();
             childForm.MdiParent = this;
             childForm.Show();
+        }
+
+        private void cambiarContraseñaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FrmPassword(Log).ShowDialog();
         }
     }
 }

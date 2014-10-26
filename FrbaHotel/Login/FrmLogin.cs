@@ -76,7 +76,22 @@ namespace FrbaHotel.Login
                         //mas de un rol?
                         //mas de un hotel?
                         //new ABM_de_Rol.altaRol().ShowDialog();        //lo uso para probar el altaRol, ni bien ingresa va a ese formulario
-                        new FrmPrincipal().ShowDialog();
+
+                        LoginId Log = new LoginId();
+                        Log.Usuario_Id = id;
+
+                        query = new SqlCommand("SELECT rol_id, hotel_id FROM GAME_OF_QUERYS.hotel_usuario_rol WHERE usuario_id = @idUser", objConexion);    //sigo sin tener en cuenta mas de un hotel y rol, esta query se va a tener que modificar por el valor que tomen los comboBox
+                        query.Parameters.AddWithValue("@idUser", id);
+                        objConexion.Open();
+                        objReader = query.ExecuteReader();
+                        objReader.Read();
+                        Log.Rol_Id = (int)objReader["rol_id"];
+                        Log.Hotel_Id = (int)objReader["hotel_id"];
+                        objConexion.Close();
+
+
+
+                        new FrmPrincipal(Log).ShowDialog();
                         this.txtBoxPass.Text = string.Empty;
                         this.txtBoxUser.Text = string.Empty;
                     }

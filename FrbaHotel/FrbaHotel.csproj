@@ -102,6 +102,12 @@
     <Compile Include="FrmGuest.Designer.cs">
       <DependentUpon>FrmGuest.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPassword.Designer.cs">
+      <DependentUpon>FrmPassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="Funcionalidad.cs" />
     <Compile Include="Generar Modificar Reserva\Form1.cs">
       <SubType>Form</SubType>
@@ -115,6 +121,7 @@
     <Compile Include="Listado Estadistico\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="LoginId.cs" />
     <Compile Include="Login\FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmGuest.resx">
       <DependentUpon>FrmGuest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPassword.resx">
+      <DependentUpon>FrmPassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
