@@ -9,5 +9,10 @@ namespace FrbaHotel
     {
         public int id { get; set; }
         public string nombre { get; set; }
+
+        public override string ToString()
+        {
+            return this.nombre;
+        }
     }
 }

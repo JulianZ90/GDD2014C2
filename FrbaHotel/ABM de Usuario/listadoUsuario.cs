@@ -17,13 +17,15 @@ namespace FrbaHotel.ABM_de_Usuario
         public listadoUsuario()
         {
             InitializeComponent();
-            SqlDataAdapter dataadapter = new SqlDataAdapter("select usuario.*, tipo_identidad.nombre as tipo from GAME_OF_QUERYS.usuario left join GAME_OF_QUERYS.tipo_identidad on tipo_identidad.id = usuario.id", connect);
+            /*SqlDataAdapter dataadapter = new SqlDataAdapter("select usuario.*, tipo_identidad.nombre as tipo from GAME_OF_QUERYS.usuario left join GAME_OF_QUERYS.tipo_identidad on tipo_identidad.id = usuario.id", connect);
             DataSet ds = new DataSet();
             connect.Open();
             dataadapter.Fill(ds, "USUARIOS");
             connect.Close();
             dataGridView1.DataSource = ds;
             dataGridView1.DataMember = "USUARIOS";
+            */
+
 
         }
 
@@ -31,33 +33,30 @@ namespace FrbaHotel.ABM_de_Usuario
         {
             List<Usuario> lista = new List<Usuario>();
 
-            SqlCommand query = new SqlCommand("select usuario.*, tipo_identidad.nombre as tipo from GAME_OF_QUERYS.usuario left join GAME_OF_QUERYS.tipo_identidad on tipo_identidad.id = usuario.id", connect);
-
+            SqlCommand query = new SqlCommand("select usuario.*, tipo_identidad.nombre as tipo from GAME_OF_QUERYS.usuario left join GAME_OF_QUERYS.tipo_identidad on tipo_identidad.id = usuario.tipo_identidad_id", connect);
             connect.Open();
             SqlDataReader objReader = query.ExecuteReader();
-
             while (objReader.Read())
             {
                 Usuario user = new Usuario();
                 user.id = (int)objReader["id"];
-                user.username = (string)objReader["username"];
-                user.password = (string)objReader["password"];
-                user.nombre = (string)objReader["nombre"];
-                user.apellido = (string)objReader["apellido"];
-                user.mail= (string)objReader["mail"];
-                user.tel = (int)objReader["tel"];
-                user.direccion = (string)objReader["direccion"];
-                user.fecha_nac = (DateTime)objReader["fecha_nac"];
+                user.username = objReader["username"] as string;
+                user.password = objReader["password"] as string;
+                user.nombre = objReader["nombre"] as string;
+                user.apellido = objReader["apellido"] as string;
+                user.mail = objReader["mail"] as string;
+                user.tel = objReader["tel"] as int?;
+                user.direccion = objReader["direccion"] as string;
+                user.fecha_nac = objReader["fecha_nac"] as DateTime?;
                 user.estado= (bool)objReader["estado"];
-                user.nro_identidad = (int)objReader["nro_identidad"];
+                user.nro_identidad = objReader["nro_identidad"] as int?;
 
                 TipoIdentidad tipo = new TipoIdentidad();
-                tipo.nombre = (string)objReader["tipo"];
+                tipo.nombre = objReader["tipo"] as string;
                 user.tipo_identidad = tipo;
 
                 lista.Add(user);
             }
-
             connect.Close();
             dataGridView1.DataSource = lista; 
         }

@@ -14,11 +14,11 @@ namespace FrbaHotel
         public string  nombre { get; set; }
         public string apellido { get; set; }
         public string mail { get; set; }
-        public int tel { get; set; }
+        public int? tel { get; set; }
         public string direccion { get; set; }
-        public DateTime fecha_nac { get; set; }
+        public DateTime? fecha_nac { get; set; }
         public bool estado { get; set; }
-        public int nro_identidad { get; set; }
+        public int? nro_identidad { get; set; }
         public TipoIdentidad tipo_identidad { get; set; }
 
 
@@ -32,7 +32,7 @@ namespace FrbaHotel
                 query.Parameters.AddWithValue("mail", mail);
                 query.Parameters.AddWithValue("tel", tel);
                 query.Parameters.AddWithValue("dir", direccion);
-                query.Parameters.AddWithValue("fec_nac", fecha_nac.Date );
+                query.Parameters.AddWithValue("fec_nac", fecha_nac.Value.Date );
                 query.Parameters.AddWithValue("estado", estado);
                 query.Parameters.AddWithValue("tipo_doc", tipo_identidad.id);
                 query.Parameters.AddWithValue("dni", nro_identidad);
