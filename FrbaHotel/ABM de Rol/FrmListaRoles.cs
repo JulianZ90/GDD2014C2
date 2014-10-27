@@ -44,6 +44,7 @@ namespace FrbaHotel.ABM_de_Rol
             this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.ReadOnly = true;
             
 
         }
@@ -69,7 +70,7 @@ namespace FrbaHotel.ABM_de_Rol
             }
             objConexion.Close();
 
-            new ABM_de_Rol.FrmRol().ShowDialog();
+            new ABM_de_Rol.FrmRol(RolSelec).ShowDialog();
             this.Close();
         }
 

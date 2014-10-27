@@ -37,10 +37,10 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.rolesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nuevoRolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modificarOEliminarRolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,11 +130,6 @@
             this.toolStripMenuItem5.Size = new System.Drawing.Size(155, 22);
             this.toolStripMenuItem5.Text = "5555";
             // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(178, 6);
-            // 
             // rolesToolStripMenuItem
             // 
             this.rolesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -158,12 +153,17 @@
             this.modificarOEliminarRolToolStripMenuItem.Text = "Modificar o Eliminar Rol";
             this.modificarOEliminarRolToolStripMenuItem.Click += new System.EventHandler(this.modificarOEliminarRolToolStripMenuItem_Click);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(178, 6);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.exitToolStripMenuItem.Text = "&Salir";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolsStripMenuItem_Click);
+            this.exitToolStripMenuItem.Text = "Cerrar Sesion";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // viewMenu
             // 

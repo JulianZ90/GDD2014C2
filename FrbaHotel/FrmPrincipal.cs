@@ -32,12 +32,6 @@ namespace FrbaHotel
         }
 
 
-        private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-
         private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             toolStrip.Visible = toolBarToolStripMenuItem.Checked;
@@ -107,6 +101,11 @@ namespace FrbaHotel
         private void modificarOEliminarRolToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new ABM_de_Rol.FrmListaRoles().ShowDialog();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
 

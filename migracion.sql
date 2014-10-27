@@ -156,3 +156,7 @@ insert into GAME_OF_QUERYS.usuario (username,password, nombre,estado) values ('a
 
 /* (por ahora) Para que ande el login el usuario tiene que tener un registro en la tabla hotel_usuario_rol */
 insert into GAME_OF_QUERYS.hotel_usuario_rol (hotel_id, usuario_id, rol_id) values ('1', '2', '4')
+
+/* Inserto las funcionalidades del rol admin (todas) */
+insert into GAME_OF_QUERYS.rol_funcionalidad(rol_id, funcionalidad_id)
+(select r.id, f.id from GAME_OF_QUERYS.rol r, GAME_OF_QUERYS.funcionalidad f WHERE r.descripcion = 'admin')

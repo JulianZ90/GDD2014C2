@@ -14,77 +14,89 @@ namespace FrbaHotel.ABM_de_Rol
     {
         SqlConnection objConexion = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
         List<Funcionalidad> LstCheckedFunc = new List<Funcionalidad>();
+        bool Nuevo = false;  //flag para ver si ingresa un rol nuevo o si es para modificar/eliminar
+        Rol Rol = null;
 
 
         public FrmRol()
         {
             InitializeComponent();
+            this.CargaarFuncionalidades();
+            this.Nuevo = true;
 
         }
 
         public FrmRol(Rol RolModific)
         {
             InitializeComponent();
-        }
+            this.CargaarFuncionalidades();
+            this.Rol = RolModific;
 
-        private void altaRol_Load(object sender, EventArgs e)
-        {
-            this.lblExiste.Hide();
+            //Relleno el formulario
+            this.txtBxRol.Text = RolModific.Descripcion;
+            this.checkBxEstado.Checked = RolModific.Estado;
 
-            List<Funcionalidad> LstFuncionalidad = new List<Funcionalidad>();
-
-            SqlCommand query = new SqlCommand("SELECT * FROM GAME_OF_QUERYS.funcionalidad", objConexion);
-            objConexion.Open();
-            SqlDataReader objReader = query.ExecuteReader();
-            while(objReader.Read())     //genero lista de funcionalidades
+            Funcionalidad ItemFuncionalidad = new Funcionalidad();
+            for(int i=0; i < ChLstBxFunc.Items.Count; i++)
             {
-                Funcionalidad Item = new Funcionalidad();
-                Item.Id = (int)objReader["id"];
-                Item.Descripcion = (string)objReader["descripcion"];
-                LstFuncionalidad.Add(Item);
+                
+                ItemFuncionalidad = (Funcionalidad)(ChLstBxFunc.Items[i]);
+
+                foreach (Funcionalidad RolFuncionalidad in RolModific.Funcionalidades)
+                {
+                    if (ItemFuncionalidad.Id == RolFuncionalidad.Id)
+                    {
+                        ChLstBxFunc.SetItemChecked(i, true);
+                    }
+                        
+                }
             }
-            objConexion.Close();
+            
 
-            ((ListBox)this.ChLstBxFunc).DataSource = LstFuncionalidad;
-            ((ListBox)this.ChLstBxFunc).ValueMember = "Id";
-            ((ListBox)this.ChLstBxFunc).DisplayMember = "Descripcion";
-
+            
         }
+
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            SqlCommand query = new SqlCommand("SELECT COUNT(*) AS cant FROM GAME_OF_QUERYS.rol WHERE descripcion = @NombreRol", objConexion);
-            query.Parameters.AddWithValue("@NombreRol", this.txtBxRol.Text);
-            objConexion.Open();
-            SqlDataReader objReader = query.ExecuteReader();
-            objReader.Read();
-            int cantidad = (int)objReader["cant"];
-            objConexion.Close();
 
-            if (cantidad != 0)
-            {
-                this.lblExiste.Show();
-                this.txtBxRol.Text = string.Empty;
-            }
 
-            else
+
+            if (Nuevo)
             {
-                this.lblExiste.Hide();
-                query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.rol (descripcion, estado) VALUES (@desc, @estado); SELECT SCOPE_IDENTITY()", objConexion);
-                query.Parameters.AddWithValue("@desc", this.txtBxRol.Text);
-                query.Parameters.AddWithValue("@estado", this.checkBxEstado.Checked);
+                SqlCommand query = new SqlCommand("SELECT COUNT(*) AS cant FROM GAME_OF_QUERYS.rol WHERE descripcion = @NombreRol", objConexion);
+                query.Parameters.AddWithValue("@NombreRol", this.txtBxRol.Text);
                 objConexion.Open();
-                int idRol = Convert.ToInt32(query.ExecuteScalar());
+                SqlDataReader objReader = query.ExecuteReader();
+                objReader.Read();
+                int cantidad = (int)objReader["cant"];
                 objConexion.Close();
 
-                foreach (Funcionalidad Item in LstCheckedFunc)
+                if (cantidad != 0)
                 {
-                    query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.rol_funcionalidad (rol_id, funcionalidad_id) VALUES (@idRol, @idFunc)", objConexion);    //falta verificar si ese rol puede realizar todas las funcionalidades
-                    query.Parameters.AddWithValue("@idRol", idRol);                                                                                             //capaz habria que hacer un trigger que no deje insertar las que son si o si del administrador
-                    query.Parameters.AddWithValue("@idFunc", Item.Id);
+                    this.lblExiste.Show();
+                    this.txtBxRol.Text = string.Empty;
+                }
+
+                else
+                {
+                    this.lblExiste.Hide();
+                    query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.rol (descripcion, estado) VALUES (@desc, @estado); SELECT SCOPE_IDENTITY()", objConexion);
+                    query.Parameters.AddWithValue("@desc", this.txtBxRol.Text);
+                    query.Parameters.AddWithValue("@estado", this.checkBxEstado.Checked);
                     objConexion.Open();
-                    query.ExecuteNonQuery();
+                    int idRol = Convert.ToInt32(query.ExecuteScalar());
                     objConexion.Close();
+
+                    foreach (Funcionalidad Item in LstCheckedFunc)
+                    {
+                        query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.rol_funcionalidad (rol_id, funcionalidad_id) VALUES (@idRol, @idFunc)", objConexion);    //falta verificar si ese rol puede realizar todas las funcionalidades
+                        query.Parameters.AddWithValue("@idRol", idRol);                                                                                             //capaz habria que hacer un trigger que no deje insertar las que son si o si del administrador
+                        query.Parameters.AddWithValue("@idFunc", Item.Id);
+                        objConexion.Open();
+                        query.ExecuteNonQuery();
+                        objConexion.Close();
+                    } 
                 }
 
                 this.Close();
@@ -99,6 +111,30 @@ namespace FrbaHotel.ABM_de_Rol
             else
                 LstCheckedFunc.Remove((Funcionalidad)ChLstBxFunc.Items[e.Index]);
             
+        }
+
+
+        private void CargaarFuncionalidades()
+        {
+            this.lblExiste.Hide();
+
+            List<Funcionalidad> LstFuncionalidad = new List<Funcionalidad>();
+
+            SqlCommand query = new SqlCommand("SELECT * FROM GAME_OF_QUERYS.funcionalidad", objConexion);
+            objConexion.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+            while (objReader.Read())     //genero lista de funcionalidades
+            {
+                Funcionalidad Item = new Funcionalidad();
+                Item.Id = (int)objReader["id"];
+                Item.Descripcion = (string)objReader["descripcion"];
+                LstFuncionalidad.Add(Item);
+            }
+            objConexion.Close();
+
+            ((ListBox)this.ChLstBxFunc).DataSource = LstFuncionalidad;
+            ((ListBox)this.ChLstBxFunc).ValueMember = "Id";
+            ((ListBox)this.ChLstBxFunc).DisplayMember = "Descripcion";
         }
     }
 }
