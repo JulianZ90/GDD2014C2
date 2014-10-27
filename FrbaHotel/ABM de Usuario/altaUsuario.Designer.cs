@@ -29,12 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.textBox19 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -58,17 +56,19 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button4);
-            this.groupBox1.Controls.Add(this.button3);
-            this.groupBox1.Controls.Add(this.textBox19);
-            this.groupBox1.Controls.Add(this.textBox8);
-            this.groupBox1.Controls.Add(this.label22);
-            this.groupBox1.Controls.Add(this.label21);
+            this.groupBox1.Controls.Add(this.checkBox3);
+            this.groupBox1.Controls.Add(this.checkBox2);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.listBox2);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.listBox1);
             this.groupBox1.Controls.Add(this.dateTimePicker1);
             this.groupBox1.Controls.Add(this.textBox9);
             this.groupBox1.Controls.Add(this.label10);
@@ -90,69 +90,55 @@
             this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(10, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(425, 208);
+            this.groupBox1.Size = new System.Drawing.Size(707, 208);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Alta 1";
             // 
-            // button4
+            // label12
             // 
-            this.button4.Location = new System.Drawing.Point(376, 163);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(30, 23);
-            this.button4.TabIndex = 32;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(565, 25);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(34, 13);
+            this.label12.TabIndex = 36;
+            this.label12.Text = "Roles";
             // 
-            // button3
+            // listBox2
             // 
-            this.button3.Location = new System.Drawing.Point(357, 144);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(15, 15);
-            this.button3.TabIndex = 31;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(568, 41);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.listBox2.Size = new System.Drawing.Size(124, 147);
+            this.listBox2.TabIndex = 35;
             // 
-            // textBox19
+            // label11
             // 
-            this.textBox19.Location = new System.Drawing.Point(285, 165);
-            this.textBox19.Name = "textBox19";
-            this.textBox19.Size = new System.Drawing.Size(90, 20);
-            this.textBox19.TabIndex = 30;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(421, 25);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(43, 13);
+            this.label11.TabIndex = 34;
+            this.label11.Text = "Hoteles";
             // 
-            // textBox8
+            // listBox1
             // 
-            this.textBox8.Location = new System.Drawing.Point(285, 141);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(90, 20);
-            this.textBox8.TabIndex = 29;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(221, 169);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(34, 13);
-            this.label22.TabIndex = 28;
-            this.label22.Text = "Roles";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(221, 144);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(43, 13);
-            this.label21.TabIndex = 26;
-            this.label21.Text = "Hoteles";
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(424, 41);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.listBox1.Size = new System.Drawing.Size(124, 147);
+            this.listBox1.TabIndex = 33;
             // 
             // dateTimePicker1
             // 
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dateTimePicker1.Location = new System.Drawing.Point(285, 53);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(121, 20);
+            this.dateTimePicker1.Size = new System.Drawing.Size(100, 20);
             this.dateTimePicker1.TabIndex = 25;
             // 
             // textBox9
@@ -176,7 +162,7 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(285, 84);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.Size = new System.Drawing.Size(100, 21);
             this.comboBox1.TabIndex = 22;
             // 
             // label9
@@ -281,6 +267,7 @@
             // 
             this.textBox2.Location = new System.Drawing.Point(82, 55);
             this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(121, 20);
             this.textBox2.TabIndex = 8;
             // 
@@ -296,7 +283,9 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(312, 187);
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(299, 141);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(107, 17);
             this.checkBox1.TabIndex = 6;
@@ -321,7 +310,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(362, 460);
+            this.button1.Location = new System.Drawing.Point(642, 226);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 26;
@@ -331,18 +320,42 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(281, 460);
+            this.button2.Location = new System.Drawing.Point(561, 226);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 27;
             this.button2.Text = "Limpiar";
             this.button2.UseVisualStyleBackColor = true;
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Location = new System.Drawing.Point(391, 55);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(15, 14);
+            this.checkBox2.TabIndex = 37;
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Location = new System.Drawing.Point(391, 87);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(15, 14);
+            this.checkBox3.TabIndex = 38;
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
             // altaUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(448, 500);
+            this.ClientSize = new System.Drawing.Size(725, 258);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
@@ -381,11 +394,11 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox textBox19;
-        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox3;
     }
 }

@@ -148,7 +148,7 @@ namespace FrbaHotel.ABM_de_Usuario
 
             if (e.ColumnIndex == dataGridView1.Columns["mODIFICAR"].Index)
             {
-
+                new ABM_de_Usuario.altaUsuario(user_id).ShowDialog();
                 
             }
             if (e.ColumnIndex == dataGridView1.Columns["bAJA"].Index)
