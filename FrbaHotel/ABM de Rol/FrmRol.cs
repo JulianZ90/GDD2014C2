@@ -59,12 +59,12 @@ namespace FrbaHotel.ABM_de_Rol
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            SqlCommand query = null;
 
 
-
-            if (Nuevo)
+            if (Nuevo)  //alta de nuevo rol
             {
-                SqlCommand query = new SqlCommand("SELECT COUNT(*) AS cant FROM GAME_OF_QUERYS.rol WHERE descripcion = @NombreRol", objConexion);
+                query = new SqlCommand("SELECT COUNT(*) AS cant FROM GAME_OF_QUERYS.rol WHERE descripcion = @NombreRol", objConexion);
                 query.Parameters.AddWithValue("@NombreRol", this.txtBxRol.Text);
                 objConexion.Open();
                 SqlDataReader objReader = query.ExecuteReader();
@@ -96,12 +96,40 @@ namespace FrbaHotel.ABM_de_Rol
                         objConexion.Open();
                         query.ExecuteNonQuery();
                         objConexion.Close();
-                    } 
+                    }
+                }
+            }
+
+            else    //modificacion - eliminacion de un rol
+            {
+                query = new SqlCommand("UPDATE GAME_OF_QUERYS.rol SET descripcion = @newName, estado = @newState WHERE id = @idRol", objConexion);
+                query.Parameters.AddWithValue("@newName", this.txtBxRol.Text);
+                query.Parameters.AddWithValue("@newState", this.checkBxEstado.Checked);
+                query.Parameters.AddWithValue("@idRol", Rol.Id);
+                objConexion.Open();
+                query.ExecuteNonQuery();
+                objConexion.Close();
+
+                query = new SqlCommand("DELETE FROM GAME_OF_QUERYS.rol_funcionalidad WHERE rol_id = @idRol", objConexion);  //elimino las funcionalidades que tenia el rol hasta ahora
+                query.Parameters.AddWithValue("@idRol", Rol.Id);
+                objConexion.Open();
+                query.ExecuteNonQuery();
+                objConexion.Close();
+
+                foreach (Funcionalidad Item in LstCheckedFunc)
+                {
+                    query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.rol_funcionalidad (rol_id, funcionalidad_id) VALUES (@idRol, @idFunc)", objConexion);    //falta verificar si ese rol puede realizar todas las funcionalidades
+                    query.Parameters.AddWithValue("@idRol", Rol.Id);                                                                                             //capaz habria que hacer un trigger que no deje insertar las que son si o si del administrador
+                    query.Parameters.AddWithValue("@idFunc", Item.Id);
+                    objConexion.Open();
+                    query.ExecuteNonQuery();
+                    objConexion.Close();
                 }
 
-                this.Close();
             }
-            
+   
+            this.Close();
+       
         }
 
         private void ChLstBxFunc_ItemCheck(object sender, ItemCheckEventArgs e)
