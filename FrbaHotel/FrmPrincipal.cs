@@ -108,6 +108,11 @@ namespace FrbaHotel
             this.Close();
         }
 
+        public void setStatus(string str){
+
+            toolStripStatusLabel.Text = str;
+        }
+
 
     }
 }

@@ -34,6 +34,32 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void button2_Click(object sender, EventArgs e)
         {
+            dataGridView1.Columns.Clear();
+
+            // Add a button column ALTA. 
+            DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
+            buttonColumn.HeaderText = "M";
+            buttonColumn.Name = "mODIFICAR";
+            buttonColumn.Text = "";
+            buttonColumn.UseColumnTextForButtonValue = true;
+            buttonColumn.Width = 20;
+            dataGridView1.Columns.Add(buttonColumn);
+
+            // Add a button column BAJA. 
+            DataGridViewButtonColumn btnbaja = new DataGridViewButtonColumn();
+            btnbaja.HeaderText = "B";
+            btnbaja.Name = "bAJA";
+            btnbaja.Text = "";
+            btnbaja.UseColumnTextForButtonValue = true;
+            btnbaja.Width = 20;
+            dataGridView1.Columns.Add(btnbaja);
+
+            // Add a CellClick handler to handle clicks in the button column.
+            //no se puede borrar todos los handlers asociados. Asi que trato de quitar el handler viejo aunque no este.
+            dataGridView1.CellClick -= new DataGridViewCellEventHandler(dataGridView1_CellClick);
+            dataGridView1.CellClick += new DataGridViewCellEventHandler(dataGridView1_CellClick);
+
+
             List<Usuario> lista = new List<Usuario>();
 
             StringBuilder query = new StringBuilder();
@@ -79,9 +105,6 @@ namespace FrbaHotel.ABM_de_Usuario
                 query.Append("and hotel_usuario_rol.rol_id = '" + ((Rol)comboBox3.SelectedItem).Id + "'");
 
 
-
-
-
             SqlCommand objComando = new SqlCommand(query.ToString(), connect);
 
             connect.Open();
@@ -108,7 +131,40 @@ namespace FrbaHotel.ABM_de_Usuario
                 lista.Add(user);
             }
             connect.Close();
-            dataGridView1.DataSource = lista; 
+            dataGridView1.DataSource = lista;            
+        }
+ 
+        void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Ignore clicks that are not on button cells.  
+            if (e.RowIndex < 0 || 
+                ( e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index && 
+                e.ColumnIndex != dataGridView1.Columns["bAJA"].Index )
+                ) 
+                return;
+
+            // Retrieve the user_id object from the "id" cell.
+            int user_id = (int) dataGridView1.Rows[e.RowIndex].Cells["id"].Value;
+
+            if (e.ColumnIndex == dataGridView1.Columns["mODIFICAR"].Index)
+            {
+
+                
+            }
+            if (e.ColumnIndex == dataGridView1.Columns["bAJA"].Index)
+            {
+                string query = "update GAME_OF_QUERYS.usuario set estado=0 where id=@user_id ";
+                SqlCommand command = new SqlCommand(query,connect);
+                command.Parameters.AddWithValue("@user_id", user_id);
+                connect.Open();
+                command.ExecuteNonQuery();
+                connect.Close();
+
+                dataGridView1.Rows[e.RowIndex].Cells["estado"].Value = false;
+
+                ((FrmPrincipal)MdiParent).setStatus("Usuario con id="+ user_id + " borrado con exito");
+            }
+
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
