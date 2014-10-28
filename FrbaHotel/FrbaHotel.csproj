@@ -60,6 +60,12 @@
     <Compile Include="ABM de Habitacion\FrmHabitacion.Designer.cs">
       <DependentUpon>FrmHabitacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM de Habitacion\FrmListadoHabitacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Habitacion\FrmListadoHabitacion.Designer.cs">
+      <DependentUpon>FrmListadoHabitacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM de Regimen\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,6 +151,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ABM de Habitacion\FrmHabitacion.resx">
       <DependentUpon>FrmHabitacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Habitacion\FrmListadoHabitacion.resx">
+      <DependentUpon>FrmListadoHabitacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Rol\FrmListaRoles.resx">
       <DependentUpon>FrmListaRoles.cs</DependentUpon>
