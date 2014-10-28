@@ -12,6 +12,8 @@ namespace FrbaHotel.Login
 {
     public partial class FrmLogin : Form
     {
+        SqlConnection objConexion = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
+
         public FrmLogin()
         {
             InitializeComponent();
@@ -30,7 +32,6 @@ namespace FrbaHotel.Login
         int accesos = 0;
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            SqlConnection objConexion = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
             SqlCommand queryValidation = new SqlCommand("SELECT COUNT (*) AS cant FROM GAME_OF_QUERYS.usuario WHERE username = @username", objConexion);
             queryValidation.Parameters.AddWithValue("@username", this.txtBoxUser.Text);
             objConexion.Open();
@@ -69,33 +70,50 @@ namespace FrbaHotel.Login
                             Sb.Append(b.ToString("x2"));
                     }
                     string claveHash = Sb.ToString();
-                    if (pass == claveHash)
+
+                    if (pass == claveHash)  //contraseña correcta
                     {
                         accesos = 0;
                         this.lblIncorrecta.Hide();
                         //mas de un rol?
                         //mas de un hotel?
-                        //new ABM_de_Rol.altaRol().ShowDialog();        //lo uso para probar el altaRol, ni bien ingresa va a ese formulario
 
-                        LoginId Log = new LoginId();
-                        Log.Usuario_Id = id;
-
-                        query = new SqlCommand("SELECT rol_id, hotel_id FROM GAME_OF_QUERYS.hotel_usuario_rol WHERE usuario_id = @idUser", objConexion);    //sigo sin tener en cuenta mas de un hotel y rol, esta query se va a tener que modificar por el valor que tomen los comboBox
-                        query.Parameters.AddWithValue("@idUser", id);
+                        query = new SqlCommand("SELECT COUNT(*) AS cant FROM GAME_OF_QUERYS.hotel_usuario_rol WHERE usuario_id = @UserId", objConexion);
+                        query.Parameters.AddWithValue("@UserId", id);
                         objConexion.Open();
                         objReader = query.ExecuteReader();
                         objReader.Read();
-                        Log.Rol_Id = (int)objReader["rol_id"];
-                        Log.Hotel_Id = (int)objReader["hotel_id"];
+                        cantidad = (int)objReader["cant"];
                         objConexion.Close();
 
 
+                        if (cantidad == 1)  //solo un rol en un unico hotel
+                        {
+                            LoginId Log = new LoginId();
+                            Log.Usuario_Id = id;
 
-                        new FrmPrincipal(Log).ShowDialog();
+                            query = new SqlCommand("SELECT rol_id, hotel_id FROM GAME_OF_QUERYS.hotel_usuario_rol WHERE usuario_id = @idUser", objConexion);    //sigo sin tener en cuenta mas de un hotel y rol, esta query se va a tener que modificar por el valor que tomen los comboBox
+                            query.Parameters.AddWithValue("@idUser", id);
+                            objConexion.Open();
+                            objReader = query.ExecuteReader();
+                            objReader.Read();
+                            Log.Rol_Id = (int)objReader["rol_id"];
+                            Log.Hotel_Id = (int)objReader["hotel_id"];
+                            objConexion.Close();
+
+                            new FrmPrincipal(Log).ShowDialog();
+                        }
+                        else //mas de un registro en la tabla hotel_usuario_rol
+                        {
+                            new Login.FrmElegirRolHotel(id).ShowDialog();
+                        }
+
+
                         this.txtBoxPass.Text = string.Empty;
                         this.txtBoxUser.Text = string.Empty;
                     }
-                    else
+
+                    else    //contraseña incorrecta
                     {
                         accesos++;
                         this.lblIncorrecta.Show();
