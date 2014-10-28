@@ -47,7 +47,8 @@ namespace FrbaHotel.ABM_de_Usuario
             user.direccion = textBox7.Text;
             user.fecha_nac = dateTimePicker1.Value.Date;
             user.tipo_identidad = (TipoIdentidad)comboBox1.SelectedItem;
-            if (textBox9.Text != "") user.nro_identidad = Int64.Parse(textBox9.Text);
+            if (textBox9.Text != "") user.nro_identidad = long.Parse(textBox9.Text);
+            user.estado = checkBox1.Checked;
 
             user.hoteles = listBox1.SelectedItems.Cast<Hotel>().ToList();
             user.roles = listBox2.SelectedItems.Cast<Rol>().ToList();
@@ -56,7 +57,7 @@ namespace FrbaHotel.ABM_de_Usuario
             {
                 // no tiene id todavia, es un alta
                 user.insert();
-                ((FrmPrincipal)MdiParent).setStatus("Usuario creado");
+                ((FrmPrincipal)this.Owner.MdiParent).setStatus("Usuario creado");
             }
             else
             {
