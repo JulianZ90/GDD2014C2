@@ -40,6 +40,8 @@
             this.rolesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nuevoRolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modificarOEliminarRolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.habitaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nuevaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,8 +62,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.habitaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nuevaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listarHabitacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -155,6 +156,22 @@
             this.modificarOEliminarRolToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.modificarOEliminarRolToolStripMenuItem.Text = "Modificar o Eliminar Rol";
             this.modificarOEliminarRolToolStripMenuItem.Click += new System.EventHandler(this.modificarOEliminarRolToolStripMenuItem_Click);
+            // 
+            // habitaciónToolStripMenuItem
+            // 
+            this.habitaciónToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nuevaToolStripMenuItem,
+            this.listarHabitacionesToolStripMenuItem});
+            this.habitaciónToolStripMenuItem.Name = "habitaciónToolStripMenuItem";
+            this.habitaciónToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.habitaciónToolStripMenuItem.Text = "Habitación";
+            // 
+            // nuevaToolStripMenuItem
+            // 
+            this.nuevaToolStripMenuItem.Name = "nuevaToolStripMenuItem";
+            this.nuevaToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.nuevaToolStripMenuItem.Text = "Nueva Habitación";
+            this.nuevaToolStripMenuItem.Click += new System.EventHandler(this.nuevaToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
@@ -307,20 +324,12 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(40, 17);
             this.toolStripStatusLabel.Text = "Estado";
             // 
-            // habitaciónToolStripMenuItem
+            // listarHabitacionesToolStripMenuItem
             // 
-            this.habitaciónToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.nuevaToolStripMenuItem});
-            this.habitaciónToolStripMenuItem.Name = "habitaciónToolStripMenuItem";
-            this.habitaciónToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.habitaciónToolStripMenuItem.Text = "Habitación";
-            // 
-            // nuevaToolStripMenuItem
-            // 
-            this.nuevaToolStripMenuItem.Name = "nuevaToolStripMenuItem";
-            this.nuevaToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.nuevaToolStripMenuItem.Text = "Nueva Habitación";
-            this.nuevaToolStripMenuItem.Click += new System.EventHandler(this.nuevaToolStripMenuItem_Click);
+            this.listarHabitacionesToolStripMenuItem.Name = "listarHabitacionesToolStripMenuItem";
+            this.listarHabitacionesToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.listarHabitacionesToolStripMenuItem.Text = "Listar Habitaciones";
+            this.listarHabitacionesToolStripMenuItem.Click += new System.EventHandler(this.listarHabitacionesToolStripMenuItem_Click);
             // 
             // FrmPrincipal
             // 
@@ -381,6 +390,7 @@
         private System.Windows.Forms.ToolStripMenuItem modificarOEliminarRolToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem habitaciónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nuevaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem listarHabitacionesToolStripMenuItem;
     }
 }
 

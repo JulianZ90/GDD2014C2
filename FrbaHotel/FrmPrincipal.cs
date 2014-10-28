@@ -116,6 +116,11 @@ namespace FrbaHotel
             new ABM_de_Habitacion.FrmHabitacion(Log).ShowDialog();
         }
 
+        private void listarHabitacionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ABM_de_Habitacion.FrmListadoHabitacion(Log).ShowDialog();
+        }
+
 
     }
 }
