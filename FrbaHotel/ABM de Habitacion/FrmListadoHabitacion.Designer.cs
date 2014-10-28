@@ -32,11 +32,7 @@
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.radBtnNoDisp = new System.Windows.Forms.RadioButton();
-            this.radBtnDisp = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radBtnExterior = new System.Windows.Forms.RadioButton();
-            this.radBtnInterior = new System.Windows.Forms.RadioButton();
             this.checkBxTipo = new System.Windows.Forms.CheckBox();
             this.txtBxPiso = new System.Windows.Forms.TextBox();
             this.btnLimpiar = new System.Windows.Forms.Button();
@@ -46,6 +42,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.checkBxExterior = new System.Windows.Forms.CheckBox();
+            this.checkBxInterior = new System.Windows.Forms.CheckBox();
+            this.checkBxDisp = new System.Windows.Forms.CheckBox();
+            this.checkBxNoDisp = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -94,8 +94,8 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.radBtnNoDisp);
-            this.groupBox3.Controls.Add(this.radBtnDisp);
+            this.groupBox3.Controls.Add(this.checkBxNoDisp);
+            this.groupBox3.Controls.Add(this.checkBxDisp);
             this.groupBox3.Location = new System.Drawing.Point(320, 69);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(285, 61);
@@ -103,60 +103,16 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Habitación";
             // 
-            // radBtnNoDisp
-            // 
-            this.radBtnNoDisp.AutoSize = true;
-            this.radBtnNoDisp.Location = new System.Drawing.Point(47, 29);
-            this.radBtnNoDisp.Name = "radBtnNoDisp";
-            this.radBtnNoDisp.Size = new System.Drawing.Size(101, 17);
-            this.radBtnNoDisp.TabIndex = 11;
-            this.radBtnNoDisp.TabStop = true;
-            this.radBtnNoDisp.Text = "No disponible";
-            this.radBtnNoDisp.UseVisualStyleBackColor = true;
-            // 
-            // radBtnDisp
-            // 
-            this.radBtnDisp.AutoSize = true;
-            this.radBtnDisp.Location = new System.Drawing.Point(158, 29);
-            this.radBtnDisp.Name = "radBtnDisp";
-            this.radBtnDisp.Size = new System.Drawing.Size(84, 17);
-            this.radBtnDisp.TabIndex = 10;
-            this.radBtnDisp.TabStop = true;
-            this.radBtnDisp.Text = "Disponible";
-            this.radBtnDisp.UseVisualStyleBackColor = true;
-            // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.radBtnExterior);
-            this.groupBox2.Controls.Add(this.radBtnInterior);
+            this.groupBox2.Controls.Add(this.checkBxInterior);
+            this.groupBox2.Controls.Add(this.checkBxExterior);
             this.groupBox2.Location = new System.Drawing.Point(10, 107);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(270, 63);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Ubicación";
-            // 
-            // radBtnExterior
-            // 
-            this.radBtnExterior.AutoSize = true;
-            this.radBtnExterior.Location = new System.Drawing.Point(30, 32);
-            this.radBtnExterior.Name = "radBtnExterior";
-            this.radBtnExterior.Size = new System.Drawing.Size(70, 17);
-            this.radBtnExterior.TabIndex = 14;
-            this.radBtnExterior.TabStop = true;
-            this.radBtnExterior.Text = "Exterior";
-            this.radBtnExterior.UseVisualStyleBackColor = true;
-            // 
-            // radBtnInterior
-            // 
-            this.radBtnInterior.AutoSize = true;
-            this.radBtnInterior.Location = new System.Drawing.Point(129, 32);
-            this.radBtnInterior.Name = "radBtnInterior";
-            this.radBtnInterior.Size = new System.Drawing.Size(68, 17);
-            this.radBtnInterior.TabIndex = 15;
-            this.radBtnInterior.TabStop = true;
-            this.radBtnInterior.Text = "Interior";
-            this.radBtnInterior.UseVisualStyleBackColor = true;
             // 
             // checkBxTipo
             // 
@@ -240,6 +196,50 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Número de habitación:";
             // 
+            // checkBxExterior
+            // 
+            this.checkBxExterior.AutoSize = true;
+            this.checkBxExterior.Location = new System.Drawing.Point(32, 31);
+            this.checkBxExterior.Name = "checkBxExterior";
+            this.checkBxExterior.Size = new System.Drawing.Size(71, 17);
+            this.checkBxExterior.TabIndex = 0;
+            this.checkBxExterior.Text = "Exterior";
+            this.checkBxExterior.UseVisualStyleBackColor = true;
+            this.checkBxExterior.CheckedChanged += new System.EventHandler(this.checkBxExterior_CheckedChanged);
+            // 
+            // checkBxInterior
+            // 
+            this.checkBxInterior.AutoSize = true;
+            this.checkBxInterior.Location = new System.Drawing.Point(149, 31);
+            this.checkBxInterior.Name = "checkBxInterior";
+            this.checkBxInterior.Size = new System.Drawing.Size(69, 17);
+            this.checkBxInterior.TabIndex = 1;
+            this.checkBxInterior.Text = "Interior";
+            this.checkBxInterior.UseVisualStyleBackColor = true;
+            this.checkBxInterior.CheckedChanged += new System.EventHandler(this.checkBxInterior_CheckedChanged);
+            // 
+            // checkBxDisp
+            // 
+            this.checkBxDisp.AutoSize = true;
+            this.checkBxDisp.Location = new System.Drawing.Point(159, 29);
+            this.checkBxDisp.Name = "checkBxDisp";
+            this.checkBxDisp.Size = new System.Drawing.Size(85, 17);
+            this.checkBxDisp.TabIndex = 0;
+            this.checkBxDisp.Text = "Disponible";
+            this.checkBxDisp.UseVisualStyleBackColor = true;
+            this.checkBxDisp.CheckedChanged += new System.EventHandler(this.checkBxDisp_CheckedChanged);
+            // 
+            // checkBxNoDisp
+            // 
+            this.checkBxNoDisp.AutoSize = true;
+            this.checkBxNoDisp.Location = new System.Drawing.Point(43, 29);
+            this.checkBxNoDisp.Name = "checkBxNoDisp";
+            this.checkBxNoDisp.Size = new System.Drawing.Size(102, 17);
+            this.checkBxNoDisp.TabIndex = 1;
+            this.checkBxNoDisp.Text = "No disponible";
+            this.checkBxNoDisp.UseVisualStyleBackColor = true;
+            this.checkBxNoDisp.CheckedChanged += new System.EventHandler(this.checkBxNoDisp_CheckedChanged);
+            // 
             // FrmListadoHabitacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -273,15 +273,15 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtBxNroHab;
         private System.Windows.Forms.ComboBox cmbBxTipoHab;
-        private System.Windows.Forms.RadioButton radBtnNoDisp;
-        private System.Windows.Forms.RadioButton radBtnDisp;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.TextBox txtBxPiso;
         private System.Windows.Forms.CheckBox checkBxTipo;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RadioButton radBtnExterior;
-        private System.Windows.Forms.RadioButton radBtnInterior;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox checkBxNoDisp;
+        private System.Windows.Forms.CheckBox checkBxDisp;
+        private System.Windows.Forms.CheckBox checkBxInterior;
+        private System.Windows.Forms.CheckBox checkBxExterior;
     }
 }

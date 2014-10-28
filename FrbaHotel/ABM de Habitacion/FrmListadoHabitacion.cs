@@ -112,17 +112,19 @@ namespace FrbaHotel.ABM_de_Habitacion
             if (checkBxTipo.Checked)
                 SBquery.Append(" AND tipo_habitacion.id = '" + (int)this.cmbBxTipoHab.SelectedValue + "'");
 
-            if (radBtnInterior.Checked)
-                SBquery.Append(" AND habitacion.ubicacion = 'S'");
-
-            if (radBtnExterior.Checked)
+            if (checkBxExterior.Checked)
                 SBquery.Append(" AND habitacion.ubicacion = 'N'");
 
-            if (radBtnDisp.Checked)
+            if (checkBxInterior.Checked)
+                SBquery.Append(" AND habitacion.ubicacion = 'S'");
+
+            if (checkBxDisp.Checked)
                 SBquery.Append(" AND habitacion.estado_habitacion = '1'");
 
-            if (radBtnNoDisp.Checked)
+            if (checkBxNoDisp.Checked)
                 SBquery.Append(" AND habitacion.estado_habitacion = '0'");
+
+            SBquery.Append(" ORDER BY habitacion.nro");
 
             query = new SqlCommand(SBquery.ToString(), objConexion);
 
@@ -161,7 +163,13 @@ namespace FrbaHotel.ABM_de_Habitacion
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             dataGridView.Columns.Clear();
-
+            this.txtBxNroHab.Text = string.Empty;
+            this.txtBxPiso.Text = string.Empty;
+            this.checkBxInterior.Checked = false;
+            this.checkBxExterior.Checked = false;
+            this.checkBxTipo.Checked = false;
+            this.checkBxNoDisp.Checked = false;
+            this.checkBxDisp.Checked = false;
         }
 
         private void checkBxTipo_CheckedChanged(object sender, EventArgs e)
@@ -201,6 +209,55 @@ namespace FrbaHotel.ABM_de_Habitacion
                 
             }
 
+        }
+
+        private void checkBxNoDisp_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBxNoDisp.Checked)
+            {
+                if (checkBxDisp.Checked)
+                {
+                    MessageBox.Show("Primero desmarque la opción de 'Habitación Disponible'");
+                    checkBxNoDisp.Checked = false;
+                }
+            }
+            
+        }
+
+        private void checkBxDisp_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBxDisp.Checked)
+            {
+                if (checkBxNoDisp.Checked)
+                {
+                    MessageBox.Show("Primero desmarque la opción de 'Habitación No Disponible'");
+                    checkBxDisp.Checked = false;
+                }
+            }
+        }
+
+        private void checkBxExterior_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBxExterior.Checked)
+            {
+                if (checkBxInterior.Checked)
+                {
+                    MessageBox.Show("Primero desmarque la opción de 'Ubicación Interna'");
+                    checkBxExterior.Checked = false;
+                }
+            }
+        }
+
+        private void checkBxInterior_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBxInterior.Checked)
+            {
+                if (checkBxExterior.Checked)
+                {
+                    MessageBox.Show("Primero desmarque la opción de 'Ubicación Externa'");
+                    checkBxInterior.Checked = false;
+                }
+            }
         }
 
     }
