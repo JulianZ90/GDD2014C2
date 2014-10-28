@@ -22,6 +22,7 @@ namespace FrbaHotel.Login
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterParent;
             this.lblError.Hide();
+            this.ShowInTaskbar = false;
 
             LoginId.Usuario_Id = Id;
 
