@@ -122,7 +122,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 user.direccion = objReader["direccion"] as string;
                 user.fecha_nac = objReader["fecha_nac"] as DateTime?;
                 user.estado = (bool)objReader["estado"]; 
-                user.nro_identidad = objReader["nro_identidad"] as int?;
+                user.nro_identidad = objReader["nro_identidad"] as Int64?;
 
                 TipoIdentidad tipo = new TipoIdentidad();
                 tipo.nombre = objReader["tipo"] as string;
@@ -148,8 +148,9 @@ namespace FrbaHotel.ABM_de_Usuario
 
             if (e.ColumnIndex == dataGridView1.Columns["mODIFICAR"].Index)
             {
-                new ABM_de_Usuario.altaUsuario(user_id).ShowDialog();
-                
+                ABM_de_Usuario.altaUsuario modif  = new ABM_de_Usuario.altaUsuario(user_id);
+                modif.Owner = this;
+                modif.ShowDialog();
             }
             if (e.ColumnIndex == dataGridView1.Columns["bAJA"].Index)
             {
@@ -161,7 +162,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 connect.Close();
 
                 dataGridView1.Rows[e.RowIndex].Cells["estado"].Value = false;
-
+                
                 ((FrmPrincipal)MdiParent).setStatus("Usuario con id="+ user_id + " borrado con exito");
             }
 
