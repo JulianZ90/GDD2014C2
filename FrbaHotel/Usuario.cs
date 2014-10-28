@@ -20,7 +20,7 @@ namespace FrbaHotel
         public string direccion { get; set; }
         public DateTime? fecha_nac { get; set; }
         public bool estado { get; set; }
-        public int? nro_identidad { get; set; }
+        public Int64? nro_identidad { get; set; }
         public TipoIdentidad tipo_identidad { get; set; }
 
         public List<Hotel> hoteles { get; set; }
@@ -50,7 +50,7 @@ namespace FrbaHotel
                 this.direccion = objReader["direccion"] as string;
                 this.fecha_nac = objReader["fecha_nac"] as DateTime?;
                 this.estado = (bool)objReader["estado"];
-                this.nro_identidad = objReader["nro_identidad"] as int?;
+                this.nro_identidad = objReader["nro_identidad"] as Int64?;
 
                 if (objReader["tipo_identidad_id"] != DBNull.Value)
                 {
@@ -92,7 +92,7 @@ namespace FrbaHotel
             connect.Close();
         }
 
-        public void guardar(){
+        public void insert(){
 
             SqlCommand query = new SqlCommand("insert into GAME_OF_QUERYS.usuario (username, password, nombre, apellido, mail, tel , direccion, fecha_nac, estado, nro_identidad, tipo_identidad_id) values (@username, @password, @nombre, @apellido, @mail, @tel , @dir, @fec_nac, @estado, @dni,@tipo); SELECT SCOPE_IDENTITY()", connect);
             query.Parameters.AddWithValue("username", username);
@@ -136,6 +136,52 @@ namespace FrbaHotel
             connect.Close();
                 
          }
+
+        public void update(){
+            SqlCommand query = new SqlCommand("delete from GAME_OF_QUERYS.hotel_usuario_rol where usuario_id=@usuario", connect);
+            query.Parameters.AddWithValue("usuario", this.id);
+            connect.Open();
+            query.ExecuteNonQuery();
+
+            query = new SqlCommand("update GAME_OF_QUERYS.usuario set username=@username, password=@password, nombre=@nombre, apellido=@apellido, mail=@mail, tel=@tel , direccion=@dir, fecha_nac=@fec_nac, estado=@estado, nro_identidad=@dni, tipo_identidad_id=@tipo where id=@user_id", connect);
+            query.Parameters.AddWithValue("user_id", this.id);
+            query.Parameters.AddWithValue("username", username);
+            query.Parameters.AddWithValue("password", password);
+            query.Parameters.AddWithValue("nombre", nombre);
+            query.Parameters.AddWithValue("apellido", apellido);
+            query.Parameters.AddWithValue("mail", mail);
+
+            if (tel == null)
+                query.Parameters.AddWithValue("tel", DBNull.Value);
+            else
+                query.Parameters.AddWithValue("tel", tel);
+
+            query.Parameters.AddWithValue("dir", direccion);
+            query.Parameters.AddWithValue("fec_nac", fecha_nac.Value.Date);
+            query.Parameters.AddWithValue("estado", estado);
+            query.Parameters.AddWithValue("tipo", tipo_identidad.id);
+
+            if (nro_identidad == null)
+                query.Parameters.AddWithValue("dni", DBNull.Value);
+            else
+                query.Parameters.AddWithValue("dni", nro_identidad);
+
+            query.ExecuteNonQuery();
+
+            foreach (Hotel hotel in hoteles)
+            {
+                foreach (Rol rol in roles)
+                {
+                    query = new SqlCommand("insert into GAME_OF_QUERYS.hotel_usuario_rol (hotel_id, rol_id, usuario_id) values (@hotel, @rol,@usuario)", connect);
+                    query.Parameters.AddWithValue("hotel", hotel.id);
+                    query.Parameters.AddWithValue("rol", rol.Id);
+                    query.Parameters.AddWithValue("usuario", this.id);
+                    query.ExecuteNonQuery();
+                }
+            }
+            
+            connect.Close();
+        }
 
     }
 

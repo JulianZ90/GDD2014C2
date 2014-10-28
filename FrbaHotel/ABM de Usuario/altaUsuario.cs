@@ -12,15 +12,17 @@ namespace FrbaHotel.ABM_de_Usuario
 {
     public partial class altaUsuario : Form
     {
-        Usuario user;
+        Usuario user = null;
         SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
 
+        // alta
         public altaUsuario()
         {
             InitializeComponent();
             llenarCombo(comboBox1);
             llenarHoteles();
             llenarRoles();
+            user = new Usuario();
         }
 
         //modificacion
@@ -36,22 +38,32 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Usuario usr = new Usuario();
-            usr.username = textBox1.Text;
-            usr.password = textBox2.Text;
-            usr.nombre = textBox3.Text;
-            usr.apellido = textBox4.Text;
-            usr.mail = textBox5.Text;
-            if (textBox6.Text!="") usr.tel = Int32.Parse(textBox6.Text);
-            usr.direccion = textBox7.Text;
-            usr.fecha_nac = dateTimePicker1.Value.Date;
-            usr.tipo_identidad = (TipoIdentidad)comboBox1.SelectedItem;
-            if (textBox9.Text != "") usr.nro_identidad = Int32.Parse(textBox9.Text);
+            user.username = textBox1.Text;
+            user.password = textBox2.Text;
+            user.nombre = textBox3.Text;
+            user.apellido = textBox4.Text;
+            user.mail = textBox5.Text;
+            if (textBox6.Text != "") user.tel = Int32.Parse(textBox6.Text);
+            user.direccion = textBox7.Text;
+            user.fecha_nac = dateTimePicker1.Value.Date;
+            user.tipo_identidad = (TipoIdentidad)comboBox1.SelectedItem;
+            if (textBox9.Text != "") user.nro_identidad = Int64.Parse(textBox9.Text);
 
-            usr.hoteles = listBox1.SelectedItems.Cast<Hotel>().ToList();
-            usr.roles = listBox2.SelectedItems.Cast<Rol>().ToList();
+            user.hoteles = listBox1.SelectedItems.Cast<Hotel>().ToList();
+            user.roles = listBox2.SelectedItems.Cast<Rol>().ToList();
 
-            usr.guardar();
+            if (user.id<1)
+            {
+                // no tiene id todavia, es un alta
+                user.insert();
+                ((FrmPrincipal)MdiParent).setStatus("Usuario creado");
+            }
+            else
+            {
+                user.update();
+                ((FrmPrincipal)this.Owner.MdiParent).setStatus("Usuario id="+user.id.ToString()+" modificado");
+                this.Close();
+            }
         }
 
         public bool IsValidEmail(string email)
