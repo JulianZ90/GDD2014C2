@@ -71,6 +71,32 @@ namespace FrbaHotel.ABM_de_Habitacion
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
+            dataGridView.Columns.Clear();
+
+            // Add a button column MODIFICAR. 
+            DataGridViewButtonColumn btnModific = new DataGridViewButtonColumn();
+            btnModific.HeaderText = " ";
+            btnModific.Name = "Modificar";
+            btnModific.Text = "Modificar";
+            btnModific.UseColumnTextForButtonValue = true;
+            btnModific.Width = 20;
+            dataGridView.Columns.Add(btnModific);
+
+            // Add a button column BAJA. 
+            DataGridViewButtonColumn btnbaja = new DataGridViewButtonColumn();
+            btnbaja.HeaderText = " ";
+            btnbaja.Name = "Baja";
+            btnbaja.Text = "Baja";
+            btnbaja.UseColumnTextForButtonValue = true;
+            btnbaja.Width = 20;
+            dataGridView.Columns.Add(btnbaja);
+
+            // Add a CellClick handler to handle clicks in the button column.
+            //no se puede borrar todos los handlers asociados. Asi que trato de quitar el handler viejo aunque no este.
+            dataGridView.CellClick -= new DataGridViewCellEventHandler(dataGridView_CellClick);
+            dataGridView.CellClick += new DataGridViewCellEventHandler(dataGridView_CellClick);
+            
+            
             List<Habitacion> lstHabitaciones = new List<Habitacion>();
 
             StringBuilder SBquery = new StringBuilder();
@@ -134,6 +160,7 @@ namespace FrbaHotel.ABM_de_Habitacion
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
+            dataGridView.Columns.Clear();
 
         }
 
@@ -143,6 +170,37 @@ namespace FrbaHotel.ABM_de_Habitacion
                 cmbBxTipoHab.Enabled = true;
             else
                 cmbBxTipoHab.Enabled = false;
+        }
+
+        private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Ignore clicks that are not on button cells.  
+            if (e.RowIndex < 0 ||
+                (e.ColumnIndex != dataGridView.Columns[0].Index &&
+                e.ColumnIndex != dataGridView.Columns[1].Index)
+                )
+                return;
+
+            // Retrieve the user_id object from the "id" cell.
+            int habitacion_id = (int)dataGridView.Rows[e.RowIndex].Cells["id"].Value;
+
+            if (e.ColumnIndex == dataGridView.Columns[0].Index)   //Boton modificar
+            {
+                new ABM_de_Habitacion.FrmHabitacion(habitacion_id).ShowDialog();
+                
+            }
+            if (e.ColumnIndex == dataGridView.Columns[1].Index)     //Boton eliminar
+            {
+                query = new SqlCommand("update GAME_OF_QUERYS.habitacion set estado_habitacion = 0 where id = @habId", objConexion);
+                query.Parameters.AddWithValue("@habId", (int)dataGridView.Rows[e.RowIndex].Cells["id"].Value);
+                objConexion.Open();
+                query.ExecuteNonQuery();
+                objConexion.Close();
+
+                dataGridView.Rows[e.RowIndex].Cells["Estado"].Value = false;
+                
+            }
+
         }
 
     }

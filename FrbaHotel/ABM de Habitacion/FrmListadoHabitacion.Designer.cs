@@ -31,26 +31,26 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.radBtnNoDisp = new System.Windows.Forms.RadioButton();
+            this.radBtnDisp = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.radBtnExterior = new System.Windows.Forms.RadioButton();
+            this.radBtnInterior = new System.Windows.Forms.RadioButton();
+            this.checkBxTipo = new System.Windows.Forms.CheckBox();
+            this.txtBxPiso = new System.Windows.Forms.TextBox();
+            this.btnLimpiar = new System.Windows.Forms.Button();
+            this.btnBuscar = new System.Windows.Forms.Button();
             this.txtBxNroHab = new System.Windows.Forms.TextBox();
             this.cmbBxTipoHab = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnBuscar = new System.Windows.Forms.Button();
-            this.btnLimpiar = new System.Windows.Forms.Button();
-            this.radBtnDisp = new System.Windows.Forms.RadioButton();
-            this.radBtnNoDisp = new System.Windows.Forms.RadioButton();
-            this.txtBxPiso = new System.Windows.Forms.TextBox();
-            this.checkBxTipo = new System.Windows.Forms.CheckBox();
-            this.radBtnExterior = new System.Windows.Forms.RadioButton();
-            this.radBtnInterior = new System.Windows.Forms.RadioButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -69,6 +69,7 @@
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.Size = new System.Drawing.Size(627, 274);
             this.dataGridView.TabIndex = 0;
+            this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
             // 
             // groupBox1
             // 
@@ -90,6 +91,110 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Habitación";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.radBtnNoDisp);
+            this.groupBox3.Controls.Add(this.radBtnDisp);
+            this.groupBox3.Location = new System.Drawing.Point(320, 69);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(285, 61);
+            this.groupBox3.TabIndex = 17;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Habitación";
+            // 
+            // radBtnNoDisp
+            // 
+            this.radBtnNoDisp.AutoSize = true;
+            this.radBtnNoDisp.Location = new System.Drawing.Point(47, 29);
+            this.radBtnNoDisp.Name = "radBtnNoDisp";
+            this.radBtnNoDisp.Size = new System.Drawing.Size(101, 17);
+            this.radBtnNoDisp.TabIndex = 11;
+            this.radBtnNoDisp.TabStop = true;
+            this.radBtnNoDisp.Text = "No disponible";
+            this.radBtnNoDisp.UseVisualStyleBackColor = true;
+            // 
+            // radBtnDisp
+            // 
+            this.radBtnDisp.AutoSize = true;
+            this.radBtnDisp.Location = new System.Drawing.Point(158, 29);
+            this.radBtnDisp.Name = "radBtnDisp";
+            this.radBtnDisp.Size = new System.Drawing.Size(84, 17);
+            this.radBtnDisp.TabIndex = 10;
+            this.radBtnDisp.TabStop = true;
+            this.radBtnDisp.Text = "Disponible";
+            this.radBtnDisp.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.radBtnExterior);
+            this.groupBox2.Controls.Add(this.radBtnInterior);
+            this.groupBox2.Location = new System.Drawing.Point(10, 107);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(270, 63);
+            this.groupBox2.TabIndex = 16;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Ubicación";
+            // 
+            // radBtnExterior
+            // 
+            this.radBtnExterior.AutoSize = true;
+            this.radBtnExterior.Location = new System.Drawing.Point(30, 32);
+            this.radBtnExterior.Name = "radBtnExterior";
+            this.radBtnExterior.Size = new System.Drawing.Size(70, 17);
+            this.radBtnExterior.TabIndex = 14;
+            this.radBtnExterior.TabStop = true;
+            this.radBtnExterior.Text = "Exterior";
+            this.radBtnExterior.UseVisualStyleBackColor = true;
+            // 
+            // radBtnInterior
+            // 
+            this.radBtnInterior.AutoSize = true;
+            this.radBtnInterior.Location = new System.Drawing.Point(129, 32);
+            this.radBtnInterior.Name = "radBtnInterior";
+            this.radBtnInterior.Size = new System.Drawing.Size(68, 17);
+            this.radBtnInterior.TabIndex = 15;
+            this.radBtnInterior.TabStop = true;
+            this.radBtnInterior.Text = "Interior";
+            this.radBtnInterior.UseVisualStyleBackColor = true;
+            // 
+            // checkBxTipo
+            // 
+            this.checkBxTipo.AutoSize = true;
+            this.checkBxTipo.Location = new System.Drawing.Point(590, 31);
+            this.checkBxTipo.Name = "checkBxTipo";
+            this.checkBxTipo.Size = new System.Drawing.Size(15, 14);
+            this.checkBxTipo.TabIndex = 13;
+            this.checkBxTipo.UseVisualStyleBackColor = true;
+            this.checkBxTipo.CheckedChanged += new System.EventHandler(this.checkBxTipo_CheckedChanged);
+            // 
+            // txtBxPiso
+            // 
+            this.txtBxPiso.Location = new System.Drawing.Point(159, 69);
+            this.txtBxPiso.Name = "txtBxPiso";
+            this.txtBxPiso.Size = new System.Drawing.Size(121, 21);
+            this.txtBxPiso.TabIndex = 12;
+            this.txtBxPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBxPiso_KeyPress);
+            // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.Location = new System.Drawing.Point(516, 147);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.btnLimpiar.TabIndex = 9;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Location = new System.Drawing.Point(424, 147);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(75, 23);
+            this.btnBuscar.TabIndex = 8;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // txtBxNroHab
             // 
@@ -135,110 +240,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Número de habitación:";
             // 
-            // btnBuscar
-            // 
-            this.btnBuscar.Location = new System.Drawing.Point(424, 147);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(75, 23);
-            this.btnBuscar.TabIndex = 8;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
-            // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.Location = new System.Drawing.Point(516, 147);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
-            this.btnLimpiar.TabIndex = 9;
-            this.btnLimpiar.Text = "Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
-            // 
-            // radBtnDisp
-            // 
-            this.radBtnDisp.AutoSize = true;
-            this.radBtnDisp.Location = new System.Drawing.Point(158, 29);
-            this.radBtnDisp.Name = "radBtnDisp";
-            this.radBtnDisp.Size = new System.Drawing.Size(84, 17);
-            this.radBtnDisp.TabIndex = 10;
-            this.radBtnDisp.TabStop = true;
-            this.radBtnDisp.Text = "Disponible";
-            this.radBtnDisp.UseVisualStyleBackColor = true;
-            // 
-            // radBtnNoDisp
-            // 
-            this.radBtnNoDisp.AutoSize = true;
-            this.radBtnNoDisp.Location = new System.Drawing.Point(47, 29);
-            this.radBtnNoDisp.Name = "radBtnNoDisp";
-            this.radBtnNoDisp.Size = new System.Drawing.Size(101, 17);
-            this.radBtnNoDisp.TabIndex = 11;
-            this.radBtnNoDisp.TabStop = true;
-            this.radBtnNoDisp.Text = "No disponible";
-            this.radBtnNoDisp.UseVisualStyleBackColor = true;
-            // 
-            // txtBxPiso
-            // 
-            this.txtBxPiso.Location = new System.Drawing.Point(159, 69);
-            this.txtBxPiso.Name = "txtBxPiso";
-            this.txtBxPiso.Size = new System.Drawing.Size(121, 21);
-            this.txtBxPiso.TabIndex = 12;
-            this.txtBxPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBxPiso_KeyPress);
-            // 
-            // checkBxTipo
-            // 
-            this.checkBxTipo.AutoSize = true;
-            this.checkBxTipo.Location = new System.Drawing.Point(590, 31);
-            this.checkBxTipo.Name = "checkBxTipo";
-            this.checkBxTipo.Size = new System.Drawing.Size(15, 14);
-            this.checkBxTipo.TabIndex = 13;
-            this.checkBxTipo.UseVisualStyleBackColor = true;
-            this.checkBxTipo.CheckedChanged += new System.EventHandler(this.checkBxTipo_CheckedChanged);
-            // 
-            // radBtnExterior
-            // 
-            this.radBtnExterior.AutoSize = true;
-            this.radBtnExterior.Location = new System.Drawing.Point(30, 32);
-            this.radBtnExterior.Name = "radBtnExterior";
-            this.radBtnExterior.Size = new System.Drawing.Size(70, 17);
-            this.radBtnExterior.TabIndex = 14;
-            this.radBtnExterior.TabStop = true;
-            this.radBtnExterior.Text = "Exterior";
-            this.radBtnExterior.UseVisualStyleBackColor = true;
-            // 
-            // radBtnInterior
-            // 
-            this.radBtnInterior.AutoSize = true;
-            this.radBtnInterior.Location = new System.Drawing.Point(129, 32);
-            this.radBtnInterior.Name = "radBtnInterior";
-            this.radBtnInterior.Size = new System.Drawing.Size(68, 17);
-            this.radBtnInterior.TabIndex = 15;
-            this.radBtnInterior.TabStop = true;
-            this.radBtnInterior.Text = "Interior";
-            this.radBtnInterior.UseVisualStyleBackColor = true;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.radBtnExterior);
-            this.groupBox2.Controls.Add(this.radBtnInterior);
-            this.groupBox2.Location = new System.Drawing.Point(10, 107);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(270, 63);
-            this.groupBox2.TabIndex = 16;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Ubicación";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.radBtnNoDisp);
-            this.groupBox3.Controls.Add(this.radBtnDisp);
-            this.groupBox3.Location = new System.Drawing.Point(320, 69);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(285, 61);
-            this.groupBox3.TabIndex = 17;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Habitación";
-            // 
             // FrmListadoHabitacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -254,10 +255,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }

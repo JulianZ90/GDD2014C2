@@ -29,6 +29,13 @@ namespace FrbaHotel.ABM_de_Habitacion
             this.Text = "Nueva Habitación";
         }
 
+        public FrmHabitacion(int HabId)
+        {
+            InitializeComponent();
+            this.CargarFuncionalidades();
+            this.Text = "Modificar Habitación";
+        }
+
         private void CargarFuncionalidades()
         {
             this.StartPosition = FormStartPosition.CenterParent;
