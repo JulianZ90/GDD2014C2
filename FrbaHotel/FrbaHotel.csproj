@@ -123,6 +123,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginId.cs" />
+    <Compile Include="Login\FrmElegirRolHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\FrmElegirRolHotel.Designer.cs">
+      <DependentUpon>FrmElegirRolHotel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login\FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPassword.resx">
       <DependentUpon>FrmPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\FrmElegirRolHotel.resx">
+      <DependentUpon>FrmElegirRolHotel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
