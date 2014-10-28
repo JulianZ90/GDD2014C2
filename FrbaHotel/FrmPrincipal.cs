@@ -12,15 +12,13 @@ namespace FrbaHotel
     public partial class FrmPrincipal : Form
     {
         private int childFormNumber = 0;
-        LoginId Log = new LoginId();
+        LoginId Log = null;
 
         public FrmPrincipal(LoginId IdLog)
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterParent;
-            Log.Hotel_Id = IdLog.Hotel_Id;
-            Log.Rol_Id = IdLog.Rol_Id;
-            Log.Usuario_Id = IdLog.Usuario_Id;
+            Log = IdLog;
         }
 
         private void ShowNewForm(object sender, EventArgs e)

@@ -23,6 +23,7 @@ namespace FrbaHotel.ABM_de_Rol
             InitializeComponent();
             this.CargaarFuncionalidades();
             this.Nuevo = true;
+            this.Text = "Nuevo Rol";
 
         }
 
@@ -31,6 +32,7 @@ namespace FrbaHotel.ABM_de_Rol
             InitializeComponent();
             this.CargaarFuncionalidades();
             this.Rol = RolModific;
+            this.Text = "Modificar o Eliminar Rol";
 
             //Relleno el formulario
             this.txtBxRol.Text = RolModific.Descripcion;
