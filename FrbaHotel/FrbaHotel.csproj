@@ -204,6 +204,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Rol.cs" />
+    <Compile Include="TipoHabitacion.cs" />
     <Compile Include="TipoIdentidad.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>

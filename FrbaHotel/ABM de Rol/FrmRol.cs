@@ -21,7 +21,7 @@ namespace FrbaHotel.ABM_de_Rol
         public FrmRol()
         {
             InitializeComponent();
-            this.CargaarFuncionalidades();
+            this.CargarFuncionalidades();
             this.Nuevo = true;
             this.Text = "Nuevo Rol";
 
@@ -30,7 +30,7 @@ namespace FrbaHotel.ABM_de_Rol
         public FrmRol(Rol RolModific)
         {
             InitializeComponent();
-            this.CargaarFuncionalidades();
+            this.CargarFuncionalidades();
             this.Rol = RolModific;
             this.Text = "Modificar o Eliminar Rol";
 
@@ -144,7 +144,7 @@ namespace FrbaHotel.ABM_de_Rol
         }
 
 
-        private void CargaarFuncionalidades()
+        private void CargarFuncionalidades()
         {
             this.lblExiste.Hide();
 

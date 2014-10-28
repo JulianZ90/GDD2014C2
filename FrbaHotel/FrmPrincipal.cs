@@ -111,6 +111,11 @@ namespace FrbaHotel
             toolStripStatusLabel.Text = str;
         }
 
+        private void nuevaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ABM_de_Habitacion.FrmHabitacion(Log).ShowDialog();
+        }
+
 
     }
 }
