@@ -25,6 +25,7 @@ namespace FrbaHotel.ABM_de_Habitacion
             this.StartPosition = FormStartPosition.CenterParent;
             this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.cmbBxTipoHab.Enabled = false;
             Log = LogUser;
 
             //Cargar combo box de tipo de habitacion
@@ -112,7 +113,12 @@ namespace FrbaHotel.ABM_de_Habitacion
                 habitacion.Ubicacion = (string)objReader["ubicacion"];
                 habitacion.Descripcion = objReader["descripcion"] as string;
                 habitacion.Estado = (bool)objReader["estado_habitacion"];
-                habitacion.Tipo = (string)objReader["tipo"];
+
+                TipoHabitacion TipoHabitacion = new TipoHabitacion();
+                //TipoHabitacion.Id = (int)objReader["tipo_hab_id"];
+                TipoHabitacion.Descripcion = (string)objReader["tipo"];
+
+                habitacion.Tipo = TipoHabitacion;
                 
                 lstHabitaciones.Add(habitacion);
             }
@@ -129,6 +135,14 @@ namespace FrbaHotel.ABM_de_Habitacion
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void checkBxTipo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBxTipo.Checked)
+                cmbBxTipoHab.Enabled = true;
+            else
+                cmbBxTipoHab.Enabled = false;
         }
 
     }

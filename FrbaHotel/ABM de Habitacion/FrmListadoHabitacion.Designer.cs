@@ -193,6 +193,7 @@
             this.checkBxTipo.Size = new System.Drawing.Size(15, 14);
             this.checkBxTipo.TabIndex = 13;
             this.checkBxTipo.UseVisualStyleBackColor = true;
+            this.checkBxTipo.CheckedChanged += new System.EventHandler(this.checkBxTipo_CheckedChanged);
             // 
             // radBtnExterior
             // 

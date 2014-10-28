@@ -12,7 +12,7 @@ namespace FrbaHotel
         public int Numero { get; set; }
         public int Piso { get; set; }
         public string Ubicacion { get; set; }
-        public string Tipo { get; set; }
+        public TipoHabitacion Tipo { get; set; }
         public string Descripcion { get; set; }
         public bool Estado { get; set; }
     }
