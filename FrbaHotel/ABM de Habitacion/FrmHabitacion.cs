@@ -26,6 +26,7 @@ namespace FrbaHotel.ABM_de_Habitacion
             InitializeComponent();
             Log = LogUser;
             this.CargarFuncionalidades();
+            this.Text = "Nueva Habitación";
         }
 
         private void CargarFuncionalidades()

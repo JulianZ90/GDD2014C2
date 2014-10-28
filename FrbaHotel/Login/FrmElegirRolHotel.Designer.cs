@@ -96,6 +96,7 @@
             // 
             // FrmElegirRolHotel
             // 
+            this.AcceptButton = this.btnIngresar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(408, 212);
@@ -105,6 +106,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnIngresar);
             this.Controls.Add(this.cmbBoxRol);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FrmElegirRolHotel";
             this.Text = "Elegir rol y hotel";
             this.ResumeLayout(false);

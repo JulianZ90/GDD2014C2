@@ -109,7 +109,7 @@
             // btnLogin
             // 
             this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLogin.Location = new System.Drawing.Point(138, 297);
+            this.btnLogin.Location = new System.Drawing.Point(71, 297);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(106, 35);
             this.btnLogin.TabIndex = 6;
@@ -121,7 +121,7 @@
             // 
             this.btnGuest.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnGuest.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGuest.Location = new System.Drawing.Point(297, 297);
+            this.btnGuest.Location = new System.Drawing.Point(254, 298);
             this.btnGuest.Name = "btnGuest";
             this.btnGuest.Size = new System.Drawing.Size(202, 35);
             this.btnGuest.TabIndex = 7;
@@ -173,7 +173,7 @@
             this.AcceptButton = this.btnLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(526, 444);
+            this.ClientSize = new System.Drawing.Size(526, 399);
             this.Controls.Add(this.lblUserIncorrecto);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtBoxPass);
