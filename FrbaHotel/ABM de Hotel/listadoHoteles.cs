@@ -20,8 +20,6 @@ namespace FrbaHotel.ABM_de_Hotel
             llenarComboPais();
         }
 
-        
-
         private void button2_Click(object sender, EventArgs e)
         {
             dataGridView1.Columns.Clear();
@@ -34,6 +32,15 @@ namespace FrbaHotel.ABM_de_Hotel
             buttonColumn.UseColumnTextForButtonValue = true;
             buttonColumn.Width = 20;
             dataGridView1.Columns.Add(buttonColumn);
+
+            // Add a button column BAJA. 
+            DataGridViewButtonColumn btnbaja = new DataGridViewButtonColumn();
+            btnbaja.HeaderText = "B";
+            btnbaja.Name = "bAJA";
+            btnbaja.Text = "";
+            btnbaja.UseColumnTextForButtonValue = true;
+            btnbaja.Width = 20;
+            dataGridView1.Columns.Add(btnbaja);
 
             // Add a CellClick handler to handle clicks in the button column.
             //no se puede borrar todos los handlers asociados. Asi que trato de quitar el handler viejo aunque no este.
@@ -60,13 +67,16 @@ namespace FrbaHotel.ABM_de_Hotel
                 query.Append("and hotel.ciudad like '%" + textBox4.Text + "%'");
 
             if (textBox6.Text != "")
-                query.Append("and hotel.telefono like '%" + textBox6.Text + "%'");
+                query.Append("and hotel.tel like '%" + textBox6.Text + "%'");
 
             if (textBox7.Text != "")
                 query.Append("and hotel.cantidad_estrella like '%" + textBox7.Text + "%'");
 
             if (textBox5.Text != "")
                 query.Append("and hotel.recarga_estrella like '%" + textBox5.Text + "%'");
+
+            if (textBox8.Text != "")
+                query.Append("and hotel.mail like '%" + textBox8.Text + "%'");
 
             if (checkBox2.Checked)
                 query.Append("and hotel.fecha_creacion = '" + dateTimePicker1.Value.Date + "'");
@@ -84,12 +94,13 @@ namespace FrbaHotel.ABM_de_Hotel
                 hotel.id = (int)objReader["id"];
                 hotel.nombre = objReader["nombre"] as string;
                 hotel.calle = objReader["calle"] as string;
-                hotel.nro_calle = objReader["nombre"] as int?;
+                hotel.nro_calle = objReader["nro_calle"] as int?;
                 hotel.ciudad = objReader["ciudad"] as string;
                 hotel.tel = objReader["tel"] as int?;
                 hotel.cantidad_estrella = objReader["cantidad_estrella"] as int?;
                 hotel.recarga_estrella = objReader["recarga_estrella"] as int?;
                 hotel.fecha_creacion = objReader["fecha_creacion"] as DateTime?;
+                hotel.mail = objReader["mail"] as string;
 
                 Pais pais = new Pais();
                 pais.nombre = objReader["pais"] as string;
@@ -104,7 +115,10 @@ namespace FrbaHotel.ABM_de_Hotel
         void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Ignore clicks that are not on button cells.  
-            if (e.RowIndex < 0 || e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index)
+            if (e.RowIndex < 0 || 
+                ( e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index && 
+                e.ColumnIndex != dataGridView1.Columns["bAJA"].Index )
+                )
                 return;
 
             // Retrieve the hotel_id object from the "id" cell.
@@ -115,6 +129,12 @@ namespace FrbaHotel.ABM_de_Hotel
                 ABM_de_Hotel.altaHotel modif = new ABM_de_Hotel.altaHotel(hotel_id);
                 modif.Owner = this;
                 modif.ShowDialog();
+            }
+            if (e.ColumnIndex == dataGridView1.Columns["bAJA"].Index)
+            {
+                ABM_de_Hotel.frmMantenimiento frmMante = new ABM_de_Hotel.frmMantenimiento(hotel_id);
+                frmMante.Owner = this;
+                frmMante.ShowDialog();
             }
         }
 

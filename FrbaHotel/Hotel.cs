@@ -17,6 +17,7 @@ namespace FrbaHotel
         public int? cantidad_estrella { get; set; }
         public int? recarga_estrella { get; set; }
         public DateTime? fecha_creacion { get; set; }
+        public string mail { get; set; }
 
         //public List<Regimen> regimenes { get; set; }
         public List<Habitacion> habitaciones { get; set; }

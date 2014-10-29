@@ -72,6 +72,12 @@
     <Compile Include="ABM de Hotel\altaHotel.Designer.cs">
       <DependentUpon>altaHotel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM de Hotel\frmMantenimiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Hotel\frmMantenimiento.Designer.cs">
+      <DependentUpon>frmMantenimiento.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM de Hotel\listadoHoteles.cs">
       <SubType>Form</SubType>
     </Compile>

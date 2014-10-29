@@ -121,6 +121,20 @@ namespace FrbaHotel
             new ABM_de_Habitacion.FrmListadoHabitacion(Log).ShowDialog();
         }
 
+        private void altaHotelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form childForm = new ABM_de_Hotel.altaHotel();
+            childForm.MdiParent = this;
+            childForm.Show();
+        }
+
+        private void listadoHotelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form childForm = new ABM_de_Hotel.listadoHoteles();
+            childForm.MdiParent = this;
+            childForm.Show();
+        }
+
 
     }
 }
