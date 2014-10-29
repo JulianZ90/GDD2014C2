@@ -175,6 +175,9 @@
     <EmbeddedResource Include="ABM de Habitacion\FrmListadoHabitacion.resx">
       <DependentUpon>FrmListadoHabitacion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Hotel\altaHotel.resx">
+      <DependentUpon>altaHotel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\listadoHoteles.resx">
       <DependentUpon>listadoHoteles.cs</DependentUpon>
     </EmbeddedResource>

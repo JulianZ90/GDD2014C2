@@ -22,5 +22,13 @@ namespace FrbaHotel
         //public List<Regimen> regimenes { get; set; }
         public List<Habitacion> habitaciones { get; set; }
         //public List<Mantenimiento> mantenimientos { get; set; }
+
+        public Hotel() { }
+
+        public Hotel(int id)
+        {
+            this.id= id;
+
+        }
     }
 }
