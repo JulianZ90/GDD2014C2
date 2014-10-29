@@ -20,7 +20,7 @@ namespace FrbaHotel
         public string direccion { get; set; }
         public DateTime? fecha_nac { get; set; }
         public bool estado { get; set; }
-        public Int64? nro_identidad { get; set; }
+        public long? nro_identidad { get; set; }
         public TipoIdentidad tipo_identidad { get; set; }
 
         public List<Hotel> hoteles { get; set; }
@@ -50,7 +50,7 @@ namespace FrbaHotel
                 this.direccion = objReader["direccion"] as string;
                 this.fecha_nac = objReader["fecha_nac"] as DateTime?;
                 this.estado = (bool)objReader["estado"];
-                this.nro_identidad = objReader["nro_identidad"] as Int64?;
+                this.nro_identidad = objReader["nro_identidad"] as long?;
 
                 if (objReader["tipo_identidad_id"] != DBNull.Value)
                 {
