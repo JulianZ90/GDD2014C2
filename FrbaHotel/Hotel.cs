@@ -64,7 +64,7 @@ namespace FrbaHotel
             }
             objReader.Close();
 
-            query = new SqlCommand("select distinct reg_id from GAME_OF_QUERYS.hotel_reg where hote_id=@id", connect);
+            query = new SqlCommand("select distinct reg_id from GAME_OF_QUERYS.hotel_reg where hotel_id=@id", connect);
             query.Parameters.AddWithValue("id", this.id);
             objReader = query.ExecuteReader();
 
@@ -75,6 +75,7 @@ namespace FrbaHotel
                 regimenes.Add(reg);
             }
             objReader.Close();
+            connect.Close();
         }
 
         public void insert()
@@ -134,12 +135,13 @@ namespace FrbaHotel
         public void update()
         {
             SqlCommand query = new SqlCommand("delete from GAME_OF_QUERYS.hotel_reg where hotel_id=@hotel", connect);
-            query.Parameters.AddWithValue("usuario", this.id);
+            query.Parameters.AddWithValue("hotel", this.id);
             connect.Open();
             query.ExecuteNonQuery();
 
 
-            query = new SqlCommand("update into GAME_OF_QUERYS.hotel set calle=@calle, nro_calle=@nro_calle, ciudad=@ciudad, cantidad_estrella=@cantidad_estrella, recarga_estrella=@recarga_estrella, pais_id= @pais_id, tel=@tel, mail=@mail, fecha_creacion=@fecha_creacion, nombre=@nombre ", connect);
+            query = new SqlCommand("update GAME_OF_QUERYS.hotel set calle=@calle, nro_calle=@nro_calle, ciudad=@ciudad, cantidad_estrella=@cantidad_estrella, recarga_estrella=@recarga_estrella, pais_id= @pais_id, tel=@tel, mail=@mail, fecha_creacion=@fecha_creacion, nombre=@nombre where hotel.id = @hote_id", connect);
+            query.Parameters.AddWithValue("hotel_id", this.id);
             query.Parameters.AddWithValue("calle", calle);
 
             if (nro_calle == null)

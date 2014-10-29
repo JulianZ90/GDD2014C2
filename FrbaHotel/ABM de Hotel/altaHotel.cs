@@ -25,6 +25,7 @@ namespace FrbaHotel.ABM_de_Hotel
 
         public altaHotel(int id)
         {
+            InitializeComponent();
             llenarComboPais();
             llenarRegimenes();
             hotel = new Hotel(id);
