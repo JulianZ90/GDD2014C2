@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Data.SqlClient;
+using System.Security.Cryptography;
 
 namespace FrbaHotel.ABM_de_Usuario
 {
@@ -23,6 +24,7 @@ namespace FrbaHotel.ABM_de_Usuario
             llenarHoteles();
             llenarRoles();
             user = new Usuario();
+            textBox2.ReadOnly = false;
         }
 
         //modificacion
@@ -39,7 +41,7 @@ namespace FrbaHotel.ABM_de_Usuario
         private void button1_Click(object sender, EventArgs e)
         {
             user.username = textBox1.Text;
-            user.password = textBox2.Text;
+            user.password = getHash(textBox2.Text);
             user.nombre = textBox3.Text;
             user.apellido = textBox4.Text;
             user.mail = textBox5.Text;
@@ -57,7 +59,7 @@ namespace FrbaHotel.ABM_de_Usuario
             {
                 // no tiene id todavia, es un alta
                 user.insert();
-                ((FrmPrincipal)this.Owner.MdiParent).setStatus("Usuario creado");
+                ((FrmPrincipal)this.MdiParent).setStatus("Usuario creado");
             }
             else
             {
@@ -226,5 +228,17 @@ namespace FrbaHotel.ABM_de_Usuario
                 comboBox1.Enabled = false;
         }
 
+        private string getHash(string pass)
+        {
+            StringBuilder Sb = new StringBuilder();
+            using (SHA256 hash = SHA256Managed.Create())
+            {
+                Encoding enc = Encoding.UTF8;
+                Byte[] result = hash.ComputeHash(enc.GetBytes(pass));
+                foreach (Byte b in result)
+                    Sb.Append(b.ToString("x2"));
+            }
+            return Sb.ToString();
+        }
     }
 }

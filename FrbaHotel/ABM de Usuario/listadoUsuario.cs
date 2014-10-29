@@ -17,19 +17,9 @@ namespace FrbaHotel.ABM_de_Usuario
         public listadoUsuario()
         {
             InitializeComponent();
-            /*SqlDataAdapter dataadapter = new SqlDataAdapter("select usuario.*, tipo_identidad.nombre as tipo from GAME_OF_QUERYS.usuario left join GAME_OF_QUERYS.tipo_identidad on tipo_identidad.id = usuario.id", connect);
-            DataSet ds = new DataSet();
-            connect.Open();
-            dataadapter.Fill(ds, "USUARIOS");
-            connect.Close();
-            dataGridView1.DataSource = ds;
-            dataGridView1.DataMember = "USUARIOS";
-            */
-
             llenarComboIdentidad();
             llenarComboHotel();
             llenarComboRol();
-
         }
 
         private void button2_Click(object sender, EventArgs e)
