@@ -19,17 +19,45 @@ namespace FrbaHotel.ABM_de_Hotel
         {
             InitializeComponent();
             llenarComboPais();
+            llenarRegimenes();
+            hotel = new Hotel();
         }
 
-        public altaHotel(int id) {
+        public altaHotel(int id)
+        {
             llenarComboPais();
+            llenarRegimenes();
             hotel = new Hotel(id);
-            //cargarConHotel(hotel);
+            cargarConHotel(hotel);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            hotel.nombre = textBox1.Text;
+            hotel.calle = textBox2.Text;
+            if (textBox3.Text != "") hotel.nro_calle = Int32.Parse(textBox3.Text);
+            hotel.ciudad = textBox4.Text;
+            if (checkBox3.Checked) hotel.pais = (Pais)comboBox1.SelectedItem;
+            if (textBox6.Text != "") hotel.tel = Int32.Parse(textBox6.Text);
+            hotel.mail = textBox7.Text;
+            if (checkBox2.Checked) hotel.fecha_creacion = dateTimePicker1.Value.Date;
+            if (textBox8.Text != "") hotel.cantidad_estrella = Int32.Parse(textBox8.Text);
+            if (textBox5.Text != "") hotel.recarga_estrella = Int32.Parse(textBox5.Text);
 
+            hotel.regimenes = listBox1.SelectedItems.Cast<Regimen>().ToList();
+
+            if (hotel.id < 1)
+            {
+                // no tiene id todavia, es un alta
+                hotel.insert();
+                ((FrmPrincipal)this.MdiParent).setStatus("Hotel creado");
+            }
+            else
+            {
+                hotel.update();
+                ((FrmPrincipal)this.Owner.MdiParent).setStatus("Hotel id=" + hotel.id.ToString() + " modificado");
+                this.Close();
+            }
         }
 
         private void llenarComboPais()
@@ -56,7 +84,7 @@ namespace FrbaHotel.ABM_de_Hotel
             comboBox1.DataSource = lista;
         }
 
-       // public void cargarConHotel(Hotel h)
+        // public void cargarConHotel(Hotel h)
         //{ }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
@@ -73,6 +101,77 @@ namespace FrbaHotel.ABM_de_Hotel
                 dateTimePicker1.Enabled = true;
             else
                 dateTimePicker1.Enabled = false;
+        }
+
+        private void llenarRegimenes()
+        {
+            listBox1.DisplayMember = "descripcion";
+            listBox1.ValueMember = "id";
+
+            List<Regimen> lista = new List<Regimen>();
+
+            SqlCommand query = new SqlCommand("select * from GAME_OF_QUERYS.regimen where estado=1", connect);
+
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+
+            while (objReader.Read())
+            {
+                Regimen Item = new Regimen();
+                Item.id = (int)objReader["id"];
+                Item.descripcion = (string)objReader["descripcion"];
+                lista.Add(Item);
+            }
+
+            connect.Close();
+            listBox1.DataSource = lista;
+
+        }
+
+        private void cargarConHotel(Hotel h)
+        {
+            textBox1.Text = h.nombre;
+            textBox2.Text = h.calle;
+            textBox3.Text = h.nro_calle.ToString();
+            textBox4.Text = h.ciudad;
+
+            if (h.pais!= null)
+            {
+                comboBox1.Enabled = true;
+                checkBox3.Checked = true;
+                comboBox1.SelectedItem = h.pais;
+            }
+            else
+            {
+                comboBox1.Enabled = false;
+                checkBox3.Checked = false;
+            }
+
+            textBox6.Text = h.tel.ToString();
+            textBox7.Text = h.mail;
+
+            if (h.fecha_creacion!= null)
+            {
+                dateTimePicker1.Enabled = true;
+                checkBox2.Checked = true;
+                dateTimePicker1.Value = (DateTime)h.fecha_creacion;
+            }
+            else
+            {
+                dateTimePicker1.Enabled = false;
+                checkBox2.Checked = false;
+            }
+
+            textBox8.Text = h.cantidad_estrella.ToString();
+            textBox5.Text = h.recarga_estrella.ToString();
+
+            for (int i = 0; i < listBox1.Items.Count; i++)
+            {
+                if (h.regimenes.Exists(x => (x.id == ((Regimen)listBox1.Items[i]).id)))
+                    listBox1.SetSelected(i, true);
+                else
+                    listBox1.SetSelected(i, false);
+            }
         }
     }
 }

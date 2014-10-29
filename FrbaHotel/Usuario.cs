@@ -101,15 +101,24 @@ namespace FrbaHotel
             query.Parameters.AddWithValue("apellido", apellido);
             query.Parameters.AddWithValue("mail", mail);
 
-            if(tel==null)
+            if(tel==null) 
                 query.Parameters.AddWithValue("tel", DBNull.Value);
-            else
+            else 
                 query.Parameters.AddWithValue("tel", tel);
 
             query.Parameters.AddWithValue("dir", direccion);
-            query.Parameters.AddWithValue("fec_nac", fecha_nac.Value.Date );
+
+            if (fecha_nac == null) 
+                query.Parameters.AddWithValue("fec_nac", DBNull.Value);
+            else 
+                query.Parameters.AddWithValue("fec_nac", fecha_nac.Value.Date );
+
             query.Parameters.AddWithValue("estado", estado);
-            query.Parameters.AddWithValue("tipo", tipo_identidad.id);
+
+            if (tipo_identidad == null)
+                query.Parameters.AddWithValue("tipo", DBNull.Value);
+            else 
+                query.Parameters.AddWithValue("tipo", tipo_identidad.id);
             
             if (nro_identidad == null)
                 query.Parameters.AddWithValue("dni", DBNull.Value);

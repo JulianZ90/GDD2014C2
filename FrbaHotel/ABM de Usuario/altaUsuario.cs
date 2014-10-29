@@ -47,8 +47,8 @@ namespace FrbaHotel.ABM_de_Usuario
             user.mail = textBox5.Text;
             if (textBox6.Text != "") user.tel = Int32.Parse(textBox6.Text);
             user.direccion = textBox7.Text;
-            user.fecha_nac = dateTimePicker1.Value.Date;
-            user.tipo_identidad = (TipoIdentidad)comboBox1.SelectedItem;
+            if (checkBox2.Checked) user.fecha_nac = dateTimePicker1.Value.Date;
+            if (checkBox3.Checked) user.tipo_identidad = (TipoIdentidad)comboBox1.SelectedItem;
             if (textBox9.Text != "") user.nro_identidad = long.Parse(textBox9.Text);
             user.estado = checkBox1.Checked;
 

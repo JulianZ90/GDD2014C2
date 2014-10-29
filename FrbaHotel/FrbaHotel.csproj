@@ -226,6 +226,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Regimen.cs" />
     <Compile Include="Registrar Consumible\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
