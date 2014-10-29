@@ -66,6 +66,18 @@
     <Compile Include="ABM de Habitacion\FrmListadoHabitacion.Designer.cs">
       <DependentUpon>FrmListadoHabitacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM de Hotel\altaHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Hotel\altaHotel.Designer.cs">
+      <DependentUpon>altaHotel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Hotel\listadoHoteles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Hotel\listadoHoteles.Designer.cs">
+      <DependentUpon>listadoHoteles.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM de Regimen\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +160,7 @@
     <Compile Include="FrmPrincipal.Designer.cs">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pais.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ABM de Habitacion\FrmHabitacion.resx">
@@ -155,6 +168,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Habitacion\FrmListadoHabitacion.resx">
       <DependentUpon>FrmListadoHabitacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Hotel\listadoHoteles.resx">
+      <DependentUpon>listadoHoteles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Rol\FrmListaRoles.resx">
       <DependentUpon>FrmListaRoles.cs</DependentUpon>

@@ -122,7 +122,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 user.direccion = objReader["direccion"] as string;
                 user.fecha_nac = objReader["fecha_nac"] as DateTime?;
                 user.estado = (bool)objReader["estado"]; 
-                user.nro_identidad = objReader["nro_identidad"] as Int64?;
+                user.nro_identidad = objReader["nro_identidad"] as long?;
 
                 TipoIdentidad tipo = new TipoIdentidad();
                 tipo.nombre = objReader["tipo"] as string;
