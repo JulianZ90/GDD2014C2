@@ -133,11 +133,11 @@
       <DependentUpon>FrmPassword.cs</DependentUpon>
     </Compile>
     <Compile Include="Funcionalidad.cs" />
-    <Compile Include="Generar Modificar Reserva\Form1.cs">
+    <Compile Include="Generar Modificar Reserva\FrmReserva.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Generar Modificar Reserva\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Generar Modificar Reserva\FrmReserva.Designer.cs">
+      <DependentUpon>FrmReserva.cs</DependentUpon>
     </Compile>
     <Compile Include="Habitacion.cs" />
     <Compile Include="Hotel.cs" />
@@ -198,6 +198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPassword.resx">
       <DependentUpon>FrmPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Modificar Reserva\FrmReserva.resx">
+      <DependentUpon>FrmReserva.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\FrmElegirRolHotel.resx">
       <DependentUpon>FrmElegirRolHotel.cs</DependentUpon>
