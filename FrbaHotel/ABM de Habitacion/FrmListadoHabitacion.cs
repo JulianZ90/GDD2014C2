@@ -195,6 +195,7 @@ namespace FrbaHotel.ABM_de_Habitacion
             if (e.ColumnIndex == dataGridView.Columns[0].Index)   //Boton modificar
             {
                 new ABM_de_Habitacion.FrmHabitacion(habitacion_id).ShowDialog();
+                this.Close();
                 
             }
             if (e.ColumnIndex == dataGridView.Columns[1].Index)     //Boton eliminar

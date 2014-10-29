@@ -32,8 +32,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.numUDPiso = new System.Windows.Forms.NumericUpDown();
-            this.numUDHabitacion = new System.Windows.Forms.NumericUpDown();
             this.checkBxDisponible = new System.Windows.Forms.CheckBox();
             this.radBtnInterna = new System.Windows.Forms.RadioButton();
             this.radBtnExterior = new System.Windows.Forms.RadioButton();
@@ -47,18 +45,20 @@
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
+            this.txtBxNroHab = new System.Windows.Forms.TextBox();
+            this.txtBxPiso = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDPiso)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDHabitacion)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.txtBxPiso);
+            this.groupBox1.Controls.Add(this.txtBxNroHab);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.numUDPiso);
-            this.groupBox1.Controls.Add(this.numUDHabitacion);
             this.groupBox1.Controls.Add(this.checkBxDisponible);
             this.groupBox1.Controls.Add(this.radBtnInterna);
             this.groupBox1.Controls.Add(this.radBtnExterior);
@@ -109,47 +109,6 @@
             this.label7.Size = new System.Drawing.Size(25, 14);
             this.label7.TabIndex = 14;
             this.label7.Text = "(*)";
-            // 
-            // numUDPiso
-            // 
-            this.numUDPiso.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numUDPiso.Location = new System.Drawing.Point(156, 83);
-            this.numUDPiso.Maximum = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
-            this.numUDPiso.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numUDPiso.Name = "numUDPiso";
-            this.numUDPiso.Size = new System.Drawing.Size(120, 22);
-            this.numUDPiso.TabIndex = 13;
-            this.numUDPiso.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // numUDHabitacion
-            // 
-            this.numUDHabitacion.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numUDHabitacion.Location = new System.Drawing.Point(156, 30);
-            this.numUDHabitacion.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numUDHabitacion.Name = "numUDHabitacion";
-            this.numUDHabitacion.Size = new System.Drawing.Size(120, 22);
-            this.numUDHabitacion.TabIndex = 12;
-            this.numUDHabitacion.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // checkBxDisponible
             // 
@@ -288,6 +247,35 @@
             this.label6.TabIndex = 14;
             this.label6.Text = "(*) Campos obligatorios";
             // 
+            // txtBxNroHab
+            // 
+            this.txtBxNroHab.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBxNroHab.Location = new System.Drawing.Point(167, 29);
+            this.txtBxNroHab.Name = "txtBxNroHab";
+            this.txtBxNroHab.Size = new System.Drawing.Size(109, 23);
+            this.txtBxNroHab.TabIndex = 17;
+            this.txtBxNroHab.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBxNroHab_KeyPress);
+            // 
+            // txtBxPiso
+            // 
+            this.txtBxPiso.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBxPiso.Location = new System.Drawing.Point(167, 91);
+            this.txtBxPiso.Name = "txtBxPiso";
+            this.txtBxPiso.Size = new System.Drawing.Size(109, 23);
+            this.txtBxPiso.TabIndex = 18;
+            this.txtBxPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBxPiso_KeyPress);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.Red;
+            this.label10.Location = new System.Drawing.Point(49, 91);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(25, 14);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "(*)";
+            // 
             // FrmHabitacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -303,8 +291,6 @@
             this.Text = "Form1";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDPiso)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDHabitacion)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -325,12 +311,13 @@
         private System.Windows.Forms.CheckBox checkBxDisponible;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnLimpiar;
-        private System.Windows.Forms.NumericUpDown numUDHabitacion;
-        private System.Windows.Forms.NumericUpDown numUDPiso;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtBxPiso;
+        private System.Windows.Forms.TextBox txtBxNroHab;
+        private System.Windows.Forms.Label label10;
 
     }
 }
