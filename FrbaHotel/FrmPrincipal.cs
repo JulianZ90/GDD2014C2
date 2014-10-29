@@ -135,6 +135,11 @@ namespace FrbaHotel
             childForm.Show();
         }
 
+        private void nuevaReservaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Generar_Modificar_Reserva.FrmReserva(Log).ShowDialog();
+        }
+
 
     }
 }

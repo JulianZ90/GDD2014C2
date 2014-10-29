@@ -29,52 +29,52 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.txtBxCostoTotal = new System.Windows.Forms.TextBox();
+            this.lblCosto = new System.Windows.Forms.Label();
+            this.btnAgregarHabitacion = new System.Windows.Forms.Button();
+            this.tableHabitaciones = new System.Windows.Forms.TableLayoutPanel();
+            this.cmbBxTipoHab = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtBxCostoDia = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cmbBxHoteles = new System.Windows.Forms.ComboBox();
+            this.lblHotel = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.dataGridViewRegimen = new System.Windows.Forms.DataGridView();
+            this.tbnMostrarRegimen = new System.Windows.Forms.Button();
+            this.txtBxRegimen = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.dateTimeFin = new System.Windows.Forms.DateTimePicker();
+            this.dateTimeInicio = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnReservar = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
+            this.btnDisponibilidad = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            this.tableHabitaciones.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRegimen)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox3);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.tableLayoutPanel1);
+            this.groupBox1.Controls.Add(this.txtBxCostoTotal);
+            this.groupBox1.Controls.Add(this.lblCosto);
+            this.groupBox1.Controls.Add(this.btnAgregarHabitacion);
+            this.groupBox1.Controls.Add(this.tableHabitaciones);
             this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.comboBox1);
-            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.cmbBxHoteles);
+            this.groupBox1.Controls.Add(this.lblHotel);
             this.groupBox1.Controls.Add(this.panel1);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.tbnMostrarRegimen);
+            this.groupBox1.Controls.Add(this.txtBxRegimen);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.dateTimePicker2);
-            this.groupBox1.Controls.Add(this.dateTimePicker1);
+            this.groupBox1.Controls.Add(this.dateTimeFin);
+            this.groupBox1.Controls.Add(this.dateTimeInicio);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -85,55 +85,145 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Reserva";
             // 
-            // comboBox1
+            // txtBxCostoTotal
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(392, 13);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(235, 21);
-            this.comboBox1.TabIndex = 10;
+            this.txtBxCostoTotal.Location = new System.Drawing.Point(415, 318);
+            this.txtBxCostoTotal.Name = "txtBxCostoTotal";
+            this.txtBxCostoTotal.Size = new System.Drawing.Size(100, 21);
+            this.txtBxCostoTotal.TabIndex = 16;
             // 
-            // label5
+            // lblCosto
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(310, 16);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(76, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Elegir hotel:";
+            this.lblCosto.AutoSize = true;
+            this.lblCosto.Location = new System.Drawing.Point(313, 321);
+            this.lblCosto.Name = "lblCosto";
+            this.lblCosto.Size = new System.Drawing.Size(74, 13);
+            this.lblCosto.TabIndex = 15;
+            this.lblCosto.Text = "Costo total:";
+            // 
+            // btnAgregarHabitacion
+            // 
+            this.btnAgregarHabitacion.Location = new System.Drawing.Point(476, 57);
+            this.btnAgregarHabitacion.Name = "btnAgregarHabitacion";
+            this.btnAgregarHabitacion.Size = new System.Drawing.Size(131, 23);
+            this.btnAgregarHabitacion.TabIndex = 14;
+            this.btnAgregarHabitacion.Text = "Agregar habitación";
+            this.btnAgregarHabitacion.UseVisualStyleBackColor = true;
+            // 
+            // tableHabitaciones
+            // 
+            this.tableHabitaciones.ColumnCount = 4;
+            this.tableHabitaciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.36917F));
+            this.tableHabitaciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.63083F));
+            this.tableHabitaciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
+            this.tableHabitaciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101F));
+            this.tableHabitaciones.Controls.Add(this.cmbBxTipoHab, 1, 0);
+            this.tableHabitaciones.Controls.Add(this.label6, 0, 0);
+            this.tableHabitaciones.Controls.Add(this.label8, 2, 0);
+            this.tableHabitaciones.Controls.Add(this.txtBxCostoDia, 3, 0);
+            this.tableHabitaciones.Location = new System.Drawing.Point(316, 93);
+            this.tableHabitaciones.Name = "tableHabitaciones";
+            this.tableHabitaciones.RowCount = 1;
+            this.tableHabitaciones.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableHabitaciones.Size = new System.Drawing.Size(474, 214);
+            this.tableHabitaciones.TabIndex = 13;
+            // 
+            // cmbBxTipoHab
+            // 
+            this.cmbBxTipoHab.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cmbBxTipoHab.FormattingEnabled = true;
+            this.cmbBxTipoHab.Location = new System.Drawing.Point(123, 3);
+            this.cmbBxTipoHab.Name = "cmbBxTipoHab";
+            this.cmbBxTipoHab.Size = new System.Drawing.Size(150, 21);
+            this.cmbBxTipoHab.TabIndex = 0;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label6.Location = new System.Drawing.Point(3, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(114, 13);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Tipo de habitación";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label8.Location = new System.Drawing.Point(279, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(90, 13);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "Costo por día";
+            // 
+            // txtBxCostoDia
+            // 
+            this.txtBxCostoDia.Dock = System.Windows.Forms.DockStyle.Top;
+            this.txtBxCostoDia.Location = new System.Drawing.Point(375, 3);
+            this.txtBxCostoDia.Name = "txtBxCostoDia";
+            this.txtBxCostoDia.Size = new System.Drawing.Size(96, 21);
+            this.txtBxCostoDia.TabIndex = 3;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(310, 57);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(79, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Habitaciones";
+            // 
+            // cmbBxHoteles
+            // 
+            this.cmbBxHoteles.FormattingEnabled = true;
+            this.cmbBxHoteles.Location = new System.Drawing.Point(392, 13);
+            this.cmbBxHoteles.Name = "cmbBxHoteles";
+            this.cmbBxHoteles.Size = new System.Drawing.Size(235, 21);
+            this.cmbBxHoteles.TabIndex = 10;
+            // 
+            // lblHotel
+            // 
+            this.lblHotel.AutoSize = true;
+            this.lblHotel.Location = new System.Drawing.Point(310, 16);
+            this.lblHotel.Name = "lblHotel";
+            this.lblHotel.Size = new System.Drawing.Size(76, 13);
+            this.lblHotel.TabIndex = 9;
+            this.lblHotel.Text = "Elegir hotel:";
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.dataGridView1);
+            this.panel1.Controls.Add(this.dataGridViewRegimen);
             this.panel1.Location = new System.Drawing.Point(28, 184);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(184, 126);
             this.panel1.TabIndex = 8;
             // 
-            // dataGridView1
+            // dataGridViewRegimen
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(184, 126);
-            this.dataGridView1.TabIndex = 0;
+            this.dataGridViewRegimen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewRegimen.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewRegimen.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewRegimen.Name = "dataGridViewRegimen";
+            this.dataGridViewRegimen.Size = new System.Drawing.Size(184, 126);
+            this.dataGridViewRegimen.TabIndex = 0;
             // 
-            // button1
+            // tbnMostrarRegimen
             // 
-            this.button1.Location = new System.Drawing.Point(28, 154);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(124, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Buscar régimen";
-            this.button1.UseVisualStyleBackColor = true;
+            this.tbnMostrarRegimen.Location = new System.Drawing.Point(28, 154);
+            this.tbnMostrarRegimen.Name = "tbnMostrarRegimen";
+            this.tbnMostrarRegimen.Size = new System.Drawing.Size(184, 23);
+            this.tbnMostrarRegimen.TabIndex = 7;
+            this.tbnMostrarRegimen.Text = "Buscar régimenes del hotel";
+            this.tbnMostrarRegimen.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // txtBxRegimen
             // 
-            this.textBox1.Location = new System.Drawing.Point(112, 112);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 21);
-            this.textBox1.TabIndex = 6;
+            this.txtBxRegimen.Location = new System.Drawing.Point(112, 112);
+            this.txtBxRegimen.Name = "txtBxRegimen";
+            this.txtBxRegimen.Size = new System.Drawing.Size(100, 21);
+            this.txtBxRegimen.TabIndex = 6;
             // 
             // label4
             // 
@@ -153,21 +243,21 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Régimen:";
             // 
-            // dateTimePicker2
+            // dateTimeFin
             // 
-            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker2.Location = new System.Drawing.Point(171, 67);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(102, 21);
-            this.dateTimePicker2.TabIndex = 3;
+            this.dateTimeFin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimeFin.Location = new System.Drawing.Point(171, 67);
+            this.dateTimeFin.Name = "dateTimeFin";
+            this.dateTimeFin.Size = new System.Drawing.Size(102, 21);
+            this.dateTimeFin.TabIndex = 3;
             // 
-            // dateTimePicker1
+            // dateTimeInicio
             // 
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(37, 67);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(102, 21);
-            this.dateTimePicker1.TabIndex = 2;
+            this.dateTimeInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimeInicio.Location = new System.Drawing.Point(37, 67);
+            this.dateTimeInicio.Name = "dateTimeInicio";
+            this.dateTimeInicio.Size = new System.Drawing.Size(102, 21);
+            this.dateTimeInicio.TabIndex = 2;
             // 
             // label2
             // 
@@ -187,143 +277,53 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Desde:";
             // 
-            // label7
+            // btnReservar
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(310, 57);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(86, 13);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "Habitacioones";
+            this.btnReservar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReservar.Location = new System.Drawing.Point(660, 373);
+            this.btnReservar.Name = "btnReservar";
+            this.btnReservar.Size = new System.Drawing.Size(139, 23);
+            this.btnReservar.TabIndex = 1;
+            this.btnReservar.Text = "Generar Reserva";
+            this.btnReservar.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel1
+            // btnLimpiar
             // 
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.36917F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.63083F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98F));
-            this.tableLayoutPanel1.Controls.Add(this.comboBox2, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label8, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.textBox2, 3, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(313, 86);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(474, 214);
-            this.tableLayoutPanel1.TabIndex = 13;
+            this.btnLimpiar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiar.Location = new System.Drawing.Point(12, 373);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.btnLimpiar.TabIndex = 2;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnDisponibilidad
             // 
-            this.button2.Location = new System.Drawing.Point(476, 57);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(131, 23);
-            this.button2.TabIndex = 14;
-            this.button2.Text = "Agregar habitación";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(124, 3);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(152, 21);
-            this.comboBox2.TabIndex = 0;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label6.Location = new System.Drawing.Point(3, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(115, 13);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Tipo de habitación";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label8.Location = new System.Drawing.Point(282, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(90, 13);
-            this.label8.TabIndex = 2;
-            this.label8.Text = "Costo por día";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBox2.Location = new System.Drawing.Point(378, 3);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(93, 21);
-            this.textBox2.TabIndex = 3;
-            // 
-            // button3
-            // 
-            this.button3.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(660, 373);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(139, 23);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Generar Reserva";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(12, 373);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 2;
-            this.button4.Text = "Limpiar";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(449, 373);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(182, 23);
-            this.button5.TabIndex = 3;
-            this.button5.Text = "Consultar Disponibilidad";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(313, 316);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(74, 13);
-            this.label9.TabIndex = 15;
-            this.label9.Text = "Costo total:";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(416, 313);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 21);
-            this.textBox3.TabIndex = 16;
+            this.btnDisponibilidad.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDisponibilidad.Location = new System.Drawing.Point(449, 373);
+            this.btnDisponibilidad.Name = "btnDisponibilidad";
+            this.btnDisponibilidad.Size = new System.Drawing.Size(182, 23);
+            this.btnDisponibilidad.TabIndex = 3;
+            this.btnDisponibilidad.Text = "Consultar Disponibilidad";
+            this.btnDisponibilidad.UseVisualStyleBackColor = true;
             // 
             // FrmReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(846, 408);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnDisponibilidad);
+            this.Controls.Add(this.btnLimpiar);
+            this.Controls.Add(this.btnReservar);
             this.Controls.Add(this.groupBox1);
             this.Name = "FrmReserva";
             this.Text = "Nueva Reserva";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tableHabitaciones.ResumeLayout(false);
+            this.tableHabitaciones.PerformLayout();
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRegimen)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -331,30 +331,30 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dateTimeInicio;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DateTimePicker dateTimeFin;
+        private System.Windows.Forms.ComboBox cmbBxHoteles;
+        private System.Windows.Forms.Label lblHotel;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.DataGridView dataGridViewRegimen;
+        private System.Windows.Forms.Button tbnMostrarRegimen;
+        private System.Windows.Forms.TextBox txtBxRegimen;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.TableLayoutPanel tableHabitaciones;
+        private System.Windows.Forms.Button btnAgregarHabitacion;
+        private System.Windows.Forms.ComboBox cmbBxTipoHab;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.TextBox txtBxCostoDia;
+        private System.Windows.Forms.Button btnReservar;
+        private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.TextBox txtBxCostoTotal;
+        private System.Windows.Forms.Label lblCosto;
+        private System.Windows.Forms.Button btnDisponibilidad;
 
     }
 }
