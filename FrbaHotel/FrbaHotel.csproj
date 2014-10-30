@@ -120,6 +120,7 @@
     <Compile Include="Cancelar Reserva\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="consumible.cs" />
     <Compile Include="FrmGuest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -216,6 +217,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Registrar Consumible\altaConsumible.resx">
+      <DependentUpon>altaConsumible.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -230,11 +234,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Regimen.cs" />
-    <Compile Include="Registrar Consumible\Form1.cs">
+    <Compile Include="Registrar Consumible\altaConsumible.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Registrar Consumible\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Registrar Consumible\altaConsumible.Designer.cs">
+      <DependentUpon>altaConsumible.cs</DependentUpon>
     </Compile>
     <Compile Include="Registrar Estadia\Form1.cs">
       <SubType>Form</SubType>
