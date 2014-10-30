@@ -19,8 +19,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         SqlDataReader objReader = null;
         bool guest = false;
         LoginId Log = null;
-        int index;
-        int rowIndex = 1;
+        List<Regimen> lstRegimenes = new List<Regimen>();
+        List<TipoHabitacion> lstHabitacionesReserva = new List<TipoHabitacion>();
+        StringBuilder SBDetalle = new StringBuilder();
+        decimal sumCostoDiario = 0;
+        int RegimenId;
+        int HotelId;
 
 
         public FrmReserva(LoginId LogUser)  //un empleado del hotel genera la reserva
@@ -30,6 +34,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.cmbBxHoteles.Hide();
             this.CondicionesIniciales();
             Log = LogUser;
+            this.CompletarDataGridViewRegimenes(this.dataGridViewRegimen);
 
         }
 
@@ -57,11 +62,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             objConexion.Close();
 
+            //agregar un hotel generico como default
+            Hotel Default = new Hotel();
+            Default.id = 0;
+            Default.nombre = "--Select--";
+            lstHoteles.Insert(0, Default);
+
             cmbBxHoteles.DataSource = lstHoteles;
             cmbBxHoteles.DisplayMember = "nombre";
             cmbBxHoteles.ValueMember = "id";
         }
-
 
 
         public void CondicionesIniciales()
@@ -70,8 +80,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.lblCosto.Hide();
             this.txtBxCostoTotal.Hide();
             this.btnReservar.Hide();
-            this.AddRow();
             this.StartPosition = FormStartPosition.CenterParent;
+            this.dateTimeInicio.Value = DateTime.Today;
+            this.dateTimeFin.Value = DateTime.Today.AddDays(1);
+            this.LlenarComboBoxTipoHabitacion(this.cmbBxTipoHab);
         }
 
 
@@ -87,30 +99,43 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 TipoHabitacion TipoHabitacion = new TipoHabitacion();
                 TipoHabitacion.Id = (int)objReader["id"];
                 TipoHabitacion.Descripcion = (string)objReader["descripcion"];
-                TipoHabitacion.Porcenual = (decimal)objReader["porcentual"];
+                TipoHabitacion.Porcentual = (decimal)objReader["porcentual"];
                 lstTipoHabitacion.Add(TipoHabitacion);
             }
             objConexion.Close();
 
+            //agregar un tipo de habitacion generico como default
+            TipoHabitacion Default = new TipoHabitacion();
+            Default.Id = 0;
+            Default.Descripcion = "--Select--";
+            lstTipoHabitacion.Insert(0, Default);
+
             Combo.DataSource = lstTipoHabitacion;
             Combo.DisplayMember = "Descripcion";
             Combo.ValueMember = "Id";
+         
         }
+
 
         private void tbnMostrarRegimen_Click(object sender, EventArgs e)
         {
-
-            //muestro el datagridview
-            this.dataGridViewRegimen.Show();
-
-            //lleno el datagridview de regimenes
-            this.CompletarDataGridViewRegimenes(this.dataGridViewRegimen);
+            if (guest && (((Hotel)this.cmbBxHoteles.SelectedItem).id == 0))
+            {
+                MessageBox.Show("Debe elegir el hotel primero");
+            }
+            else
+            {
+                this.dataGridViewRegimen.Show();
+                //lleno el datagridview de regimenes
+                this.CompletarDataGridViewRegimenes(this.dataGridViewRegimen);
+            }           
         }
 
 
         private void CompletarDataGridViewRegimenes(DataGridView DataGridView)
         {
-            List<Regimen> lstRegimenes = new List<Regimen>();
+            //this.dataGridViewRegimen.Columns.Clear();
+            lstRegimenes.Clear();
 
             query = new SqlCommand("SELECT regimen.id, regimen.descripcion, regimen.precio_base FROM GAME_OF_QUERYS.hotel_reg JOIN GAME_OF_QUERYS.regimen ON (regimen.id = hotel_reg.reg_id) where hotel_id = @hotelId AND regimen.estado = 1", objConexion);
 
@@ -142,85 +167,171 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             DataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
             DataGridView.MultiSelect = false;
             DataGridView.ReadOnly = true;
-
         }
+
 
 
         private void dataGridViewRegimen_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            DataGridViewRow row = dataGridViewRegimen.Rows[e.RowIndex];
-
-            this.txtBxRegimen.Text = (string)row.Cells["descripcion"].Value;
-        }
-
-        private void btnAgregarHabitacion_Click(object sender, EventArgs e)
-        {
-            this.AddRow();
-        }
-
-        private int AddTableRow()
-        {
-            index = tableHabitaciones.RowCount++;
-            tableHabitaciones.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-            return index;
-        }
-
-        private void AddRow()
-        {
-            if (tableHabitaciones.RowCount <= 9)
+            if (this.lstHabitacionesReserva.Count > 0)  //ya hay habtaciones en la reserva
             {
-                rowIndex = AddTableRow();
-
-                //Agrega label de "Tipo de Habitacion"
-                Label label = new Label();
-                label.Text = "Tipo de habitación";
-                label.Anchor = AnchorStyles.Left;
-                label.Anchor = AnchorStyles.Right;
-                label.Anchor = AnchorStyles.Top;
-                label.Width = 114;
-                label.Height = 13;
-                tableHabitaciones.Controls.Add(label, 0, rowIndex);
-
-                //Agregar combo box de Tipo de Habitacion y llenarlo
-                ComboBox combo = new ComboBox();
-                combo.Anchor = AnchorStyles.Left;
-                combo.Anchor = AnchorStyles.Right;
-                combo.Anchor = AnchorStyles.Top;
-                combo.Width = 150;
-                combo.Height = 21;
-                tableHabitaciones.Controls.Add(combo, 1, rowIndex);
-                LlenarComboBoxTipoHabitacion(combo);
-
-                //Agregar label de "Costo por día"
-                Label label2 = new Label();
-                label2.Text = "Costo por día";
-                label2.Anchor = AnchorStyles.Left;
-                label2.Anchor = AnchorStyles.Right;
-                label2.Anchor = AnchorStyles.Top;
-                label2.Width = 90;
-                label2.Height = 13;
-                tableHabitaciones.Controls.Add(label2, 2, rowIndex);
-
-                //Agregat text box para el costo diario
-                TextBox textBox = new TextBox();
-                textBox.Anchor = AnchorStyles.Left;
-                textBox.Anchor = AnchorStyles.Right;
-                textBox.Anchor = AnchorStyles.Top;
-                textBox.Width = 96;
-                textBox.Height = 20;
-                tableHabitaciones.Controls.Add(textBox, 3, rowIndex);
+                MessageBox.Show("No se puede elegir distintos régimenes en una reserva. Si desea comenzar de nuevo haga click en 'Eliminar todas las habitaciones'");
             }
             else
             {
-                MessageBox.Show("Límite de habitaciones por reserva alcanzado");
-            }              
+                DataGridViewRow row = dataGridViewRegimen.Rows[e.RowIndex];
+                this.txtBxRegimen.Text = (string)row.Cells["descripcion"].Value;
+
+                if (((TipoHabitacion)this.cmbBxTipoHab.SelectedItem).Id != 0)
+                    this.calcularColstoDiario();
+            }
         }
+
 
 
         private void cmbBxHoteles_SelectedValueChanged(object sender, EventArgs e)
         {
-            this.CompletarDataGridViewRegimenes(dataGridViewRegimen);
+            if (lstHabitacionesReserva.Count > 0)
+            {
+                MessageBox.Show("No se puede elegir más de un rol en la misma reserva. Haga click en 'Eliminar todas las habitaciones' antes de elegir un nuevo hotel'");
+                this.cmbBxHoteles.SelectedValue = HotelId;
+            }
+            else
+            {
+                HotelId = ((Hotel)this.cmbBxHoteles.SelectedItem).id;
+
+                if (((Hotel)this.cmbBxHoteles.SelectedItem).id == 0)
+                {
+                    this.dataGridViewRegimen.Columns.Clear();
+                    this.dataGridViewRegimen.Hide();
+                }
+                else
+                    this.CompletarDataGridViewRegimenes(this.dataGridViewRegimen);
+            } 
         }
+
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            this.dateTimeInicio.Value = DateTime.Today;
+            this.dateTimeFin.Value = DateTime.Today.AddDays(1);
+            this.txtBxRegimen.Text = string.Empty;
+            this.dataGridViewRegimen.Columns.Clear();
+            this.dataGridViewRegimen.Hide();
+            lstHabitacionesReserva.Clear();
+            this.cmbBxHoteles.SelectedValue = 0;
+            this.cmbBxTipoHab.SelectedValue = 0;
+            this.txtBxCostoDiario.Text = string.Empty;
+            this.txtBxDetalle.Text = string.Empty;
+            this.txtBxCostoTotal.Text = string.Empty;
+            this.lblCosto.Hide();
+            this.sumCostoDiario = 0;
+        }
+
+        private void cmbBxTipoHab_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (guest && (((Hotel)this.cmbBxHoteles.SelectedItem).id == 0))
+            {
+                this.cmbBxTipoHab.SelectedValue = 0;
+                MessageBox.Show("Primero seleccione un hotel");
+            }
+            else
+            {
+                if (((TipoHabitacion)this.cmbBxTipoHab.SelectedItem).Id == 0)   //selecciono el "--select--"
+                {
+                    this.txtBxCostoDiario.Text = string.Empty;
+                }
+                else
+                {
+                    this.calcularColstoDiario();
+                }
+            }
+        }
+
+
+
+        private void calcularColstoDiario()
+        {
+            bool valido = false;
+            decimal precioBase = 0;
+
+
+            if (txtBxRegimen.Text != string.Empty)
+            {
+                foreach (Regimen Item in lstRegimenes)
+                {
+                    if (Item.descripcion == txtBxRegimen.Text)
+                    {
+                        valido = true;
+                        precioBase = Item.precio_base;
+                    }
+                }
+            }
+
+            //controlar que, si es guest, este el hotel elegido
+            if ((this.txtBxRegimen.Text != string.Empty) && valido)  //regimen ingresado es valido?
+            {
+                //calcular costo diario
+                decimal porcentual = ((TipoHabitacion)this.cmbBxTipoHab.SelectedItem).Porcentual;
+                int cantEstrellas;
+                int recargoEstrella;
+                if (guest)
+                {
+                    cantEstrellas = (int)((Hotel)this.cmbBxHoteles.SelectedItem).cantidad_estrella;
+                    recargoEstrella = (int)((Hotel)this.cmbBxHoteles.SelectedItem).recarga_estrella;
+                }
+                else
+                {
+                    //buscar la cantidad de estrellas del hotel y el recargo de estrella
+                    query = new SqlCommand("SELECT cantidad_estrella, recarga_estrella FROM GAME_OF_QUERYS.hotel WHERE id = @hotelId", objConexion);
+                    query.Parameters.AddWithValue("@hotelId", Log.Hotel_Id);
+                    objConexion.Open();
+                    objReader = query.ExecuteReader();
+                    objReader.Read();
+                    cantEstrellas = (int)objReader["cantidad_estrella"];
+                    recargoEstrella = (int)objReader["recarga_estrella"];
+                    objConexion.Close();
+                }
+
+                    this.txtBxCostoDiario.Text = Convert.ToString(precioBase * porcentual + cantEstrellas * recargoEstrella);
+                }
+                else
+                {
+                    this.cmbBxTipoHab.SelectedValue = 0;
+                    MessageBox.Show("Ingrese un régimen válido");
+                }
+        }
+
+
+
+        private void btnAgregarHabitacion_Click(object sender, EventArgs e)
+        {
+            if (((TipoHabitacion)this.cmbBxTipoHab.SelectedItem).Id != 0)
+            {
+                this.txtBxDetalle.Text = txtBxDetalle.Text + "Tipo de Habitación: " + ((TipoHabitacion)this.cmbBxTipoHab.SelectedItem).Descripcion + "  -   Costo Diario: " + txtBxCostoDiario.Text + " ; \r\n";
+                lstHabitacionesReserva.Add((TipoHabitacion)this.cmbBxTipoHab.SelectedItem);     //agrego la habitacion a las que se quiere en la reserva
+                sumCostoDiario = sumCostoDiario + Convert.ToDecimal(txtBxCostoDiario.Text);
+                this.txtBxCostoDiario.Text = string.Empty;
+                this.cmbBxTipoHab.SelectedValue = 0;
+            }
+            else
+            {
+                MessageBox.Show("Ingrese una habitación");
+            }
+        }
+
+
+
+        private void btnEliminarHab_Click(object sender, EventArgs e)
+        {
+            this.txtBxDetalle.Text = string.Empty;
+            this.lstHabitacionesReserva.Clear();
+            this.txtBxCostoTotal.Text = string.Empty;
+            this.sumCostoDiario = 0;
+            this.txtBxCostoDiario.Text = string.Empty;
+            this.cmbBxTipoHab.SelectedValue = 0;
+        }
+
 
     }
 }
