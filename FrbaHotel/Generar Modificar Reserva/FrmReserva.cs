@@ -23,7 +23,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         List<TipoHabitacion> lstHabitacionesReserva = new List<TipoHabitacion>();
         StringBuilder SBDetalle = new StringBuilder();
         decimal sumCostoDiario = 0;
-        int RegimenId;
         int HotelId;
 
 
@@ -43,11 +42,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             InitializeComponent();
             guest = true;
-            this.CondicionesIniciales();
 
             //llenar comboBox de hoteles
             List<Hotel> lstHoteles = new List<Hotel>();
-
             query = new SqlCommand("SELECT id, nombre, cantidad_estrella, recarga_estrella FROM GAME_OF_QUERYS.hotel", objConexion);
             objConexion.Open();
             objReader = query.ExecuteReader();
@@ -61,7 +58,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 lstHoteles.Add(Hotel);
             }
             objConexion.Close();
-
             //agregar un hotel generico como default
             Hotel Default = new Hotel();
             Default.id = 0;
@@ -71,6 +67,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             cmbBxHoteles.DataSource = lstHoteles;
             cmbBxHoteles.DisplayMember = "nombre";
             cmbBxHoteles.ValueMember = "id";
+
+
+            this.CondicionesIniciales();
         }
 
 
