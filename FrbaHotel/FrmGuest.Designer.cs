@@ -42,6 +42,7 @@
             this.btnGenerarReserva.TabIndex = 0;
             this.btnGenerarReserva.Text = "Generar Nueva Reserva";
             this.btnGenerarReserva.UseVisualStyleBackColor = true;
+            this.btnGenerarReserva.Click += new System.EventHandler(this.btnGenerarReserva_Click);
             // 
             // btnModificarReserva
             // 
