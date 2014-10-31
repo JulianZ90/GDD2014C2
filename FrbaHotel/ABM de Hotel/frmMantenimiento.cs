@@ -105,5 +105,33 @@ namespace FrbaHotel.ABM_de_Hotel
             reload();
         }
 
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            seleccionarEnCalendario();
+        }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+            seleccionarEnCalendario();
+        }
+
+        private void seleccionarEnCalendario() {
+            monthCalendar1.SelectionStart = dateTimePicker1.Value;
+            monthCalendar1.SelectionEnd = dateTimePicker2.Value;
+        }
+
+        private void setDesdeHasta(object sender, DateRangeEventArgs e)
+        {
+            dateTimePicker1.Value = monthCalendar1.SelectionStart;
+            dateTimePicker2.Value = monthCalendar1.SelectionEnd;
+        }
+
+        private void setDesdeHasta(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 ) return;
+            monthCalendar1.SelectionStart   = (DateTime) dataGridView1.Rows[e.RowIndex].Cells["fecha_inicio"].Value;
+            monthCalendar1.SelectionEnd     = (DateTime)dataGridView1.Rows[e.RowIndex].Cells["fecha_fin"].Value;
+        }
+
     }
 }
