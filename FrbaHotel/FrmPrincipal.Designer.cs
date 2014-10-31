@@ -71,6 +71,8 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.altaClienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -100,9 +102,10 @@
             this.toolStripMenuItem4,
             this.habitaciónToolStripMenuItem,
             this.reservasToolStripMenuItem,
+            this.consumiblesToolStripMenuItem,
+            this.toolStripMenuItem5,
             this.toolStripSeparator5,
-            this.exitToolStripMenuItem,
-            this.consumiblesToolStripMenuItem});
+            this.exitToolStripMenuItem});
             this.fileMenu.ImageTransparentColor = System.Drawing.SystemColors.ActiveBorder;
             this.fileMenu.Name = "fileMenu";
             this.fileMenu.Size = new System.Drawing.Size(105, 20);
@@ -173,14 +176,14 @@
             // altaHotelToolStripMenuItem
             // 
             this.altaHotelToolStripMenuItem.Name = "altaHotelToolStripMenuItem";
-            this.altaHotelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.altaHotelToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.altaHotelToolStripMenuItem.Text = "Alta Hotel";
             this.altaHotelToolStripMenuItem.Click += new System.EventHandler(this.altaHotelToolStripMenuItem_Click);
             // 
             // listadoHotelToolStripMenuItem
             // 
             this.listadoHotelToolStripMenuItem.Name = "listadoHotelToolStripMenuItem";
-            this.listadoHotelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.listadoHotelToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.listadoHotelToolStripMenuItem.Text = "Listar Hoteles";
             this.listadoHotelToolStripMenuItem.Click += new System.EventHandler(this.listadoHotelToolStripMenuItem_Click);
             // 
@@ -218,7 +221,7 @@
             // nuevaReservaToolStripMenuItem
             // 
             this.nuevaReservaToolStripMenuItem.Name = "nuevaReservaToolStripMenuItem";
-            this.nuevaReservaToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.nuevaReservaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.nuevaReservaToolStripMenuItem.Text = "Nueva Reserva";
             this.nuevaReservaToolStripMenuItem.Click += new System.EventHandler(this.nuevaReservaToolStripMenuItem_Click);
             // 
@@ -402,6 +405,21 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(42, 17);
             this.toolStripStatusLabel.Text = "Estado";
             // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.altaClienteToolStripMenuItem});
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem5.Text = "Clientes";
+            // 
+            // altaClienteToolStripMenuItem
+            // 
+            this.altaClienteToolStripMenuItem.Name = "altaClienteToolStripMenuItem";
+            this.altaClienteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.altaClienteToolStripMenuItem.Text = "Alta Cliente";
+            this.altaClienteToolStripMenuItem.Click += new System.EventHandler(this.altaClienteToolStripMenuItem_Click);
+            // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -470,6 +488,8 @@
         private System.Windows.Forms.ToolStripMenuItem nuevoConsumibleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modificarConsumibleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem eliminarConsumibleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripMenuItem altaClienteToolStripMenuItem;
     }
 }
 

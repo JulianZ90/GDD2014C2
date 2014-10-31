@@ -145,6 +145,13 @@ namespace FrbaHotel
             new Registrar_Consumible.altaConsumible(Log).ShowDialog();
         }
 
+        private void altaClienteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form childForm = new ABM_de_Cliente.altaCliente();
+            childForm.MdiParent = this;
+            childForm.Show();
+        }
+
         
 
 
