@@ -167,6 +167,7 @@
     <Compile Include="FrmPrincipal.Designer.cs">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mantenimiento.cs" />
     <Compile Include="Pais.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -178,6 +179,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\altaHotel.resx">
       <DependentUpon>altaHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Hotel\frmMantenimiento.resx">
+      <DependentUpon>frmMantenimiento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\listadoHoteles.resx">
       <DependentUpon>listadoHoteles.cs</DependentUpon>

@@ -24,7 +24,7 @@ namespace FrbaHotel.ABM_de_Hotel
         {
             dataGridView1.Columns.Clear();
 
-            // Add a button column ALTA. 
+            // Add a button column MODIFICAR. 
             DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
             buttonColumn.HeaderText = "M";
             buttonColumn.Name = "mODIFICAR";
