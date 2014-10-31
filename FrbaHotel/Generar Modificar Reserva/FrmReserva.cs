@@ -24,6 +24,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         StringBuilder SBDetalle = new StringBuilder();
         decimal sumCostoDiario = 0;
         int HotelId;
+        int RegimenId;
         int ingreso = 0;
 
 
@@ -175,6 +176,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             if (this.lstHabitacionesReserva.Count > 0)  //ya hay habtaciones en la reserva
             {
                 MessageBox.Show("No se puede elegir distintos régimenes en una reserva. Si desea comenzar de nuevo haga click en 'Eliminar todas las habitaciones'");
+                foreach (Regimen Item in lstRegimenes)
+                {
+                    if (Item.id == RegimenId)
+                        this.txtBxRegimen.Text = Item.descripcion;
+                }
             }
             else
             {
@@ -197,7 +203,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             else
             {
-                HotelId = ((Hotel)this.cmbBxHoteles.SelectedItem).id;
+                //HotelId = ((Hotel)this.cmbBxHoteles.SelectedItem).id;
 
                 if (((Hotel)this.cmbBxHoteles.SelectedItem).id == 0)
                 {
@@ -316,6 +322,15 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 sumCostoDiario = sumCostoDiario + Convert.ToDecimal(txtBxCostoDiario.Text);
                 this.txtBxCostoDiario.Text = string.Empty;
                 this.cmbBxTipoHab.SelectedValue = 0;
+                foreach (Regimen Item in lstRegimenes)
+                {
+                    if (Item.descripcion == this.txtBxRegimen.Text)
+                        RegimenId = Item.id;
+                }
+                if (guest)
+                    HotelId = ((Hotel)this.cmbBxHoteles.SelectedItem).id;
+                else
+                    HotelId = this.Log.Hotel_Id;
             }
             else
             {
