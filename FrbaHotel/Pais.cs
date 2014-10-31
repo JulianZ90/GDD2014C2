@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FrbaHotel
 {
-    class Pais
+    public class Pais
     {
         public int id { get; set; }
         public string nombre { get; set; }

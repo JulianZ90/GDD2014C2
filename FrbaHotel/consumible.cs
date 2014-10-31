@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FrbaHotel
 {
-    class consumible
+    public class consumible
     {
         public int Id { get; set; }
         public string descripcion { get; set; }

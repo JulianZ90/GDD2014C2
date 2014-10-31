@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace FrbaHotel
 {
-    class Usuario
+    public class Usuario
     {
         SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
 
