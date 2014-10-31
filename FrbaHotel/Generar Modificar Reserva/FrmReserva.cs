@@ -24,6 +24,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         StringBuilder SBDetalle = new StringBuilder();
         decimal sumCostoDiario = 0;
         int HotelId;
+        int ingreso = 0;
 
 
         public FrmReserva(LoginId LogUser)  //un empleado del hotel genera la reserva
@@ -133,13 +134,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void CompletarDataGridViewRegimenes(DataGridView DataGridView)
         {
-            //this.dataGridViewRegimen.Columns.Clear();
             lstRegimenes.Clear();
 
             query = new SqlCommand("SELECT regimen.id, regimen.descripcion, regimen.precio_base FROM GAME_OF_QUERYS.hotel_reg JOIN GAME_OF_QUERYS.regimen ON (regimen.id = hotel_reg.reg_id) where hotel_id = @hotelId AND regimen.estado = 1", objConexion);
 
             if (guest)   //el id del hotel lo saco del cmbBxHotel
-                query.Parameters.AddWithValue("@hotelId", cmbBxHoteles.DisplayMember);
+                query.Parameters.AddWithValue("@hotelId", ((Hotel)cmbBxHoteles.SelectedItem).id);
             else    //cuando es empleado del hotel ya tengo el id del hotel en la clase LoginId
                 query.Parameters.AddWithValue("@hotelId", Log.Hotel_Id);
 
@@ -192,7 +192,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             if (lstHabitacionesReserva.Count > 0)
             {
-                MessageBox.Show("No se puede elegir más de un rol en la misma reserva. Haga click en 'Eliminar todas las habitaciones' antes de elegir un nuevo hotel'");
+                MessageBox.Show("No se puede elegir más de un hotel en la misma reserva. Haga click en 'Eliminar todas las habitaciones' antes de elegir un nuevo hotel'");
                 this.cmbBxHoteles.SelectedValue = HotelId;
             }
             else
@@ -206,7 +206,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 }
                 else
                     this.CompletarDataGridViewRegimenes(this.dataGridViewRegimen);
-            } 
+            }
         }
 
 
@@ -231,8 +231,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             if (guest && (((Hotel)this.cmbBxHoteles.SelectedItem).id == 0))
             {
-                this.cmbBxTipoHab.SelectedValue = 0;
-                MessageBox.Show("Primero seleccione un hotel");
+                this.cmbBxTipoHab.SelectedIndex = 0;
+                if (ingreso >= 2)
+                {
+                    MessageBox.Show("Primero seleccione un hotel"); 
+                }
+                ingreso++;
             }
             else
             {
