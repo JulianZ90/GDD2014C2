@@ -91,8 +91,42 @@ namespace FrbaHotel
         }
 
         public void update(){
-        
-        
+            SqlCommand query = new SqlCommand("update GAME_OF_QUERYS.cliente set tipo_identidad_id=@tipo, nro_identidad=@nro_identidad, apellido=@apellido, nombre=@nombre, fecha_nac=@fecha_nac, mail=@mail, tel=@tel , calle=@calle, nro_calle=@nro_calle, piso=@piso, depto=@depto, ciudad=@ciudad, nacionalidad=@nacionalidad, permitido_ingreso=@permitido, pais_origen_id=@pais where id=@cliente_id ", connect);
+            query.Parameters.AddWithValue("cliente_id", this.id);
+            query.Parameters.AddWithValue("tipo", tipo_identidad.id);
+
+            if (nro_identidad == null)
+                query.Parameters.AddWithValue("nro_identidad", DBNull.Value);
+            else
+                query.Parameters.AddWithValue("nro_identidad", nro_identidad);
+
+            query.Parameters.AddWithValue("nombre", nombre);
+            query.Parameters.AddWithValue("apellido", apellido);
+            query.Parameters.AddWithValue("fec_nac", fecha_nac.Value.Date);
+            query.Parameters.AddWithValue("mail", mail);
+
+            if (tel == null)
+                query.Parameters.AddWithValue("tel", DBNull.Value);
+            else
+                query.Parameters.AddWithValue("tel", tel);
+
+            query.Parameters.AddWithValue("calle", calle);
+            
+            if (nro_calle == null)
+                query.Parameters.AddWithValue("nro_calle", DBNull.Value);
+            else
+                query.Parameters.AddWithValue("nro_calle", nro_calle);
+
+            if (piso == null)
+                query.Parameters.AddWithValue("piso", DBNull.Value);
+            else
+                query.Parameters.AddWithValue("piso", piso);
+
+            query.Parameters.AddWithValue("depto", depto);
+            query.Parameters.AddWithValue("ciudad", ciudad);
+
+            query.Parameters.AddWithValue("nacionalidad", nacionalidad);
+
         }
 
 
