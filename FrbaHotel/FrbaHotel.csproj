@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="Cliente.cs" />
     <Compile Include="consumible.cs" />
+    <Compile Include="EstadoReserva.cs" />
     <Compile Include="FrmGuest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -254,6 +255,7 @@
     <Compile Include="Registrar Estadia\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reserva.cs" />
     <Compile Include="Rol.cs" />
     <Compile Include="TipoHabitacion.cs" />
     <Compile Include="TipoIdentidad.cs" />
