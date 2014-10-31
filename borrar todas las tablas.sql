@@ -1,7 +1,10 @@
 /* limpiar tablas
 hay que hacerlo en el orden inverso que las creas por las fk */
-delete from GAME_OF_QUERYS.rol
+delete from GAME_OF_QUERYS.rol_funcionalidad
+delete from GAME_OF_QUERYS.hotel_usuario_rol
 delete from GAME_OF_QUERYS.usuario
+delete from GAME_OF_QUERYS.funcionalidad
+delete from GAME_OF_QUERYS.rol
 delete from GAME_OF_QUERYS.factura
 delete from GAME_OF_QUERYS.cliente_estadia
 delete from GAME_OF_QUERYS.consumible_estadia

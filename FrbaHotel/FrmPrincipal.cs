@@ -140,6 +140,14 @@ namespace FrbaHotel
             new Generar_Modificar_Reserva.FrmReserva(Log).ShowDialog();
         }
 
+        private void nuevoConsumibleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Registrar_Consumible.altaConsumible(Log).ShowDialog();
+        }
+
+        
+
+
 
     }
 }

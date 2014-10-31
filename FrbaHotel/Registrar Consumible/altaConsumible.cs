@@ -25,12 +25,6 @@ namespace FrbaHotel.Registrar_Consumible
         public altaConsumible(LoginId LogUser)
         {
             InitializeComponent();
-            Log = LogUser;
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -43,7 +37,7 @@ namespace FrbaHotel.Registrar_Consumible
                 query.Parameters.AddWithValue("@descripcion", this.richTextBox1.Text);
                 query.Parameters.AddWithValue("@precio", this.textBox1.Text);
                 objConexion.Open();
-                objReader = query.ExecuteReader();
+                SqlDataReader objReader = query.ExecuteReader();
                 objReader.Read();
                 int cant = (int)objReader["cantidad"];
                 objConexion.Close();
@@ -51,9 +45,9 @@ namespace FrbaHotel.Registrar_Consumible
                 if (cant == 0) 
                 {
 
-                        query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.comsumible ( precio, descripcion) VALUES (@precio, @Desc)", objConexion);
-                        query.Parameters.AddWithValue("@descripcion", this.richTextBox1.Text);
+                        query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.consumible ( precio, descripcion) VALUES (@precio, @descripcion)", objConexion);
                         query.Parameters.AddWithValue("@precio", this.textBox1.Text);
+                        query.Parameters.AddWithValue("@descripcion", this.richTextBox1.Text);
                         objConexion.Open();
                         query.ExecuteNonQuery();
                         objConexion.Close();
@@ -67,5 +61,12 @@ namespace FrbaHotel.Registrar_Consumible
             }
 
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }
