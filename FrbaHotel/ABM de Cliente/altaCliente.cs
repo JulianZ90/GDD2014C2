@@ -24,6 +24,39 @@ namespace FrbaHotel.ABM_de_Cliente
             cliente = new Cliente();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (checkBox3.Checked) cliente.tipo_identidad = (TipoIdentidad)comboBox1.SelectedItem;
+            if (textBox9.Text != "") cliente.nro_identidad = long.Parse(textBox9.Text);
+            cliente.apellido = textBox1.Text;
+            cliente.nombre = textBox2.Text;
+            if (checkBox2.Checked) cliente.fecha_nac = dateTimePicker1.Value.Date;
+            cliente.mail = textBox3.Text;
+            if (textBox4.Text != "") cliente.tel = Int32.Parse(textBox4.Text);
+            cliente.calle = textBox5.Text;
+            if (textBox6.Text != "") cliente.nro_calle = Int32.Parse(textBox6.Text);
+            if (textBox11.Text != "") cliente.piso = Int32.Parse(textBox11.Text);
+            cliente.depto = textBox7.Text[0];
+            cliente.ciudad = textBox8.Text;
+            cliente.nacionalidad = textBox10.Text;
+            if (checkBox4.Checked) cliente.pais = (Pais)comboBox2.SelectedItem;
+            cliente.permitido_ingreso = checkBox1.Checked;
+
+            if (cliente.id < 1)
+            {
+                // no tiene id todavia, es un alta
+                cliente.insert();
+                ((FrmPrincipal)this.MdiParent).setStatus("Cliente creado");
+            }
+            else
+            {
+                cliente.update();
+                ((FrmPrincipal)this.Owner.MdiParent).setStatus("Cliente id=" + cliente.id.ToString() + " modificado");
+                this.Close();
+            }
+
+        }
+
         private void llenarTipoDoc()
         {
             comboBox1.DisplayMember = "nombre";
@@ -72,37 +105,6 @@ namespace FrbaHotel.ABM_de_Cliente
             comboBox2.DataSource = lista;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (checkBox3.Checked) cliente.tipo_identidad = (TipoIdentidad)comboBox1.SelectedItem;
-            if (textBox9.Text != "") cliente.nro_identidad = long.Parse(textBox9.Text);
-            cliente.apellido = textBox1.Text;
-            cliente.nombre = textBox2.Text;
-            if (checkBox2.Checked) cliente.fecha_nac = dateTimePicker1.Value.Date;
-            cliente.mail = textBox3.Text;
-            if (textBox4.Text != "") cliente.tel = Int32.Parse(textBox4.Text);
-            cliente.calle = textBox5.Text;
-            if (textBox6.Text != "") cliente.nro_calle = Int32.Parse(textBox6.Text);
-            if (textBox11.Text != "") cliente.piso = Int32.Parse(textBox11.Text);
-            cliente.depto = textBox7.Text[0];
-            cliente.ciudad = textBox8.Text;
-            cliente.nacionalidad = textBox10.Text;
-            if (checkBox4.Checked) cliente.pais = (Pais)comboBox2.SelectedItem;
-            cliente.permitido_ingreso = checkBox1.Checked;
-
-            if (cliente.id < 1)
-            {
-                // no tiene id todavia, es un alta
-                cliente.insert();
-                ((FrmPrincipal)this.MdiParent).setStatus("Cliente creado");
-            }
-            else
-            {
-                cliente.update();
-                ((FrmPrincipal)this.Owner.MdiParent).setStatus("Cliente id=" + cliente.id.ToString() + " modificado");
-                this.Close();
-            }
-
-        }
+        
     }
 }

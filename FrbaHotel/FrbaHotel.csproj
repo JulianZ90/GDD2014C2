@@ -48,11 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ABM de Cliente\Form1.cs">
+    <Compile Include="ABM de Cliente\altaCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM de Cliente\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ABM de Cliente\altaCliente.Designer.cs">
+      <DependentUpon>altaCliente.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Habitacion\FrmHabitacion.cs">
       <SubType>Form</SubType>
@@ -114,12 +114,13 @@
     <Compile Include="ABM de Usuario\listadoUsuario.Designer.cs">
       <DependentUpon>listadoUsuario.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM de Usuario\Cancelar Reserva\Form1.cs">
+    <Compile Include="Cancelar Reserva\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM de Usuario\Cancelar Reserva\Form1.Designer.cs">
+    <Compile Include="Cancelar Reserva\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cliente.cs" />
     <Compile Include="consumible.cs" />
     <Compile Include="FrmGuest.cs">
       <SubType>Form</SubType>
@@ -171,6 +172,9 @@
     <Compile Include="Pais.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ABM de Cliente\altaCliente.resx">
+      <DependentUpon>altaCliente.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM de Habitacion\FrmHabitacion.resx">
       <DependentUpon>FrmHabitacion.cs</DependentUpon>
     </EmbeddedResource>
