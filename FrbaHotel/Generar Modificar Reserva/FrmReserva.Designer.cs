@@ -314,6 +314,7 @@
             this.btnDisponibilidad.TabIndex = 3;
             this.btnDisponibilidad.Text = "Consultar Disponibilidad";
             this.btnDisponibilidad.UseVisualStyleBackColor = true;
+            this.btnDisponibilidad.Click += new System.EventHandler(this.btnDisponibilidad_Click);
             // 
             // btnLimpiar
             // 

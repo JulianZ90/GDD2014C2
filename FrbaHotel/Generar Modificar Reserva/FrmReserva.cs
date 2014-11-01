@@ -26,6 +26,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         int HotelId;
         int RegimenId;
         int ingreso = 0;
+        bool fechasValidas = false;
+        List<Habitacion> lstHabitacionesConfirmadas = new List<Habitacion>();
+        bool hayHabitaciones = false;
+
 
 
         public FrmReserva(LoginId LogUser)  //un empleado del hotel genera la reserva
@@ -348,6 +352,98 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.sumCostoDiario = 0;
             this.txtBxCostoDiario.Text = string.Empty;
             this.cmbBxTipoHab.SelectedValue = 0;
+        }
+
+        private void btnDisponibilidad_Click(object sender, EventArgs e)
+        {
+            if ((this.dateTimeInicio.Value >= DateTime.Today) && (this.dateTimeFin.Value >= DateTime.Today.AddDays(1)) && (this.dateTimeFin.Value > this.dateTimeInicio.Value))
+            {
+                fechasValidas = true;
+            }
+            else
+            {
+                MessageBox.Show("Fechas inválidas");
+            }
+
+            if (lstHabitacionesReserva.Count > 0)
+            {
+                hayHabitaciones = true;
+            }
+            else
+            {
+                MessageBox.Show("Ingrese por lo menos una habitación");
+            }
+
+            if (fechasValidas && hayHabitaciones)
+            {
+                //selecciona las haitaciones de un determinado hotel que esten disponibles
+                StringBuilder SBquery = new StringBuilder();
+                SBquery.Append("SELECT DISTINCT id, tipo_hab_id FROM GAME_OF_QUERYS.habitacion WHERE hotel_id = @hotelId AND estado_habitacion = 1 AND id NOT IN ");
+                SBquery.Append("(SELECT DISTINCT habitacion_id FROM GAME_OF_QUERYS.reserva_habitacion ");
+                SBquery.Append("JOIN GAME_OF_QUERYS.reserva ON (reserva_habitacion.reserva_id = reserva.id) ");
+                SBquery.Append("JOIN GAME_OF_QUERYS.habitacion ON (habitacion.id = reserva_habitacion.habitacion_id) ");
+                SBquery.Append("WHERE ((fecha_inicio > @fechaInicio AND fecha_fin > @fechaFin) OR (fecha_inicio > @fechaInicio AND fecha_fin > @fechaFin) OR (fecha_inicio < @fechaInicio AND fecha_fin < @fechaFin)) ");
+                SBquery.Append("AND habitacion.hotel_id = @hotelId AND habitacion.estado_habitacion = 1");
+                query = new SqlCommand(SBquery.ToString(), objConexion);
+                query.Parameters.AddWithValue("@hotelId", HotelId);
+                query.Parameters.AddWithValue("@fechaInicio", this.dateTimeInicio.Value);
+                query.Parameters.AddWithValue("@fechaFin", this.dateTimeFin.Value);
+
+                objConexion.Open();
+                objReader = query.ExecuteReader();
+
+                while (objReader.Read())
+                {
+                    if (lstHabitacionesReserva.Count > 0)
+                    {
+                        foreach (TipoHabitacion Item in lstHabitacionesReserva)
+                        {
+                            if (Item.Id == (int)objReader["tipo_hab_id"])
+                            {
+                                Habitacion Habitacion = new Habitacion();
+                                Habitacion.Id = (int)objReader["id"];
+                                Habitacion.Hotel_id = HotelId;
+                                Habitacion.Tipo.Id = Item.Id;
+                                Habitacion.Estado = true;
+
+                                this.lstHabitacionesConfirmadas.Add(Habitacion);
+                                this.lstHabitacionesReserva.Remove(Item);
+                                break;  //si hubo un match entre la habitacion de la base y la de la lista entonces sale del foreach
+                            }
+                        }
+                    }
+                    else
+                    {
+                        break;  //dejo de leer porque ya tengo todas las habitaciones de la reserva
+                    }
+                }
+                objConexion.Close();
+
+                if (lstHabitacionesReserva.Count > 0)   //quedaron habitaciones sin disponibilidad
+                {
+                    //si no se puede reservar: se muestra en un messageBox, se vacia la lista de habitaciones reserva, se pone fechasValidas y hayHabitaciones en false, se vacia el txtBxDetalle y se vacia lstHabitaciones si ya se puso alguna
+                }
+                else
+                {
+                    //disponibilidad ok, hacerle disable a todo, tirar un messageBox que le diga que esta todo ok y calcular el costo total (mostrar lo de costo total) y mostrar el boton de realizar reserva
+                    MessageBox.Show("Hay disponibilidad");
+                    this.cmbBxHoteles.Enabled = false;
+                    this.dataGridViewRegimen.Enabled = false;
+                    this.txtBxRegimen.Enabled = false;
+                    this.dateTimeInicio.Enabled = false;
+                    this.dateTimeFin.Enabled = false;
+                    this.cmbBxTipoHab.Enabled = false;
+                    this.txtBxCostoDiario.Enabled = false;
+                    this.lblCosto.Show();
+                    this.txtBxCostoTotal.Show();
+                    this.btnReservar.Show();
+
+                    TimeSpan dias = this.dateTimeFin.Value.Subtract(this.dateTimeInicio.Value);
+                    int cantidadNoches = Convert.ToInt32(dias);
+                    this.txtBxCostoTotal.Text = Convert.ToString(sumCostoDiario * cantidadNoches);
+                    
+                }
+            }
         }
 
 
