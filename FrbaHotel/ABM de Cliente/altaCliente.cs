@@ -28,6 +28,7 @@ namespace FrbaHotel.ABM_de_Cliente
         public altaCliente(int cliente_id)
         {
             InitializeComponent();
+            button1.Text = "Modificar";
             llenarTipoDoc();
             llenarPais();
             cliente = new Cliente(cliente_id);

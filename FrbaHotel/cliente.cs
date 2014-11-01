@@ -32,6 +32,41 @@ namespace FrbaHotel
         public Cliente(int id)
         {
             this.id = id;
+
+            SqlCommand query = new SqlCommand("select * from GAME_OF_QUERYS.cliente where id=@cliente_id", connect);
+            query.Parameters.AddWithValue("cliente_id", id);
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+
+            if (objReader.Read())
+            {
+                this.nombre = objReader["nombre"] as string;
+                this.apellido = objReader["apellido"] as string;
+                this.fecha_nac = objReader["fecha_nac"] as DateTime?;
+                this.mail = objReader["mail"] as string;
+                this.tel = objReader["tel"] as int?;
+                this.calle = objReader["calle"] as string;
+                this.nro_calle = objReader["nro_calle"] as int?;
+                this.piso = objReader["piso"] as int?;
+                this.depto = objReader["depto"].ToString()[0];
+                this.ciudad = objReader["ciudad"] as string;
+                this.nacionalidad = objReader["nacionalidad"] as string;
+                this.nro_identidad = objReader["nro_identidad"] as long?;
+
+                if (objReader["tipo_identidad_id"] != DBNull.Value)
+                {
+                    this.tipo_identidad = new TipoIdentidad();
+                    this.tipo_identidad.id = (int)objReader["tipo_identidad_id"];
+                }
+                else
+                    this.tipo_identidad = null;
+
+            }
+            else
+            {
+                return;
+            }
+            objReader.Close();
         }
 
         public void insert(){
@@ -126,6 +161,10 @@ namespace FrbaHotel
             query.Parameters.AddWithValue("ciudad", ciudad);
 
             query.Parameters.AddWithValue("nacionalidad", nacionalidad);
+
+
+            query.ExecuteNonQuery();
+            connect.Close();
 
         }
 

@@ -31,6 +31,7 @@ namespace FrbaHotel.ABM_de_Usuario
         public altaUsuario(int usr_id)
         {
             InitializeComponent();
+            button1.Text = "Modificar";
             llenarCombo(comboBox1);
             llenarHoteles();
             llenarRoles();

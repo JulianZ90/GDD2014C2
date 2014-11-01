@@ -108,7 +108,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 cliente.depto = objReader["depto"].ToString()[0];
                 cliente.ciudad = objReader["ciudad"] as string;
                 cliente.nacionalidad = objReader["nacionalidad"] as string;
-                cliente.nro_identidad = objReader["nro_identidad"] as long?;
+                cliente.nro_identidad = objReader["nro_identidad"] as long?; // TODO esto no anda
 
                 TipoIdentidad tipo = new TipoIdentidad();
                 tipo.nombre = objReader["tipo"] as string;
