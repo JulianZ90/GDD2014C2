@@ -13,55 +13,53 @@ namespace FrbaHotel.Registrar_Consumible
 {
     public partial class altaConsumible : Form
     {
-        SqlConnection objConexion = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
-        SqlCommand query = null;
+        SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
+        consumible consumible;
         
-
+        //alta
         public altaConsumible(LoginId LogUser)
         {
             InitializeComponent();
+            consumible = new consumible();
+
+        }
+        //modificacion
+        public altaConsumible(int id)
+        {
+            InitializeComponent();
+            consumible = new consumible(id);
+            cargarConConsumible(consumible);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+                consumible.precio = Convert.ToDecimal(textBox1.Text);
+                consumible.descripcion = richTextBox1.Text;
 
-            if (textBox1.Text != string.Empty && richTextBox1.Text != string.Empty)     //campos completos
-            {
-                query = new SqlCommand("SELECT COUNT(*) AS cantidad FROM GAME_OF_QUERYS.consumible WHERE descripcion = @descripcion AND precio = @precio", objConexion);
-
-                query.Parameters.AddWithValue("@descripcion", this.richTextBox1.Text);
-                query.Parameters.AddWithValue("@precio", this.textBox1.Text);
-                objConexion.Open();
-                SqlDataReader objReader = query.ExecuteReader();
-                objReader.Read();
-                int cant = (int)objReader["cantidad"];
-                objConexion.Close();
-
-                if (cant == 0) 
+                if (consumible.id < 1)
                 {
-
-                        query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.consumible ( precio, descripcion) VALUES (@precio, @descripcion)", objConexion);
-                        query.Parameters.AddWithValue("@precio", this.textBox1.Text);
-                        query.Parameters.AddWithValue("@descripcion", this.richTextBox1.Text);
-                        objConexion.Open();
-                        query.ExecuteNonQuery();
-                        objConexion.Close();
-                    }
-                    
+                    // no tiene id todavia, es un alta
+                    consumible.insert();
+                   // ((FrmPrincipal)this.MdiParent).setStatus("consumible creado");
+                }
+                else
+                {
+                    consumible.update();
+                    ((FrmPrincipal)this.Owner.MdiParent).setStatus("consumible id=" + consumible.id.ToString() + " modificado");
                     this.Close();
                 }
-            else
-            {
-                MessageBox.Show("Por favor complete los campos obligatorios");
-            }
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
+           }
+          
+         private void cargarConConsumible(consumible c)
         {
-
+            textBox1.Text = Convert.ToString(c.precio);
+            richTextBox1.Text = c.descripcion;
         }
 
+         private void label1_Click(object sender, EventArgs e)
+         {
+
+         }
         
     }
 }
