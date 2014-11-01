@@ -16,10 +16,10 @@ namespace FrbaHotel
         public string nombre { get; set; }
         public DateTime? fecha_nac { get; set; }
         public string mail { get; set; }
-        public int tel { get; set; }
+        public int? tel { get; set; }
         public string calle { get; set; }
-        public int nro_calle { get; set; }
-        public int piso { get; set; }
+        public int? nro_calle { get; set; }
+        public int? piso { get; set; }
         public char depto { get; set; }
         public string ciudad { get; set; }
         public string nacionalidad { get; set; }

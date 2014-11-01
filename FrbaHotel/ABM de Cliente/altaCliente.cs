@@ -24,6 +24,16 @@ namespace FrbaHotel.ABM_de_Cliente
             cliente = new Cliente();
         }
 
+        //modificacion
+        public altaCliente(int cliente_id)
+        {
+            InitializeComponent();
+            llenarTipoDoc();
+            llenarPais();
+            cliente = new Cliente(cliente_id);
+            cargarConCliente(cliente);
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             if (checkBox3.Checked) cliente.tipo_identidad = (TipoIdentidad)comboBox1.SelectedItem;
@@ -55,6 +65,61 @@ namespace FrbaHotel.ABM_de_Cliente
                 this.Close();
             }
 
+        }
+
+        private void cargarConCliente(Cliente c)
+        {
+            textBox9.Text = c.nro_identidad.ToString();
+            textBox1.Text = c.apellido;
+            textBox2.Text = c.nombre;
+
+            if (c.fecha_nac != null)
+            {
+                dateTimePicker1.Enabled = true;
+                checkBox2.Checked = true;
+                dateTimePicker1.Value = (DateTime)c.fecha_nac;
+            }
+            else
+            {
+                dateTimePicker1.Enabled = false;
+                checkBox2.Checked = false;
+            }
+
+            textBox3.Text = c.mail;
+            textBox4.Text = c.tel.ToString();
+            textBox5.Text = c.calle;
+            textBox6.Text = c.nro_calle.ToString();
+            textBox11.Text = c.piso.ToString();
+            textBox7.Text = c.depto.ToString();
+            textBox8.Text = c.ciudad;
+            textBox10.Text = c.nacionalidad;
+            checkBox1.Checked = c.permitido_ingreso;
+
+            //dni
+            if (c.tipo_identidad != null)
+            {
+                comboBox1.Enabled = true;
+                checkBox3.Checked = true;
+                comboBox1.SelectedItem = c.tipo_identidad;
+            }
+            else
+            {
+                comboBox1.Enabled = false;
+                checkBox3.Checked = false;
+            }
+
+            //pais
+            if (c.pais != null)
+            {
+                comboBox2.Enabled = true;
+                checkBox4.Checked = true;
+                comboBox2.SelectedItem = c.pais;
+            }
+            else
+            {
+                comboBox2.Enabled = false;
+                checkBox4.Checked = false;
+            }
         }
 
         private void llenarTipoDoc()
@@ -105,6 +170,28 @@ namespace FrbaHotel.ABM_de_Cliente
             comboBox2.DataSource = lista;
         }
 
-        
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox3.Checked)
+                comboBox1.Enabled = true;
+            else
+                comboBox1.Enabled = false;
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked)
+                dateTimePicker1.Enabled = true;
+            else
+                dateTimePicker1.Enabled = false;
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox4.Checked)
+                comboBox2.Enabled = true;
+            else
+                comboBox2.Enabled = false;
+        }   
     }
 }

@@ -54,6 +54,12 @@
     <Compile Include="ABM de Cliente\altaCliente.Designer.cs">
       <DependentUpon>altaCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM de Cliente\listadoClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Cliente\listadoClientes.Designer.cs">
+      <DependentUpon>listadoClientes.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM de Habitacion\FrmHabitacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +181,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ABM de Cliente\altaCliente.resx">
       <DependentUpon>altaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Cliente\listadoClientes.resx">
+      <DependentUpon>listadoClientes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Habitacion\FrmHabitacion.resx">
       <DependentUpon>FrmHabitacion.cs</DependentUpon>

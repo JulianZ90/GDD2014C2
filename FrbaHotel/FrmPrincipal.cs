@@ -152,6 +152,13 @@ namespace FrbaHotel
             childForm.Show();
         }
 
+        private void listadoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form childForm = new ABM_de_Cliente.listadoClientes();
+            childForm.MdiParent = this;
+            childForm.Show();
+        }
+
         
 
 
