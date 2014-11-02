@@ -11,5 +11,13 @@ namespace FrbaHotel
         public decimal precio_base { get; set; }
         public string descripcion { get; set; }
         public bool estado { get; set; }
+
+        public override string ToString()
+        {
+            if (String.IsNullOrEmpty(descripcion))
+                return "";
+            else
+                return descripcion;
+        }
     }
 }

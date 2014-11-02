@@ -52,6 +52,7 @@
             this.btnModificarReserva.TabIndex = 1;
             this.btnModificarReserva.Text = "Modificar o Cancelar Reserva";
             this.btnModificarReserva.UseVisualStyleBackColor = true;
+            this.btnModificarReserva.Click += new System.EventHandler(this.btnModificarReserva_Click);
             // 
             // FrmGuest
             // 
@@ -65,6 +66,7 @@
             this.MinimizeBox = false;
             this.Name = "FrmGuest";
             this.Text = "Invitado";
+            this.Load += new System.EventHandler(this.FrmGuest_Load);
             this.ResumeLayout(false);
 
         }

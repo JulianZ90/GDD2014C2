@@ -8,7 +8,7 @@ namespace FrbaHotel
     public class Habitacion
     {
         public int Id { get; set; }
-        public int Hotel_id { get; set; }
+        public Hotel Hotel { get; set; }
         public int Numero { get; set; }
         public int Piso { get; set; }
         public string Ubicacion { get; set; }

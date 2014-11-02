@@ -135,7 +135,9 @@ namespace FrbaHotel.ABM_de_Habitacion
             {
                 Habitacion habitacion = new Habitacion();
                 habitacion.Id = (int)objReader["id"];
-                habitacion.Hotel_id = (int)objReader["hotel_id"];
+                Hotel HotelHabitacion = new Hotel();
+                HotelHabitacion.id = (int)objReader["hotel_id"];
+                habitacion.Hotel = HotelHabitacion;
                 habitacion.Numero = (int)objReader["nro"];
                 habitacion.Piso = (int)objReader["piso"];
                 habitacion.Ubicacion = (string)objReader["ubicacion"];
@@ -143,7 +145,7 @@ namespace FrbaHotel.ABM_de_Habitacion
                 habitacion.Estado = (bool)objReader["estado_habitacion"];
 
                 TipoHabitacion TipoHabitacion = new TipoHabitacion();
-                //TipoHabitacion.Id = (int)objReader["tipo_hab_id"];
+                TipoHabitacion.Id = (int)objReader["tipo_hab_id"];
                 TipoHabitacion.Descripcion = (string)objReader["tipo"];
 
                 habitacion.Tipo = TipoHabitacion;

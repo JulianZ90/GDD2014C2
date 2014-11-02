@@ -16,7 +16,7 @@ namespace FrbaHotel
         SqlConnection objConexion = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
         SqlCommand query = null;
         SqlDataReader objReader = null;
-
+        int idUser;
 
         public FrmGuest()
         {
@@ -26,15 +26,22 @@ namespace FrbaHotel
 
         private void btnGenerarReserva_Click(object sender, EventArgs e)
         {
-            int idUser;
+            new Generar_Modificar_Reserva.FrmReserva(idUser).ShowDialog();
+        }
+
+        private void FrmGuest_Load(object sender, EventArgs e)
+        {
             query = new SqlCommand("SELECT id FROM GAME_OF_QUERYS.usuario WHERE username = 'guest'", objConexion);
             objConexion.Open();
             objReader = query.ExecuteReader();
             objReader.Read();
             idUser = (int)objReader["id"];
             objConexion.Close();
+        }
 
-            new Generar_Modificar_Reserva.FrmReserva(idUser).ShowDialog();
+        private void btnModificarReserva_Click(object sender, EventArgs e)
+        {
+            new Generar_Modificar_Reserva.FrmListadoReservas(idUser).ShowDialog();
         }
 
     }
