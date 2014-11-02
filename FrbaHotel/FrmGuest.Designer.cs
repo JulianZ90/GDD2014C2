@@ -30,7 +30,6 @@
         {
             this.btnGenerarReserva = new System.Windows.Forms.Button();
             this.btnModificarReserva = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnGenerarReserva
@@ -47,36 +46,25 @@
             // btnModificarReserva
             // 
             this.btnModificarReserva.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnModificarReserva.Location = new System.Drawing.Point(55, 121);
+            this.btnModificarReserva.Location = new System.Drawing.Point(55, 125);
             this.btnModificarReserva.Name = "btnModificarReserva";
-            this.btnModificarReserva.Size = new System.Drawing.Size(238, 43);
+            this.btnModificarReserva.Size = new System.Drawing.Size(238, 65);
             this.btnModificarReserva.TabIndex = 1;
-            this.btnModificarReserva.Text = "Modificar Reserva";
+            this.btnModificarReserva.Text = "Modificar o Cancelar Reserva";
             this.btnModificarReserva.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(55, 188);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(238, 43);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Cancelar Reserva";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // FrmGuest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(351, 286);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(351, 248);
             this.Controls.Add(this.btnModificarReserva);
             this.Controls.Add(this.btnGenerarReserva);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmGuest";
-            this.Text = "FrmGuest";
+            this.Text = "Invitado";
             this.ResumeLayout(false);
 
         }
@@ -85,6 +73,5 @@
 
         private System.Windows.Forms.Button btnGenerarReserva;
         private System.Windows.Forms.Button btnModificarReserva;
-        private System.Windows.Forms.Button button1;
     }
 }

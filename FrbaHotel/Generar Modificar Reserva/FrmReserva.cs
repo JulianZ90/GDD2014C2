@@ -19,6 +19,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         SqlDataReader objReader = null;
         bool guest = false;
         LoginId Log = null;
+        int IdGuest;
         List<Regimen> lstRegimenes = new List<Regimen>();
         List<TipoHabitacion> lstHabitacionesReserva = new List<TipoHabitacion>();
         StringBuilder SBDetalle = new StringBuilder();
@@ -48,6 +49,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             InitializeComponent();
             guest = true;
+            IdGuest = GuestId;
 
             //llenar comboBox de hoteles
             List<Hotel> lstHoteles = new List<Hotel>();
@@ -89,6 +91,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.dateTimeInicio.Value = DateTime.Today;
             this.dateTimeFin.Value = DateTime.Today.AddDays(1);
             this.LlenarComboBoxTipoHabitacion(this.cmbBxTipoHab);
+            this.txtBxCostoTotal.ReadOnly = true;
+            this.txtBxCostoDiario.ReadOnly = true;
+            this.txtBxDetalle.ReadOnly = true;
         }
 
 
@@ -447,6 +452,35 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     this.txtBxCostoTotal.Text = Convert.ToString(sumCostoDiario * cantidadNoches);                  
                 }
             }
+        }
+
+        private void btnReservar_Click(object sender, EventArgs e)
+        {
+            Reserva Reserva = new Reserva();
+            EstadoReserva EstadoReserva = new EstadoReserva();
+            EstadoReserva.Id = 1;
+            Reserva.Estado = EstadoReserva;
+            Reserva.FechaInicio = this.dateTimeInicio.Value;
+            Reserva.FechaFin = this.dateTimeFin.Value;
+            Reserva.FechaRealizacion = DateTime.Today;
+            Regimen RegimenReserva = new Regimen();
+            RegimenReserva.id = RegimenId;
+            Reserva.Regimen = RegimenReserva;
+            Usuario UsiarioReserva = new Usuario();
+
+            if (guest)
+                UsiarioReserva.id = IdGuest;
+            else
+                UsiarioReserva.id = Log.Usuario_Id;
+
+            Reserva.UltimoUsuario = UsiarioReserva;
+
+            foreach (Habitacion Item in lstHabitacionesConfirmadas)
+            {
+                Reserva.Habitaciones.Add(Item);
+            }
+            //hasta aca de la reserva me falta el Id y el cliente
+
         }
 
 

@@ -304,6 +304,7 @@
             this.btnReservar.TabIndex = 1;
             this.btnReservar.Text = "Generar Reserva";
             this.btnReservar.UseVisualStyleBackColor = true;
+            this.btnReservar.Click += new System.EventHandler(this.btnReservar_Click);
             // 
             // btnDisponibilidad
             // 
