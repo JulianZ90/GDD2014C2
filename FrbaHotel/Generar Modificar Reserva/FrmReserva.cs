@@ -381,9 +381,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 SBquery.Append("SELECT DISTINCT id, tipo_hab_id FROM GAME_OF_QUERYS.habitacion WHERE hotel_id = @hotelId AND estado_habitacion = 1 AND id NOT IN ");
                 SBquery.Append("(SELECT DISTINCT habitacion_id FROM GAME_OF_QUERYS.reserva_habitacion ");
                 SBquery.Append("JOIN GAME_OF_QUERYS.reserva ON (reserva_habitacion.reserva_id = reserva.id) ");
-                SBquery.Append("JOIN GAME_OF_QUERYS.habitacion ON (habitacion.id = reserva_habitacion.habitacion_id) ");
-                SBquery.Append("WHERE ((fecha_inicio > @fechaInicio AND fecha_fin > @fechaFin) OR (fecha_inicio > @fechaInicio AND fecha_fin > @fechaFin) OR (fecha_inicio < @fechaInicio AND fecha_fin < @fechaFin)) ");
-                SBquery.Append("AND habitacion.hotel_id = @hotelId AND habitacion.estado_habitacion = 1");
+                SBquery.Append("WHERE ((fecha_inicio > @fechaInicio AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin < @fechaFin)))");
                 query = new SqlCommand(SBquery.ToString(), objConexion);
                 query.Parameters.AddWithValue("@hotelId", HotelId);
                 query.Parameters.AddWithValue("@fechaInicio", this.dateTimeInicio.Value);
@@ -402,9 +400,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                             {
                                 Habitacion Habitacion = new Habitacion();
                                 Habitacion.Id = (int)objReader["id"];
-                                Habitacion.Hotel_id = HotelId;
-                                Habitacion.Tipo.Id = Item.Id;
-                                Habitacion.Estado = true;
 
                                 this.lstHabitacionesConfirmadas.Add(Habitacion);
                                 this.lstHabitacionesReserva.Remove(Item);
@@ -422,6 +417,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 if (lstHabitacionesReserva.Count > 0)   //quedaron habitaciones sin disponibilidad
                 {
                     //si no se puede reservar: se muestra en un messageBox, se vacia la lista de habitaciones reserva, se pone fechasValidas y hayHabitaciones en false, se vacia el txtBxDetalle y se vacia lstHabitaciones si ya se puso alguna
+                    MessageBox.Show("No hay disponibilidad en el hotel");
+                    lstHabitacionesConfirmadas.Clear();
+                    lstHabitacionesReserva.Clear();
+                    this.txtBxDetalle.Text = string.Empty;
+                    this.txtBxCostoDiario.Text = string.Empty;
+                    this.cmbBxTipoHab.SelectedValue = 0;
                 }
                 else
                 {
@@ -437,11 +438,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     this.lblCosto.Show();
                     this.txtBxCostoTotal.Show();
                     this.btnReservar.Show();
+                    this.btnLimpiar.Hide();
+                    this.btnDisponibilidad.Hide();
+                    this.btnAgregarHabitacion.Enabled = false;
+                    this.btnEliminarHab.Enabled = false;
 
-                    TimeSpan dias = this.dateTimeFin.Value.Subtract(this.dateTimeInicio.Value);
-                    int cantidadNoches = Convert.ToInt32(dias);
-                    this.txtBxCostoTotal.Text = Convert.ToString(sumCostoDiario * cantidadNoches);
-                    
+                    int cantidadNoches = (this.dateTimeFin.Value - this.dateTimeInicio.Value).Days;
+                    this.txtBxCostoTotal.Text = Convert.ToString(sumCostoDiario * cantidadNoches);                  
                 }
             }
         }
