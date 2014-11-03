@@ -159,6 +159,11 @@ namespace FrbaHotel
             childForm.Show();
         }
 
+        private void modificarOCancelarReservaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Generar_Modificar_Reserva.FrmListadoReservas(Log).ShowDialog();
+        }
+
         
 
 
