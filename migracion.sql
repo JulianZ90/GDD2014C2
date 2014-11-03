@@ -160,3 +160,18 @@ insert into GAME_OF_QUERYS.hotel_usuario_rol (hotel_id, usuario_id, rol_id) valu
 /* Inserto las funcionalidades del rol admin (todas) */
 insert into GAME_OF_QUERYS.rol_funcionalidad(rol_id, funcionalidad_id)
 (select r.id, f.id from GAME_OF_QUERYS.rol r, GAME_OF_QUERYS.funcionalidad f WHERE r.descripcion = 'admin')
+
+
+/* Estado de reservas */
+--reservas que tienen estadia --> estado: 6 - con ingreso
+update GAME_OF_QUERYS.reserva set estado_id = 6
+where id in (select reserva_id from GAME_OF_QUERYS.estadia)
+
+--reservas viejas que no aparecen en la tabla de estadia --> estado: 5 - cancelada por no-show
+update GAME_OF_QUERYS.reserva set estado_id = 5
+where fecha_inicio < (select MAX(check_out) from GAME_OF_QUERYS.estadia)	--max(check_out) es la maxima fecha que aparece en una estadia, entoces la tomo como el 'dia de hoy'
+and id not in (select reserva_id from GAME_OF_QUERYS.estadia)
+
+--reservas proximas --> estado: 1 - correcta (por ahora no hay ninguna)
+update GAME_OF_QUERYS.reserva set estado_id = 1
+where fecha_inicio >= (select MAX(check_out) from GAME_OF_QUERYS.estadia)
