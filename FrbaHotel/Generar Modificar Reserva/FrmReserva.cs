@@ -551,7 +551,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             else
             {
-                //falta cuando es un cliente existente
+                new ABM_de_Cliente.listadoClientes(NuevaReserva).ShowDialog();
+                this.Close();
             }
 
         }

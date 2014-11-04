@@ -13,6 +13,8 @@ namespace FrbaHotel.ABM_de_Cliente
     public partial class listadoClientes : Form
     {
         SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
+        bool reserva = false;
+        Reserva Reserva = null;
 
         public listadoClientes()
         {
@@ -21,23 +23,41 @@ namespace FrbaHotel.ABM_de_Cliente
             llenarPais();
         }
 
+        public listadoClientes(Reserva NuevaReserva)
+        {
+            InitializeComponent();
+            llenarTipoDoc();
+            llenarPais();
+            reserva = true;
+            Reserva = NuevaReserva;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             dataGridView1.Columns.Clear();
 
-            // Add a button column ALTA. 
-            DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
-            buttonColumn.HeaderText = "M";
-            buttonColumn.Name = "mODIFICAR";
-            buttonColumn.Text = "";
-            buttonColumn.UseColumnTextForButtonValue = true;
-            buttonColumn.Width = 20;
-            dataGridView1.Columns.Add(buttonColumn);
+            if (!reserva)
+            {
+                // Add a button column ALTA. 
+                DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
+                buttonColumn.HeaderText = "M";
+                buttonColumn.Name = "mODIFICAR";
+                buttonColumn.Text = "";
+                buttonColumn.UseColumnTextForButtonValue = true;
+                buttonColumn.Width = 20;
+                dataGridView1.Columns.Add(buttonColumn);
+            }
+            else
+            {
+                this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                this.dataGridView1.MultiSelect = false;
+            }
 
             // Add a CellClick handler to handle clicks in the button column.
             //no se puede borrar todos los handlers asociados. Asi que trato de quitar el handler viejo aunque no este.
             dataGridView1.CellClick -= new DataGridViewCellEventHandler(dataGridView1_CellClick);
-            dataGridView1.CellClick += new DataGridViewCellEventHandler(dataGridView1_CellClick);
+            dataGridView1.CellClick += new DataGridViewCellEventHandler(dataGridView1_CellClick); 
+            
 
             List<Cliente> lista = new List<Cliente>();
 
@@ -122,18 +142,52 @@ namespace FrbaHotel.ABM_de_Cliente
 
         void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Ignore clicks that are not on button cells.  
-            if (e.RowIndex < 0 || e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index)
-                return;
-
-            // Retrieve the cliente_id object from the "id" cell.
-            int cliente_id = (int)dataGridView1.Rows[e.RowIndex].Cells["id"].Value;
-
-            if (e.ColumnIndex == dataGridView1.Columns["mODIFICAR"].Index)
+            int cliente_id;
+            if (!reserva)
             {
-                ABM_de_Cliente.altaCliente modif = new ABM_de_Cliente.altaCliente(cliente_id);
-                modif.Owner = this;
-                modif.ShowDialog();
+                // Ignore clicks that are not on button cells.  
+                if (e.RowIndex < 0 || e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index)
+                    return;
+
+                // Retrieve the cliente_id object from the "id" cell.
+                cliente_id = (int)dataGridView1.Rows[e.RowIndex].Cells["id"].Value;
+
+                if (e.ColumnIndex == dataGridView1.Columns["mODIFICAR"].Index)
+                {
+                    ABM_de_Cliente.altaCliente modif = new ABM_de_Cliente.altaCliente(cliente_id);
+                    modif.Owner = this;
+                    modif.ShowDialog();
+                }
+            }
+            else
+            {
+                cliente_id = (int)dataGridView1.Rows[e.RowIndex].Cells["id"].Value;
+
+                SqlCommand query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.reserva(cliente_id, regimen_id, estado_id, fecha_realizacion, fecha_inicio, fecha_fin, usuario_ultima_modif_id) VALUES (@cliente, @regimen, @estado, @fechaHoy, @fechaInicio, @fechaFin, @usuario); SELECT SCOPE_IDENTITY()", connect);
+                query.Parameters.AddWithValue("@cliente", cliente_id);
+                query.Parameters.AddWithValue("@regimen", Reserva.Regimen.id);
+                query.Parameters.AddWithValue("@estado", Reserva.Estado.Id);
+                query.Parameters.AddWithValue("@fechaHoy", Reserva.FechaRealizacion);
+                query.Parameters.AddWithValue("@fechaInicio", Reserva.FechaInicio);
+                query.Parameters.AddWithValue("@fechaFin", Reserva.FechaFin);
+                query.Parameters.AddWithValue("@usuario", Reserva.UltimoUsuario.id);
+
+                connect.Open();
+                int reserva_id = Convert.ToInt32(query.ExecuteScalar());    //me devuelve el id de la reserva que se inserto
+                connect.Close();
+                //agrego las habitaciones a reserva_habitacion
+                foreach (Habitacion Item in Reserva.Habitaciones)
+                {
+                    query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.reserva_habitacion(reserva_id, habitacion_id) VALUES (@reserva, @habitacion)", connect);
+                    query.Parameters.AddWithValue("@reserva", reserva_id);
+                    query.Parameters.AddWithValue("@habitacion", Item.Id);
+                    connect.Open();
+                    query.ExecuteNonQuery();
+                    connect.Close();
+                }
+                MessageBox.Show("Su código de reserva es: " + reserva_id + ". Recuerde que necesitará este código para modificar o cancelar su reserva.");
+                this.Close();
+
             }
         }
 
