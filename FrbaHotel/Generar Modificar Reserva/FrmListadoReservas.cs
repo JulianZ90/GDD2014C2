@@ -70,6 +70,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 Reserva Reserva = new Reserva();
                 Regimen RegimenReserva = new Regimen();
                 EstadoReserva EstadoReserva = new EstadoReserva();
+                Cliente ClienteReserva = new Cliente();
                 StringBuilder SBquery = new StringBuilder();
 
                 // Add a button column MODIFICAR. 
@@ -97,10 +98,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             
 
 
-                SBquery.Append("SELECT DISTINCT reserva.id, reserva.fecha_inicio, reserva.fecha_fin, regimen.descripcion AS regimen, reserva.regimen_id, estado_reserva.descripcion AS estado, reserva.estado_id ");
+                SBquery.Append("SELECT DISTINCT reserva.id, reserva.fecha_inicio, reserva.fecha_fin, reserva.cliente_id, regimen.descripcion AS regimen, reserva.regimen_id, estado_reserva.descripcion AS estado, reserva.estado_id ");
                 SBquery.Append("FROM GAME_OF_QUERYS.reserva JOIN GAME_OF_QUERYS.regimen ON (reserva.regimen_id = regimen.id) ");
                 SBquery.Append("JOIN GAME_OF_QUERYS.estado_reserva ON (reserva.estado_id = estado_reserva.id) ");
-                SBquery.Append("JOIN GAME_OF_QUERYS.cliente ON (cliente.id = reserva.cliente_id) ");
                 if (!guest)
                 {
                     SBquery.Append("JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva_habitacion.reserva_id = reserva.id) ");
@@ -122,6 +122,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     Reserva.Id = (int)objReader["id"];
                     Reserva.FechaInicio = (DateTime)objReader["fecha_inicio"];
                     Reserva.FechaFin = (DateTime)objReader["fecha_fin"];
+                    ClienteReserva.id = (int)objReader["cliente_id"];
+                    Reserva.Cliente = ClienteReserva;
                     RegimenReserva.descripcion = (string)objReader["regimen"];
                     RegimenReserva.id = (int)objReader["regimen_id"];
                     Reserva.Regimen = RegimenReserva;
@@ -142,6 +144,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 }
                 else
                 {
+                    objConexion.Close();
                     MessageBox.Show("No se encontro reserva. Por favor ingrese nuevamente el código.");
                     this.dataGridView1.Columns.Clear();
                     this.txtBxNroReserva.Text = string.Empty;
@@ -162,10 +165,41 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
             if (e.ColumnIndex == dataGridView1.Columns[0].Index)   //Boton modificar
             {
-                //new Generar_Modificar_Reserva.FrmReserva().ShowDialog();   
-                this.Close();
+                Reserva Reserva = null;
+                int HotelId = 0;
 
+                foreach (Reserva Item in lstReserva)
+                    Reserva = Item;
+
+                query = new SqlCommand("SELECT habitacion_id, tipo_hab_id, hotel_id FROM GAME_OF_QUERYS.reserva_habitacion JOIN GAME_OF_QUERYS.habitacion ON (habitacion.id = reserva_habitacion.habitacion_id) WHERE reserva_id = @id", objConexion);
+                query.Parameters.AddWithValue("@id", Reserva.Id);
+                objConexion.Open();
+                objReader = query.ExecuteReader();
+                while (objReader.Read())
+                {
+                    Habitacion Habitacion = new Habitacion();
+                    Habitacion.Id = (int)objReader["habitacion_id"];
+                    TipoHabitacion TipoHabitacion = new TipoHabitacion();
+                    TipoHabitacion.Id = (int)objReader["tipo_hab_id"];
+                    Habitacion.Tipo = TipoHabitacion;
+                    if (guest)
+                    {
+                        HotelId = (int)objReader["hotel_id"]; 
+                    }
+
+                    Reserva.Habitaciones.Add(Habitacion);
+                }
+                objConexion.Close();
+
+                if (guest)
+                    new Generar_Modificar_Reserva.FrmReserva(Reserva, HotelId, UserId).ShowDialog();
+                else
+                    new Generar_Modificar_Reserva.FrmReserva(Reserva, Log).ShowDialog();
+
+                this.Close();
             }
+
+
             if (e.ColumnIndex == dataGridView1.Columns[1].Index)     //Boton eliminar
             {
                 if (MessageBox.Show("Esta seguro que quiere cancelar la reserva?", "Confirmacion", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)

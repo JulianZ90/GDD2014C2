@@ -46,9 +46,9 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.dataGridView1);
-            this.panel1.Location = new System.Drawing.Point(15, 130);
+            this.panel1.Location = new System.Drawing.Point(12, 112);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(723, 95);
+            this.panel1.Size = new System.Drawing.Size(723, 73);
             this.panel1.TabIndex = 0;
             // 
             // dataGridView1
@@ -57,7 +57,7 @@
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(723, 95);
+            this.dataGridView1.Size = new System.Drawing.Size(723, 73);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
@@ -118,7 +118,7 @@
             // 
             this.lblBaja.AutoSize = true;
             this.lblBaja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBaja.Location = new System.Drawing.Point(12, 271);
+            this.lblBaja.Location = new System.Drawing.Point(33, 229);
             this.lblBaja.Name = "lblBaja";
             this.lblBaja.Size = new System.Drawing.Size(195, 15);
             this.lblBaja.TabIndex = 6;
@@ -126,7 +126,7 @@
             // 
             // txtBxMotivos
             // 
-            this.txtBxMotivos.Location = new System.Drawing.Point(234, 244);
+            this.txtBxMotivos.Location = new System.Drawing.Point(255, 202);
             this.txtBxMotivos.Multiline = true;
             this.txtBxMotivos.Name = "txtBxMotivos";
             this.txtBxMotivos.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -136,7 +136,7 @@
             // btnCancelar
             // 
             this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Location = new System.Drawing.Point(530, 261);
+            this.btnCancelar.Location = new System.Drawing.Point(551, 219);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(172, 37);
             this.btnCancelar.TabIndex = 8;
@@ -148,7 +148,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(747, 334);
+            this.ClientSize = new System.Drawing.Size(747, 292);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.txtBxMotivos);
             this.Controls.Add(this.lblBaja);

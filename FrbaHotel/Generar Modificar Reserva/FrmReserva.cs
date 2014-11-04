@@ -18,7 +18,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         SqlCommand query = null;
         SqlDataReader objReader = null;
         bool guest = false;
+        bool modificacion = false;
         LoginId Log = null;
+        Reserva Reserva = null;
         int IdGuest;
         List<Regimen> lstRegimenes = new List<Regimen>();
         List<TipoHabitacion> lstHabitacionesReserva = new List<TipoHabitacion>();
@@ -30,6 +32,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         bool fechasValidas = false;
         List<Habitacion> lstHabitacionesConfirmadas = new List<Habitacion>();
         bool hayHabitaciones = false;
+        bool habitacionesModificadas = false;
+        int IdHotelReserva;
 
 
 
@@ -40,8 +44,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.cmbBxHoteles.Hide();
             this.CondicionesIniciales();
             Log = LogUser;
+            HotelId = LogUser.Hotel_Id;
             this.CompletarDataGridViewRegimenes(this.dataGridViewRegimen);
-
         }
 
 
@@ -50,8 +54,81 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             InitializeComponent();
             guest = true;
             IdGuest = GuestId;
+            this.LlenarComboBoxHoteles(this.cmbBxHoteles);
+            this.CondicionesIniciales();
+        }
 
-            //llenar comboBox de hoteles
+
+        public FrmReserva(Reserva ReservaModific, int HotelReserva, int UserId)
+        {
+            InitializeComponent();
+            IdGuest = UserId;
+            HotelId = HotelReserva;
+            IdHotelReserva = HotelReserva;
+            Reserva = ReservaModific;
+            guest = true;
+            modificacion = true;
+            this.LlenarComboBoxHoteles(this.cmbBxHoteles);
+            this.CondicionesIniciales();
+            this.LlenarFormulario(ReservaModific, HotelReserva);
+        }
+
+
+        public FrmReserva(Reserva ReservaModific, LoginId LogUser)
+        {
+            InitializeComponent();
+            Log = LogUser;
+            Reserva = ReservaModific;
+            HotelId = LogUser.Hotel_Id;
+            IdHotelReserva = LogUser.Hotel_Id;
+            this.lblHotel.Hide();
+            this.cmbBxHoteles.Hide();
+            modificacion = true;
+            this.CondicionesIniciales();
+            this.LlenarFormulario(ReservaModific, LogUser.Hotel_Id);
+        }
+
+
+        public void LlenarFormulario(Reserva Reserva, int HotelId)
+        {
+            if (guest)
+                this.cmbBxHoteles.SelectedValue = HotelId;
+            this.txtBxRegimen.Text = Reserva.Regimen.descripcion;
+            this.dateTimeInicio.Value = Reserva.FechaInicio;
+            this.dateTimeFin.Value = Reserva.FechaFin;
+            this.CompletarDataGridViewRegimenes(this.dataGridViewRegimen);
+        }
+
+
+
+        public void CondicionesIniciales()
+        {
+            this.dataGridViewRegimen.Hide();
+            this.lblCosto.Hide();
+            this.txtBxCostoTotal.Hide();
+            this.btnReservar.Hide();
+            if (!modificacion)
+            {
+                this.lblModific.Hide();
+                this.btnModificar.Hide();
+            }
+            else
+            {
+                this.btnDisponibilidad.Hide();
+                this.btnReservar.Hide();
+            }
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.dateTimeInicio.Value = DateTime.Today;
+            this.dateTimeFin.Value = DateTime.Today.AddDays(1);
+            this.LlenarComboBoxTipoHabitacion(this.cmbBxTipoHab);
+            this.txtBxCostoTotal.ReadOnly = true;
+            this.txtBxCostoDiario.ReadOnly = true;
+            this.txtBxDetalle.ReadOnly = true;
+        }
+
+
+        public void LlenarComboBoxHoteles(ComboBox Combo)
+        {
             List<Hotel> lstHoteles = new List<Hotel>();
             query = new SqlCommand("SELECT id, nombre, cantidad_estrella, recarga_estrella FROM GAME_OF_QUERYS.hotel", objConexion);
             objConexion.Open();
@@ -75,25 +152,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             cmbBxHoteles.DataSource = lstHoteles;
             cmbBxHoteles.DisplayMember = "nombre";
             cmbBxHoteles.ValueMember = "id";
-
-
-            this.CondicionesIniciales();
-        }
-
-
-        public void CondicionesIniciales()
-        {
-            this.dataGridViewRegimen.Hide();
-            this.lblCosto.Hide();
-            this.txtBxCostoTotal.Hide();
-            this.btnReservar.Hide();
-            this.StartPosition = FormStartPosition.CenterParent;
-            this.dateTimeInicio.Value = DateTime.Today;
-            this.dateTimeFin.Value = DateTime.Today.AddDays(1);
-            this.LlenarComboBoxTipoHabitacion(this.cmbBxTipoHab);
-            this.txtBxCostoTotal.ReadOnly = true;
-            this.txtBxCostoDiario.ReadOnly = true;
-            this.txtBxDetalle.ReadOnly = true;
         }
 
 
@@ -212,7 +270,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             else
             {
-                //HotelId = ((Hotel)this.cmbBxHoteles.SelectedItem).id;
+                HotelId = ((Hotel)this.cmbBxHoteles.SelectedItem).id;
 
                 if (((Hotel)this.cmbBxHoteles.SelectedItem).id == 0)
                 {
@@ -326,6 +384,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             if (((TipoHabitacion)this.cmbBxTipoHab.SelectedItem).Id != 0)
             {
+                if (modificacion)
+                    habitacionesModificadas = true;
+
                 this.txtBxDetalle.Text = txtBxDetalle.Text + "Tipo de Habitación: " + ((TipoHabitacion)this.cmbBxTipoHab.SelectedItem).Descripcion + "  -   Costo Diario: " + txtBxCostoDiario.Text + " ; \r\n";
                 lstHabitacionesReserva.Add((TipoHabitacion)this.cmbBxTipoHab.SelectedItem);     //agrego la habitacion a las que se quiere en la reserva
                 sumCostoDiario = sumCostoDiario + Convert.ToDecimal(txtBxCostoDiario.Text);
@@ -351,6 +412,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void btnEliminarHab_Click(object sender, EventArgs e)
         {
+            if (modificacion)
+                habitacionesModificadas = false;
+
             this.txtBxDetalle.Text = string.Empty;
             this.lstHabitacionesReserva.Clear();
             this.txtBxCostoTotal.Text = string.Empty;
@@ -481,6 +545,168 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             //hasta aca de la reserva me falta el Id y el cliente
 
+        }
+
+
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            foreach (Regimen Item in lstRegimenes)
+            {
+                if (Item.descripcion == this.txtBxRegimen.Text)
+                    RegimenId = Item.id;
+            }
+
+            if (habitacionesModificadas || (RegimenId != Reserva.Regimen.id) || (this.dateTimeInicio.Value != Reserva.FechaInicio) || (this.dateTimeFin.Value != Reserva.FechaFin) || (HotelId != IdHotelReserva))  //cambio algo?
+            {
+                if ((RegimenId != Reserva.Regimen.id) && !habitacionesModificadas && (this.dateTimeInicio.Value == Reserva.FechaInicio) && (this.dateTimeFin.Value == Reserva.FechaFin) && (HotelId == IdHotelReserva))     //solo cambio el regimen? lo distingo porque es el unico que no tengo que chequear disponibilidad
+                {
+                    if (MessageBox.Show("Esta seguro que quiere modificar su reserva?", "Confirmacion", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        query = new SqlCommand("UPDATE GAME_OF_QUERYS.reserva SET regimen_id = @nuevoRegimen, estado_id = @nuevoEstado, usuario_ultima_modif_id = @usuarioModif WHERE id = @idReserva", objConexion);
+                        query.Parameters.AddWithValue("@nuevoRegimen", RegimenId);
+                        query.Parameters.AddWithValue("@nuevoEstado", 2);
+                        if (guest)
+                            query.Parameters.AddWithValue("@usuarioModif", IdGuest);
+                        else
+                            query.Parameters.AddWithValue("@usuarioModif", Log.Usuario_Id);
+                        query.Parameters.AddWithValue("@idReserva", Reserva.Id);
+                        objConexion.Open();
+                        query.ExecuteNonQuery();
+                        objConexion.Close();
+                        this.Close();
+                    }
+                    else
+                    {
+                        this.txtBxRegimen.Text = Reserva.Regimen.descripcion;
+                    }
+
+                }
+
+                else    //se modifico algun campo que necesita verificar la disponibilidad de habitaciones antes de modificar
+                {
+                    //1ro elimino las habitaciones reservadas hasta ahora
+                    query = new SqlCommand("DELETE FROM GAME_OF_QUERYS.reserva_habitacion WHERE reserva_id = @reservaId", objConexion);
+                    query.Parameters.AddWithValue("@reservaId", Reserva.Id);
+                    objConexion.Open();
+                    query.ExecuteNonQuery();
+                    objConexion.Close();
+
+                    if (!habitacionesModificadas)
+                    {
+                        foreach (Habitacion Item in Reserva.Habitaciones)
+                            lstHabitacionesReserva.Add(Item.Tipo);
+                    }
+
+                    //hay disponibilidad?
+                    if ((this.dateTimeInicio.Value >= DateTime.Today) && (this.dateTimeFin.Value >= DateTime.Today.AddDays(1)) && (this.dateTimeFin.Value > this.dateTimeInicio.Value))
+                        fechasValidas = true;    
+                    else
+                        MessageBox.Show("Fechas inválidas");
+
+                    if (fechasValidas)
+                    {
+                        //selecciona las haitaciones de un determinado hotel que esten disponibles
+                        StringBuilder SBquery = new StringBuilder();
+                        SBquery.Append("SELECT DISTINCT id, tipo_hab_id FROM GAME_OF_QUERYS.habitacion WHERE hotel_id = @hotelId AND estado_habitacion = 1 AND id NOT IN ");
+                        SBquery.Append("(SELECT DISTINCT habitacion_id FROM GAME_OF_QUERYS.reserva_habitacion ");
+                        SBquery.Append("JOIN GAME_OF_QUERYS.reserva ON (reserva_habitacion.reserva_id = reserva.id) ");
+                        SBquery.Append("WHERE ((fecha_inicio > @fechaInicio AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin < @fechaFin)))");
+                        query = new SqlCommand(SBquery.ToString(), objConexion);
+                        query.Parameters.AddWithValue("@hotelId", HotelId);
+                        query.Parameters.AddWithValue("@fechaInicio", this.dateTimeInicio.Value);
+                        query.Parameters.AddWithValue("@fechaFin", this.dateTimeFin.Value);
+
+                        objConexion.Open();
+                        objReader = query.ExecuteReader();
+
+                        while (objReader.Read())
+                        {
+                            if (lstHabitacionesReserva.Count > 0)
+                            {
+                                foreach (TipoHabitacion Item in lstHabitacionesReserva)
+                                {
+                                    if (Item.Id == (int)objReader["tipo_hab_id"])
+                                    {
+                                        Habitacion Habitacion = new Habitacion();
+                                        Habitacion.Id = (int)objReader["id"];
+
+                                        this.lstHabitacionesConfirmadas.Add(Habitacion);
+                                        this.lstHabitacionesReserva.Remove(Item);
+                                        break;  //si hubo un match entre la habitacion de la base y la de la lista entonces sale del foreach
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                break;  //dejo de leer porque ya tengo todas las habitaciones de la reserva
+                            }
+                        }
+                        objConexion.Close();
+
+                        if (lstHabitacionesReserva.Count > 0)   //quedaron habitaciones sin disponibilidad
+                        {
+                            //si no se puede reservar: se muestra en un messageBox, se vacia la lista de habitaciones reserva, se pone fechasValidas y hayHabitaciones en false, se vacia el txtBxDetalle y se vacia lstHabitaciones si ya se puso alguna
+                            MessageBox.Show("No hay disponibilidad en el hotel");
+                            lstHabitacionesConfirmadas.Clear();
+                            lstHabitacionesReserva.Clear();
+                            fechasValidas = false;
+                            this.txtBxDetalle.Text = string.Empty;
+                            this.txtBxCostoDiario.Text = string.Empty;
+                            this.cmbBxTipoHab.SelectedValue = 0;
+                        }
+                        else
+                        {
+                            //disponibilidad ok
+                            if (MessageBox.Show("Hay disponibilidad. Esta seguro que quiere modificar su reserva?", "Confirmacion", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            {
+                                query = new SqlCommand("UPDATE GAME_OF_QUERYS.reserva SET regimen_id = @nuevoRegimen, estado_id = @nuevoEstado, fecha_inicio = @nuevaFechaInicio, fecha_fin = @nuevaFechaFin, usuario_ultima_modif_id = @ultimoUser WHERE id = @idReserva", objConexion);
+                                query.Parameters.AddWithValue("@nuevoRegimen", RegimenId);
+                                query.Parameters.AddWithValue("@nuevoEstado", 2);
+                                query.Parameters.AddWithValue("@nuevaFechaInicio", this.dateTimeInicio.Value);
+                                query.Parameters.AddWithValue("@nuevaFechaFin", this.dateTimeFin.Value);
+                                if (guest)
+                                    query.Parameters.AddWithValue("@ultimoUser", IdGuest);
+                                else
+                                    query.Parameters.AddWithValue("@ultimoUser", Log.Usuario_Id);
+                                query.Parameters.AddWithValue("@idReserva", Reserva.Id);
+
+                                objConexion.Open();
+                                query.ExecuteNonQuery();    //hice el update en la tabla reservas, ahora falta agregar las habitaciones
+                                objConexion.Close();
+
+                                foreach(Habitacion Item in lstHabitacionesConfirmadas)
+                                {
+                                    query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.reserva_habitacion(reserva_id, habitacion_id) VALUES (@idReserva, @idHab)", objConexion);
+                                    query.Parameters.AddWithValue("@idReserva", Reserva.Id);
+                                    query.Parameters.AddWithValue("@idHab", Item.Id);
+                                    objConexion.Open();
+                                    query.ExecuteNonQuery();
+                                    objConexion.Close();
+                                }
+
+                                this.Close();
+
+                            }
+                            else
+                            {
+                                lstHabitacionesConfirmadas.Clear();
+                                this.txtBxDetalle.Text = string.Empty;
+                                this.txtBxCostoDiario.Text = string.Empty;
+                                this.cmbBxTipoHab.SelectedValue = 0;
+                            }
+
+                        }
+                    }
+
+                    
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("No se modifico ningun campo");
+            }
         }
 
 
