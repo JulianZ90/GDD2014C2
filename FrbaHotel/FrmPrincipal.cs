@@ -164,6 +164,14 @@ namespace FrbaHotel
             new Generar_Modificar_Reserva.FrmListadoReservas(Log).ShowDialog();
         }
 
+        private void modificarConsumibleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form childForm = new Registrar_Consumible.listadoConsumibles();
+            childForm.MdiParent = this;
+            childForm.Show();
+        
+        }
+
         
 
 
