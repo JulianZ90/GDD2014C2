@@ -543,7 +543,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             {
                 NuevaReserva.Habitaciones.Add(Item);
             }
-            //hasta aca de la reserva me falta el Id y el cliente
+
+            if (MessageBox.Show("Es un nuevo cliente?", "Confirmacion", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                new ABM_de_Cliente.altaCliente(NuevaReserva).ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                //falta cuando es un cliente existente
+            }
 
         }
 

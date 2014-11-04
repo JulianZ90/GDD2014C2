@@ -14,6 +14,8 @@ namespace FrbaHotel.ABM_de_Cliente
     {
         SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
         Cliente cliente;
+        Reserva Reserva;
+        bool reserva = false;
         
         //alta
         public altaCliente()
@@ -22,6 +24,7 @@ namespace FrbaHotel.ABM_de_Cliente
             llenarTipoDoc();
             llenarPais();
             cliente = new Cliente();
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         //modificacion
@@ -33,7 +36,23 @@ namespace FrbaHotel.ABM_de_Cliente
             llenarPais();
             cliente = new Cliente(cliente_id);
             cargarConCliente(cliente);
+            this.StartPosition = FormStartPosition.CenterParent;
+
         }
+
+        //alta de un cliente para una reserva
+        public altaCliente(Reserva NuevaReserva)
+        {
+            InitializeComponent();
+            llenarTipoDoc();
+            llenarPais();
+            cliente = new Cliente();
+            Reserva = NuevaReserva;
+            reserva = true;
+            this.StartPosition = FormStartPosition.CenterParent;
+
+        }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -47,7 +66,7 @@ namespace FrbaHotel.ABM_de_Cliente
             cliente.calle = textBox5.Text;
             if (textBox6.Text != "") cliente.nro_calle = Int32.Parse(textBox6.Text);
             if (textBox11.Text != "") cliente.piso = Int32.Parse(textBox11.Text);
-            cliente.depto = textBox7.Text[0];
+            if (textBox7.Text != "") cliente.depto = textBox7.Text[0];
             cliente.ciudad = textBox8.Text;
             cliente.nacionalidad = textBox10.Text;
             if (checkBox4.Checked) cliente.pais = (Pais)comboBox2.SelectedItem;
@@ -56,8 +75,39 @@ namespace FrbaHotel.ABM_de_Cliente
             if (cliente.id < 1)
             {
                 // no tiene id todavia, es un alta
-                cliente.insert();
-                ((FrmPrincipal)this.MdiParent).setStatus("Cliente creado");
+                if (reserva)
+                {
+                    int cliente_id = cliente.insert(reserva);   //me devuelve el id del cliente que inserte
+                    SqlCommand query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.reserva(cliente_id, regimen_id, estado_id, fecha_realizacion, fecha_inicio, fecha_fin, usuario_ultima_modif_id) VALUES (@cliente, @regimen, @estado, @fechaHoy, @fechaInicio, @fechaFin, @usuario); SELECT SCOPE_IDENTITY()", connect);
+                    query.Parameters.AddWithValue("@cliente", cliente_id);
+                    query.Parameters.AddWithValue("@regimen", Reserva.Regimen.id);
+                    query.Parameters.AddWithValue("@estado", Reserva.Estado.Id);
+                    query.Parameters.AddWithValue("@fechaHoy", Reserva.FechaRealizacion);
+                    query.Parameters.AddWithValue("@fechaInicio", Reserva.FechaInicio);
+                    query.Parameters.AddWithValue("@fechaFin", Reserva.FechaFin);
+                    query.Parameters.AddWithValue("@usuario", Reserva.UltimoUsuario.id);
+
+                    connect.Open();
+                    int reserva_id = Convert.ToInt32(query.ExecuteScalar());    //me devuelve el id de la reserva que se inserto
+                    connect.Close();
+                    //agrego las habitaciones a reserva_habitacion
+                    foreach (Habitacion Item in Reserva.Habitaciones)
+                    {
+                        query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.reserva_habitacion(reserva_id, habitacion_id) VALUES (@reserva, @habitacion)", connect);
+                        query.Parameters.AddWithValue("@reserva", reserva_id);
+                        query.Parameters.AddWithValue("@habitacion", Item.Id);
+                        connect.Open();
+                        query.ExecuteNonQuery();
+                        connect.Close();
+                    }
+                    MessageBox.Show("Su código de reserva es: " + reserva_id + ". Recuerde que necesitará este código para modificar o cancelar su reserva.");
+                    this.Close();
+                }
+                else
+                {
+                    cliente.insert();
+                    ((FrmPrincipal)this.MdiParent).setStatus("Cliente creado");
+                }
             }
             else
             {
