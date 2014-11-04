@@ -172,6 +172,13 @@ namespace FrbaHotel
         
         }
 
+        private void estadíaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form childForm = new Registrar_Estadia.frmEstadia();
+            childForm.MdiParent = this;
+            childForm.Show();
+        }
+
         
 
 

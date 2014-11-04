@@ -74,6 +74,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.estadíaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -105,6 +106,7 @@
             this.reservasToolStripMenuItem,
             this.consumiblesToolStripMenuItem,
             this.toolStripMenuItem5,
+            this.estadíaToolStripMenuItem,
             this.toolStripSeparator5,
             this.exitToolStripMenuItem});
             this.fileMenu.ImageTransparentColor = System.Drawing.SystemColors.ActiveBorder;
@@ -431,6 +433,13 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(42, 17);
             this.toolStripStatusLabel.Text = "Estado";
             // 
+            // estadíaToolStripMenuItem
+            // 
+            this.estadíaToolStripMenuItem.Name = "estadíaToolStripMenuItem";
+            this.estadíaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.estadíaToolStripMenuItem.Text = "Registrar Estadía";
+            this.estadíaToolStripMenuItem.Click += new System.EventHandler(this.estadíaToolStripMenuItem_Click);
+            // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -502,6 +511,7 @@
         private System.Windows.Forms.ToolStripMenuItem altaClienteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listadoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modificarOCancelarReservaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem estadíaToolStripMenuItem;
     }
 }
 
