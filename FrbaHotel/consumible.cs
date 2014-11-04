@@ -12,13 +12,29 @@ namespace FrbaHotel
 
         public int id { get; set; }
         public string descripcion { get; set; }
-        public decimal precio { get; set; }
+        public decimal? precio { get; set; }
         
         public consumible() { }
 
         public consumible(int id)
         {
             this.id = id;
+
+            SqlCommand query = new SqlCommand("select * from GAME_OF_QUERYS.consumibles where id=@consumible_id", connect);
+            query.Parameters.AddWithValue("consumible_id", id);
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+
+            if (objReader.Read())
+            {
+                this.descripcion = objReader["descripcion"] as string;
+                this.precio = objReader["precio"] as decimal?;
+            }
+            else
+            {
+                return;
+            }
+            objReader.Close();
         }
         public void insert()
         {
@@ -39,6 +55,9 @@ namespace FrbaHotel
             query.Parameters.AddWithValue("id", this.id);
             query.Parameters.AddWithValue("precio", precio);
             query.Parameters.AddWithValue("descripcion", descripcion);
+
+            query.ExecuteNonQuery();
+            connect.Close();
         }
 
     }

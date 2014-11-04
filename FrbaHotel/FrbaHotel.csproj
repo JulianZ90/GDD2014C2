@@ -247,6 +247,9 @@
     <EmbeddedResource Include="Registrar Consumible\altaConsumible.resx">
       <DependentUpon>altaConsumible.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Registrar Consumible\listadoConsumibles.resx">
+      <DependentUpon>listadoConsumibles.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -266,6 +269,12 @@
     </Compile>
     <Compile Include="Registrar Consumible\altaConsumible.Designer.cs">
       <DependentUpon>altaConsumible.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registrar Consumible\listadoConsumibles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registrar Consumible\listadoConsumibles.Designer.cs">
+      <DependentUpon>listadoConsumibles.cs</DependentUpon>
     </Compile>
     <Compile Include="Registrar Estadia\Form1.cs">
       <SubType>Form</SubType>

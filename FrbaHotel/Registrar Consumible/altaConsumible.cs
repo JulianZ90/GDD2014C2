@@ -24,10 +24,11 @@ namespace FrbaHotel.Registrar_Consumible
 
         }
         //modificacion
-        public altaConsumible(int id)
+        public altaConsumible(int consumible_id)
         {
             InitializeComponent();
-            consumible = new consumible(id);
+            button1.Text = "Modificar";
+            consumible = new consumible(consumible_id);
             cargarConConsumible(consumible);
         }
 
