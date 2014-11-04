@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace FrbaHotel
 {
@@ -13,13 +14,34 @@ namespace FrbaHotel
     {
         private int childFormNumber = 0;
         LoginId Log = null;
+        SqlConnection objConexion = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
+        
 
         public FrmPrincipal(LoginId IdLog)
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterParent;
             Log = IdLog;
+            this.MostrarFuncionalidades();
         }
+
+        private void MostrarFuncionalidades()
+        {
+            ToolStripItemCollection collection = fileMenu.DropDownItems;
+            int idFuncionalidad;   
+            SqlCommand query = new SqlCommand("SELECT id FROM GAME_OF_QUERYS.funcionalidad WHERE id NOT IN (SELECT funcionalidad_id FROM GAME_OF_QUERYS.rol_funcionalidad WHERE rol_id = @id) ORDER BY 1", objConexion);
+            query.Parameters.AddWithValue("@id", Log.Rol_Id);
+            objConexion.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+            while (objReader.Read())
+            {
+                idFuncionalidad = (int)objReader["id"];
+                collection[idFuncionalidad].Visible = false;
+            }
+            objConexion.Close();
+            
+        }
+
 
         private void ShowNewForm(object sender, EventArgs e)
         {

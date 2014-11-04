@@ -145,11 +145,14 @@ insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('ambUsuario')
 insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('abmCliente')
 insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('abmHabitacion')
 insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('abmRegimen')
-insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('generarReserva')
-insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('cancelarReserva')
+insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('Reservas')
 insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('registrarEstadia')
 insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('facturar')
 insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('estadistico')
+insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('abmHotel')
+insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('consumibles')
+
+
 
 insert into GAME_OF_QUERYS.usuario (username,estado) values ('guest', 1 )
 insert into GAME_OF_QUERYS.usuario (username,password, nombre,estado) values ('admin', 'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7', 'Administrador General','1')

@@ -450,7 +450,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 SBquery.Append("SELECT DISTINCT id, tipo_hab_id FROM GAME_OF_QUERYS.habitacion WHERE hotel_id = @hotelId AND estado_habitacion = 1 AND id NOT IN ");
                 SBquery.Append("(SELECT DISTINCT habitacion_id FROM GAME_OF_QUERYS.reserva_habitacion ");
                 SBquery.Append("JOIN GAME_OF_QUERYS.reserva ON (reserva_habitacion.reserva_id = reserva.id) ");
-                SBquery.Append("WHERE ((fecha_inicio > @fechaInicio AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin < @fechaFin)))");
+                SBquery.Append("WHERE reserva.estado_id IN (1, 2, 6) AND ((fecha_inicio > @fechaInicio AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin < @fechaFin)))");
                 query = new SqlCommand(SBquery.ToString(), objConexion);
                 query.Parameters.AddWithValue("@hotelId", HotelId);
                 query.Parameters.AddWithValue("@fechaInicio", this.dateTimeInicio.Value);
@@ -621,7 +621,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         SBquery.Append("SELECT DISTINCT id, tipo_hab_id FROM GAME_OF_QUERYS.habitacion WHERE hotel_id = @hotelId AND estado_habitacion = 1 AND id NOT IN ");
                         SBquery.Append("(SELECT DISTINCT habitacion_id FROM GAME_OF_QUERYS.reserva_habitacion ");
                         SBquery.Append("JOIN GAME_OF_QUERYS.reserva ON (reserva_habitacion.reserva_id = reserva.id) ");
-                        SBquery.Append("WHERE ((fecha_inicio > @fechaInicio AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin < @fechaFin)))");
+                        SBquery.Append("WHERE reserva.estado_id IN (1, 2, 6) AND ((fecha_inicio > @fechaInicio AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin < @fechaFin)))");
                         query = new SqlCommand(SBquery.ToString(), objConexion);
                         query.Parameters.AddWithValue("@hotelId", HotelId);
                         query.Parameters.AddWithValue("@fechaInicio", this.dateTimeInicio.Value);
