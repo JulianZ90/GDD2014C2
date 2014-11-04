@@ -16,12 +16,12 @@ namespace FrbaHotel
         public Cliente Cliente { get; set; }
         public Regimen Regimen { get; set; }
         public EstadoReserva Estado { get; set; }
-        public DateTime FechaRealizacion { get; set; }
+        public DateTime? FechaRealizacion { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
         public Usuario UltimoUsuario { get; set; }
         public string CancelMotivo { get; set; }
-        public DateTime CancelFecha { get; set; }
+        public DateTime? CancelFecha { get; set; }
         public List<Habitacion> Habitaciones { get; set; }
 
     }

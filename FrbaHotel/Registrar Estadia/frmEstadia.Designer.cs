@@ -47,17 +47,18 @@
             this.label11 = new System.Windows.Forms.Label();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
             this.textBox9 = new System.Windows.Forms.TextBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.textBox11 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -164,9 +165,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(13, 234);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(190, 13);
+            this.label8.Size = new System.Drawing.Size(220, 13);
             this.label8.TabIndex = 16;
-            this.label8.Text = "Usuario logueado que cargo la reserva";
+            this.label8.Text = "Usuario logueado que cargo/modif la reserva";
             // 
             // textBox6
             // 
@@ -197,9 +198,15 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(16, 294);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowTemplate.Height = 18;
             this.dataGridView1.Size = new System.Drawing.Size(217, 150);
             this.dataGridView1.TabIndex = 22;
             // 
@@ -236,6 +243,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Días";
             // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(110, 39);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.ReadOnly = true;
+            this.textBox9.Size = new System.Drawing.Size(100, 20);
+            this.textBox9.TabIndex = 29;
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(110, 13);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.ReadOnly = true;
+            this.textBox8.Size = new System.Drawing.Size(100, 20);
+            this.textBox8.TabIndex = 28;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.textBox10);
@@ -250,30 +273,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Cancelación";
             // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(133, 211);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.ReadOnly = true;
-            this.textBox7.Size = new System.Drawing.Size(100, 20);
-            this.textBox7.TabIndex = 27;
-            // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(110, 13);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.ReadOnly = true;
-            this.textBox8.Size = new System.Drawing.Size(100, 20);
-            this.textBox8.TabIndex = 28;
-            // 
-            // textBox9
-            // 
-            this.textBox9.Location = new System.Drawing.Point(110, 39);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.ReadOnly = true;
-            this.textBox9.Size = new System.Drawing.Size(100, 20);
-            this.textBox9.TabIndex = 29;
-            // 
             // textBox10
             // 
             this.textBox10.Location = new System.Drawing.Point(136, 115);
@@ -281,6 +280,14 @@
             this.textBox10.ReadOnly = true;
             this.textBox10.Size = new System.Drawing.Size(100, 20);
             this.textBox10.TabIndex = 29;
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(133, 211);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.ReadOnly = true;
+            this.textBox7.Size = new System.Drawing.Size(100, 20);
+            this.textBox7.TabIndex = 27;
             // 
             // groupBox3
             // 
@@ -338,11 +345,21 @@
             this.label2.TabIndex = 31;
             this.label2.Text = "Nombre";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(390, 450);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(98, 23);
+            this.button2.TabIndex = 32;
+            this.button2.Text = "Grabar Check In";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // frmEstadia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(522, 462);
+            this.ClientSize = new System.Drawing.Size(501, 480);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.textBox7);
             this.Controls.Add(this.groupBox2);
@@ -406,5 +423,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button2;
     }
 }
