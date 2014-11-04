@@ -520,16 +520,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void btnReservar_Click(object sender, EventArgs e)
         {
-            Reserva Reserva = new Reserva();
+            Reserva NuevaReserva = new Reserva();
             EstadoReserva EstadoReserva = new EstadoReserva();
             EstadoReserva.Id = 1;
-            Reserva.Estado = EstadoReserva;
-            Reserva.FechaInicio = this.dateTimeInicio.Value;
-            Reserva.FechaFin = this.dateTimeFin.Value;
-            Reserva.FechaRealizacion = DateTime.Today;
+            NuevaReserva.Estado = EstadoReserva;
+            NuevaReserva.FechaInicio = this.dateTimeInicio.Value;
+            NuevaReserva.FechaFin = this.dateTimeFin.Value;
+            NuevaReserva.FechaRealizacion = DateTime.Today;
             Regimen RegimenReserva = new Regimen();
             RegimenReserva.id = RegimenId;
-            Reserva.Regimen = RegimenReserva;
+            NuevaReserva.Regimen = RegimenReserva;
             Usuario UsiarioReserva = new Usuario();
 
             if (guest)
@@ -537,11 +537,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             else
                 UsiarioReserva.id = Log.Usuario_Id;
 
-            Reserva.UltimoUsuario = UsiarioReserva;
+            NuevaReserva.UltimoUsuario = UsiarioReserva;
 
             foreach (Habitacion Item in lstHabitacionesConfirmadas)
             {
-                Reserva.Habitaciones.Add(Item);
+                NuevaReserva.Habitaciones.Add(Item);
             }
             //hasta aca de la reserva me falta el Id y el cliente
 
