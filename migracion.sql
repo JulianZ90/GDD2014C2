@@ -130,8 +130,8 @@ join GAME_OF_QUERYS.cliente c
 join GAME_OF_QUERYS.estadia e on m.Reserva_Codigo=e.reserva_id
 
 /*cargar factura (89603)*/
-insert into GAME_OF_QUERYS.factura (fecha,estadia_id)
-select distinct CAST(m.Factura_Fecha as DATE), e.id
+insert into GAME_OF_QUERYS.factura (fecha,estadia_id,nro_factura)
+select distinct CAST(m.Factura_Fecha as DATE), e.id, m.Factura_Nro
 from gd_esquema.Maestra m 
 join GAME_OF_QUERYS.estadia e on m.Reserva_Codigo=e.reserva_id
 where m.Factura_Fecha is not null
