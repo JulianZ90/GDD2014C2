@@ -62,12 +62,16 @@ insert into GAME_OF_QUERYS.estado_reserva (descripcion)values('con ingreso')
 /*cargar reserva (100740)*/
 
 set identity_insert GD2C2014.GAME_OF_QUERYS.reserva on
-insert into GAME_OF_QUERYS.reserva(id,cliente_id,regimen_id, fecha_inicio, fecha_fin)
-select distinct m.Reserva_Codigo, c.id, r.id, cast(m.Reserva_Fecha_Inicio as Date), DATEADD (day ,m.Reserva_Cant_Noches , cast(m.Reserva_Fecha_Inicio as Date) )
+insert into GAME_OF_QUERYS.reserva(id,cliente_id,regimen_id, fecha_inicio, fecha_fin,hotel_id)
+select distinct m.Reserva_Codigo, c.id, r.id, cast(m.Reserva_Fecha_Inicio as Date), DATEADD (day ,m.Reserva_Cant_Noches , cast(m.Reserva_Fecha_Inicio as Date) ),h.id
 from gd_esquema.Maestra m
 						join GAME_OF_QUERYS.cliente c on m.cliente_pasaporte_nro=c.nro_identidad and
 														m.Cliente_Mail=c.mail
 						join GAME_OF_QUERYS.regimen r on r.descripcion = m.regimen_descripcion
+						
+						join GAME_OF_QUERYS.hotel h on h.ciudad=m.Hotel_Ciudad and h.calle=m.Hotel_Calle
+							and h.nro_calle=m.Hotel_Nro_Calle
+						
 set identity_insert GD2C2014.GAME_OF_QUERYS.reserva off	
 
 /*cargar reserva_habitacion (100740)*/
