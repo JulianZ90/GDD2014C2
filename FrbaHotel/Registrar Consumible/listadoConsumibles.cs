@@ -41,7 +41,10 @@ namespace FrbaHotel.Registrar_Consumible
 
             StringBuilder query = new StringBuilder();
             query.Append("select distinct * from GAME_OF_QUERYS.consumible ");
-
+            if (textBox9.Text != "")
+                query.Append("and consumible.descripcion like '%" + textBox9.Text + "%'");
+            if (textBox1.Text != "")
+                query.Append("and consumible.precio like '%" + textBox1.Text + "%'");
             SqlCommand objComando = new SqlCommand(query.ToString(), connect);
 
             connect.Open();

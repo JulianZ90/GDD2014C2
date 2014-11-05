@@ -74,6 +74,20 @@ from gd_esquema.Maestra m
 						
 set identity_insert GD2C2014.GAME_OF_QUERYS.reserva off	
 
+/* cargar estado_id en reserva*/
+--reservas que tienen estadia 
+update GAME_OF_QUERYS.reserva set estado_id = (select id from GAME_OF_QUERYS.estado_reserva where descripcion='con ingreso')
+where id in (select reserva_id from GAME_OF_QUERYS.estadia)
+
+--reservas viejas que no aparecen en la tabla de estadia 
+update GAME_OF_QUERYS.reserva set estado_id = (select id from GAME_OF_QUERYS.estado_reserva where descripcion='cancelada por No-Show')
+where fecha_inicio < (select MAX(check_out) from GAME_OF_QUERYS.estadia)	--max(check_out) es la maxima fecha que aparece en una estadia, entoces la tomo como el 'dia de hoy'
+and id not in (select reserva_id from GAME_OF_QUERYS.estadia)
+
+--reservas proximas
+update GAME_OF_QUERYS.reserva set estado_id = (select id from GAME_OF_QUERYS.estado_reserva where descripcion='correcta')
+where fecha_inicio >= (select MAX(check_out) from GAME_OF_QUERYS.estadia)
+
 /*cargar reserva_habitacion (100740)*/
 
 insert into GAME_OF_QUERYS.reserva_habitacion ( reserva_id, habitacion_id)
@@ -136,14 +150,13 @@ from gd_esquema.Maestra m
 join GAME_OF_QUERYS.estadia e on m.Reserva_Codigo=e.reserva_id
 where m.Factura_Fecha is not null
 
-
-
+/*cargar rol (4)*/
 insert into GAME_OF_QUERYS.rol (descripcion, estado) values ('Administrador',1)
 insert into GAME_OF_QUERYS.rol (descripcion, estado) values ('Recepcionista',1)
 insert into GAME_OF_QUERYS.rol (descripcion, estado) values ('Guest',1)
 insert into GAME_OF_QUERYS.rol (descripcion, estado) values ('admin',1)
 
-
+/*cargar funcionalidad (11)*/
 insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('abmRol')
 insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('ambUsuario')
 insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('abmCliente')
@@ -156,8 +169,7 @@ insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('estadistico')
 insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('abmHotel')
 insert into GAME_OF_QUERYS.funcionalidad (descripcion) values ('consumibles')
 
-
-
+/*cargar usuario (2)*/
 insert into GAME_OF_QUERYS.usuario (username,estado) values ('guest', 1 )
 insert into GAME_OF_QUERYS.usuario (username,password, nombre,estado) values ('admin', 'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7', 'Administrador General','1')
 
@@ -167,18 +179,3 @@ insert into GAME_OF_QUERYS.hotel_usuario_rol (hotel_id, usuario_id, rol_id) valu
 /* Inserto las funcionalidades del rol admin (todas) */
 insert into GAME_OF_QUERYS.rol_funcionalidad(rol_id, funcionalidad_id)
 (select r.id, f.id from GAME_OF_QUERYS.rol r, GAME_OF_QUERYS.funcionalidad f WHERE r.descripcion = 'admin')
-
-
-/* Estado de reservas */
---reservas que tienen estadia --> estado: 6 - con ingreso
-update GAME_OF_QUERYS.reserva set estado_id = 6
-where id in (select reserva_id from GAME_OF_QUERYS.estadia)
-
---reservas viejas que no aparecen en la tabla de estadia --> estado: 5 - cancelada por no-show
-update GAME_OF_QUERYS.reserva set estado_id = 5
-where fecha_inicio < (select MAX(check_out) from GAME_OF_QUERYS.estadia)	--max(check_out) es la maxima fecha que aparece en una estadia, entoces la tomo como el 'dia de hoy'
-and id not in (select reserva_id from GAME_OF_QUERYS.estadia)
-
---reservas proximas --> estado: 1 - correcta (por ahora no hay ninguna)
-update GAME_OF_QUERYS.reserva set estado_id = 1
-where fecha_inicio >= (select MAX(check_out) from GAME_OF_QUERYS.estadia)
