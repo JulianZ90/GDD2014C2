@@ -34,8 +34,8 @@ namespace FrbaHotel.Registrar_Consumible
 
         private void button1_Click(object sender, EventArgs e)
         {
-                consumible.precio = Convert.ToDecimal(textBox1.Text);
-                consumible.descripcion = richTextBox1.Text;
+            if (textBox1.Text != "") consumible.precio = Convert.ToDecimal(textBox1.Text);
+            if (textBox2.Text != "") consumible.descripcion = textBox2.Text;
 
                 if (consumible.id < 1)
                 {
@@ -54,12 +54,34 @@ namespace FrbaHotel.Registrar_Consumible
          private void cargarConConsumible(consumible c)
         {
             textBox1.Text = Convert.ToString(c.precio);
-            richTextBox1.Text = c.descripcion;
+            textBox2.Text = c.descripcion;
         }
 
          private void label1_Click(object sender, EventArgs e)
          {
 
+         }
+
+         private void button2_Click(object sender, EventArgs e)
+         {
+                 this.textBox1.Text = string.Empty;
+                 this.textBox2.Text = string.Empty;
+         }
+
+         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+         {
+          if (Char.IsDigit(e.KeyChar) | (e.KeyChar == ',') | (e.KeyChar == '.' ) ) //Al pulsar un numero o coma o punto 
+            {
+                e.Handled = false; //Se acepta
+            }
+            else if (Char.IsControl(e.KeyChar)) //Al pulsar teclas como Borrar y eso.
+            {
+                e.Handled = false; //Se acepta 
+            }
+            else //Para todo lo demas
+            {
+                e.Handled = true; //No se acepta
+            }
          }
         
     }

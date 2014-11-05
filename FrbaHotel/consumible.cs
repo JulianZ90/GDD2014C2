@@ -20,7 +20,7 @@ namespace FrbaHotel
         {
             this.id = id;
 
-            SqlCommand query = new SqlCommand("select * from GAME_OF_QUERYS.consumibles where id=@consumible_id", connect);
+            SqlCommand query = new SqlCommand("select * from GAME_OF_QUERYS.consumible where id=@consumible_id", connect);
             query.Parameters.AddWithValue("consumible_id", id);
             connect.Open();
             SqlDataReader objReader = query.ExecuteReader();

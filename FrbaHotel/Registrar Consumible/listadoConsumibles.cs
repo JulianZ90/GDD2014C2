@@ -19,7 +19,7 @@ namespace FrbaHotel.Registrar_Consumible
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click_1(object sender, EventArgs e)
         {
             dataGridView1.Columns.Clear();
 
@@ -73,6 +73,12 @@ namespace FrbaHotel.Registrar_Consumible
                 modif.Owner = this;
                 modif.ShowDialog();
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.textBox9.Text = string.Empty;
+            this.textBox1.Text = string.Empty;
         }
     }
 }
