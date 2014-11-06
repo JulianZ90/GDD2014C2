@@ -58,29 +58,32 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void getReserva(int id)
         {
-            string query_str = consultaBase +  @"where reserva.id=@reserva ";
+            string query_str = consultaBase + @"where reserva.id=@reserva and reserva.hotel_id=@hotel ";
             SqlCommand query = new SqlCommand(query_str, connect);
             string q = query.CommandText;
             query.Parameters.AddWithValue("reserva", id);
+            query.Parameters.AddWithValue("hotel", ((FrmPrincipal)this.MdiParent).Log.Hotel_Id);
             connect.Open();
             SqlDataReader objReader = query.ExecuteReader();
+            
 
             procesarResultadosBusqueda(objReader);
-
             connect.Close();
         }
 
         private void getReserva(string habitaciones)
         {
-            string query_str = consultaBase + @"where habitacion.nro in (@nro) ";
+            string query_str = consultaBase + @"where reserva.check_in=(select MAX(check_in) from GAME_OF_QUERYS.reserva ) 
+                                            and habitacion.nro in (@nro) and reserva.hotel_id=@hotel and reserva.estado_id=6 ";
             SqlCommand query = new SqlCommand(query_str, connect);
             string q = query.CommandText;
             query.Parameters.AddWithValue("nro", habitaciones);
+            query.Parameters.AddWithValue("hotel", ((FrmPrincipal)this.MdiParent).Log.Hotel_Id);
             connect.Open();
             SqlDataReader objReader = query.ExecuteReader();
+            
 
             procesarResultadosBusqueda(objReader);
-
             connect.Close();
         }
 
@@ -179,6 +182,8 @@ namespace FrbaHotel.Registrar_Estadia
 
                     habs.Add(hab);
                 } while (objReader.Read());
+
+                
             }
         }
 
@@ -191,7 +196,7 @@ namespace FrbaHotel.Registrar_Estadia
             if (reserva.Estado != null)
             {
                 textBox4.Text = reserva.Estado.ToString();
-                if (reserva.Estado.isCancel())
+                if (reserva.isCancel())
                 {
                     groupBox2.Enabled = true;
                     textBox4.BackColor = Color.Salmon;
@@ -220,8 +225,18 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void button1_Click(object sender, EventArgs e)
         {
-            getReserva(Int32.Parse( textBox1.Text));
+            if (textBox1.Text == "") return;
+            if (reserva == null) return;
+
+            getReserva(Int32.Parse(textBox1.Text));
             completarFormConReserva();
+
+            if (reserva.tieneIngreso())
+            {
+                button2.Enabled = false;
+                button3.Enabled = false;
+            }
+
             button3.Enabled = true;
         }
 

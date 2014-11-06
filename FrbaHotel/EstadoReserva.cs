@@ -18,9 +18,6 @@ namespace FrbaHotel
                 return Descripcion;
         }
 
-        public bool isCancel()
-        {
-            return Descripcion.Contains("cancelada");
-        }
+        
     }
 }

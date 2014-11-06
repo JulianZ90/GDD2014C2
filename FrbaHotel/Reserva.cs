@@ -65,6 +65,17 @@ namespace FrbaHotel
 
         public void hacerCheckout()
         {}
+
+
+        public bool isCancel()
+        {
+            return this.Estado.Descripcion.Contains("cancelada");
+        }
+
+        public bool tieneIngreso()
+        { 
+            return this.Estado.Descripcion == "con ingreso";
+        }
  
     }
 }
