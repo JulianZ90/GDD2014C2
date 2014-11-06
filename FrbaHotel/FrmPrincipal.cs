@@ -194,9 +194,16 @@ namespace FrbaHotel
         
         }
 
-        private void estadíaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void checkInToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form childForm = new Registrar_Estadia.frmEstadia();
+            childForm.MdiParent = this;
+            childForm.Show();
+        }
+
+        private void checkOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form childForm = new Registrar_Estadia.frmEstadia("checkout");
             childForm.MdiParent = this;
             childForm.Show();
         }

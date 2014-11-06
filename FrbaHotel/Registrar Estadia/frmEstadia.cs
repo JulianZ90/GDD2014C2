@@ -17,19 +17,23 @@ namespace FrbaHotel.Registrar_Estadia
 
         public frmEstadia()
         {
+            //checkin
             InitializeComponent();
-            dataGridView1.Rows.Clear();
-            dataGridView1.ColumnCount = 2;
-            dataGridView1.Columns[0].Name = "Nro";
-            dataGridView1.Columns[1].Name = "Tipo";
+            panel1.Show();
+            panel2.Hide();
+            panel3.Hide();
+            dateTimePicker1.Hide();
+        }
 
-            dataGridView2.ColumnCount = 4;
-            dataGridView2.Columns[0].Name = "Tipo";
-            dataGridView2.Columns[1].Name = "Id";
-            dataGridView2.Columns[2].Name = "Nombre";
-            dataGridView2.Columns[3].Name = "Apellido";
-
-
+        public frmEstadia(string s)
+        {
+            //checkout
+            InitializeComponent();
+            panel1.Hide();
+            panel2.Show();
+            groupBox2.Show();
+            button2.Text = "Registrar Checkout y facturar";
+            button3.Hide();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -180,7 +184,7 @@ namespace FrbaHotel.Registrar_Estadia
             monthCalendar1.SelectionStart = reserva.FechaInicio;
             monthCalendar1.SelectionEnd = reserva.FechaFin;
             textBox6.Text = reserva.CancelMotivo;
-            textBox10.Text = reserva.CancelFecha.Value.ToShortDateString();
+            textBox10.Text = reserva.CancelFecha == null ? "" : reserva.CancelFecha.Value.ToShortDateString();
 
             
             foreach (Habitacion hab in reserva.Habitaciones)
@@ -191,7 +195,7 @@ namespace FrbaHotel.Registrar_Estadia
 
             refrescarListaHuespedes();
 
-            
+            button3.Enabled = true;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -221,6 +225,53 @@ namespace FrbaHotel.Registrar_Estadia
                 string[] row = new string[] { h.tipo_identidad.ToString(), h.nro_identidad.ToString(), h.nombre, h.apellido };
                 dataGridView2.Rows.Add(row);
             }
+        }
+
+        private void frmEstadia_Load(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+            dataGridView1.ColumnCount = 2;
+            dataGridView1.Columns[0].Name = "Nro";
+            dataGridView1.Columns[1].Name = "Tipo";
+
+            dataGridView2.ColumnCount = 4;
+            dataGridView2.Columns[0].Name = "Tipo";
+            dataGridView2.Columns[1].Name = "Id";
+            dataGridView2.Columns[2].Name = "Nombre";
+            dataGridView2.Columns[3].Name = "Apellido";
+
+            dataGridView3.ColumnCount = 3;
+            dataGridView3.Columns[0].Name = "Descripcion";
+            dataGridView3.Columns[1].Name = "Precio";
+            dataGridView3.Columns[2].Name = "Cantidad";
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            using (Registrar_Consumible.listadoConsumibles busca = new Registrar_Consumible.listadoConsumibles("buscar"))
+            {
+                if (busca.ShowDialog(this) == DialogResult.OK)
+                {
+                    consumible h = busca.getConsumibleSeleccionado();
+                    reserva.consumibles.Add(h);
+                    refrescarListaConsumibles();
+                }
+            }
+        }
+
+        private void refrescarListaConsumibles()
+        {
+            dataGridView3.Rows.Clear();
+            foreach (consumible h in reserva.consumibles)
+            {
+                string[] row = new string[] { h.descripcion, h.precio.ToString(), "1" };
+                dataGridView2.Rows.Add(row);
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            button5.Enabled = true;
         }
 
     }

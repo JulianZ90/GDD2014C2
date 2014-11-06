@@ -13,16 +13,34 @@ namespace FrbaHotel.Registrar_Consumible
     public partial class listadoConsumibles : Form
     {
         SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
+		consumible consumibleSeleccionado;
+        bool seleccionar = false;
 
         public listadoConsumibles()
         {
             InitializeComponent();
         }
 
+        public listadoConsumibles(string s)
+        {
+            InitializeComponent();
+            seleccionar = true;
+        }
         private void button1_Click_1(object sender, EventArgs e)
         {
             dataGridView1.Columns.Clear();
 
+            if (seleccionar)
+            {
+                // Add a button column ALTA. 
+                DataGridViewButtonColumn buttonColumnSel = new DataGridViewButtonColumn();
+                buttonColumnSel.HeaderText = "S";
+                buttonColumnSel.Name = "sELECCIONAR";
+                buttonColumnSel.Text = "Seleccionar";
+                buttonColumnSel.UseColumnTextForButtonValue = true;
+                buttonColumnSel.Width = 70;
+                dataGridView1.Columns.Add(buttonColumnSel);
+            }
             // Add a button column ALTA. 
             DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
             buttonColumn.HeaderText = "M";
@@ -66,7 +84,10 @@ namespace FrbaHotel.Registrar_Consumible
         void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Ignore clicks that are not on button cells.  
-            if (e.RowIndex < 0 || e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index)
+            if (e.RowIndex < 0 ||
+                    (e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index &&
+                    e.ColumnIndex != dataGridView1.Columns["sELECCIONAR"].Index)
+                    )
                 return;
 
             // Retrieve the consumible_id object from the "id" cell.
@@ -77,6 +98,12 @@ namespace FrbaHotel.Registrar_Consumible
                 Registrar_Consumible.altaConsumible modif = new Registrar_Consumible.altaConsumible(consumible_id);
                 modif.Owner = this;
                 modif.ShowDialog();
+            }
+            if (e.ColumnIndex == dataGridView1.Columns["sELECCIONAR"].Index)
+            {
+                consumibleSeleccionado = ((List<consumible>)dataGridView1.DataSource).ElementAt(e.RowIndex);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
         }
 
@@ -99,6 +126,11 @@ namespace FrbaHotel.Registrar_Consumible
             {
                 e.Handled = true; //No se acepta
             }
+        }
+
+        public consumible getConsumibleSeleccionado()
+        {
+            return consumibleSeleccionado;
         }
     }
 }

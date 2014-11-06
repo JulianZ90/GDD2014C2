@@ -28,6 +28,7 @@ namespace FrbaHotel
         public Usuario user_checkin { get; set; }
         public Usuario user_checkout { get; set; }
         public List<Cliente> huespedes { get; set; }
+        public List<consumible> consumibles { get; set; }
         
         public Reserva()
         {
