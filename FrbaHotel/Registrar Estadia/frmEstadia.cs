@@ -14,31 +14,8 @@ namespace FrbaHotel.Registrar_Estadia
     {
         SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
         Reserva reserva;
-
-        public frmEstadia()
-        {
-            //checkin
-            InitializeComponent();
-            panel1.Show();
-            panel2.Hide();
-            panel3.Hide();
-            dateTimePicker1.Hide();
-        }
-
-        public frmEstadia(string s)
-        {
-            //checkout
-            InitializeComponent();
-            panel1.Hide();
-            panel2.Show();
-            groupBox2.Show();
-            button2.Text = "Registrar Checkout y facturar";
-            button3.Hide();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            string query_str = @"select reserva.*, regimen.descripcion as regimen, estado_reserva.descripcion as estado,
+        bool checkout = false;
+        string consultaBase = @"select reserva.*, regimen.descripcion as regimen, estado_reserva.descripcion as estado,
                 cliente.id as cliente_id, cliente.nombre, cliente.apellido, cliente.nro_identidad,cliente.tipo_identidad_id as tipo_id , tipo_identidad.nombre as tipo,
                 reserva_habitacion.habitacion_id,
                 habitacion.nro as hab_nro,tipo_habitacion.descripcion as hab_tipo,
@@ -54,14 +31,61 @@ namespace FrbaHotel.Registrar_Estadia
                 join GAME_OF_QUERYS.habitacion on reserva_habitacion.habitacion_id = habitacion.id
                 left join GAME_OF_QUERYS.tipo_habitacion on habitacion.tipo_hab_id = tipo_habitacion.id
                 left join GAME_OF_QUERYS.usuario on reserva.usuario_ultima_modif_id = usuario.id
-                where reserva.id=@reserva ";
+                ";
 
+        public frmEstadia()
+        {
+            //checkin
+            InitializeComponent();
+            panel1.Show();
+            panel2.Hide();
+            panel3.Hide();
+            dateTimePicker1.Hide();
+        }
+
+        public frmEstadia(string s)
+        {
+            //checkout
+            InitializeComponent();
+            checkout = true;
+            panel1.Hide();
+            panel2.Show();
+            groupBox2.Show();
+            button2.Text = "Registrar Checkout y facturar";
+            button3.Hide();
+        }
+
+
+        private void getReserva(int id)
+        {
+            string query_str = consultaBase +  @"where reserva.id=@reserva ";
             SqlCommand query = new SqlCommand(query_str, connect);
             string q = query.CommandText;
-            query.Parameters.AddWithValue("reserva", textBox1.Text);            
+            query.Parameters.AddWithValue("reserva", id);
             connect.Open();
             SqlDataReader objReader = query.ExecuteReader();
 
+            procesarResultadosBusqueda(objReader);
+
+            connect.Close();
+        }
+
+        private void getReserva(string habitaciones)
+        {
+            string query_str = consultaBase + @"where habitacion.nro in (@nro) ";
+            SqlCommand query = new SqlCommand(query_str, connect);
+            string q = query.CommandText;
+            query.Parameters.AddWithValue("nro", habitaciones);
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+
+            procesarResultadosBusqueda(objReader);
+
+            connect.Close();
+        }
+
+        private void procesarResultadosBusqueda(SqlDataReader objReader)
+        {
             if (objReader.HasRows)
             {
                 objReader.Read();
@@ -70,10 +94,10 @@ namespace FrbaHotel.Registrar_Estadia
                 List<Cliente> huespedes = new List<Cliente>();
                 reserva.Habitaciones = habs;
                 reserva.huespedes = huespedes;
-                
+
 
                 reserva.Id = (int)objReader["id"];
-                
+
                 if (objReader["cliente_id"] != DBNull.Value)
                 {
                     reserva.Cliente = new Cliente();
@@ -81,7 +105,7 @@ namespace FrbaHotel.Registrar_Estadia
                     reserva.Cliente.nombre = objReader["nombre"] as string;
                     reserva.Cliente.apellido = objReader["apellido"] as string;
                     reserva.Cliente.nro_identidad = objReader["nro_identidad"] as long?;
-                    
+
                     if (objReader["tipo_id"] != DBNull.Value)
                     {
                         TipoIdentidad tipo = new TipoIdentidad();
@@ -124,7 +148,7 @@ namespace FrbaHotel.Registrar_Estadia
                 else
                     reserva.FechaRealizacion = null;
 
-               
+
                 reserva.FechaInicio = (DateTime)objReader["fecha_inicio"];
                 reserva.FechaFin = (DateTime)objReader["fecha_fin"];
 
@@ -156,13 +180,10 @@ namespace FrbaHotel.Registrar_Estadia
                     habs.Add(hab);
                 } while (objReader.Read());
             }
-            else
-            {
-                return;
-            }
+        }
 
-            connect.Close();
-
+        private void completarFormConReserva()
+        {
             textBox2.Text = reserva.Cliente.nombre + " " + reserva.Cliente.apellido;
             textBox12.Text = reserva.Cliente.tipo_identidad == null ? "" : reserva.Cliente.tipo_identidad.ToString();
             textBox11.Text = reserva.Cliente.nro_identidad.ToString();
@@ -170,13 +191,14 @@ namespace FrbaHotel.Registrar_Estadia
             if (reserva.Estado != null)
             {
                 textBox4.Text = reserva.Estado.ToString();
-                if(reserva.Estado.isCancel() ){
+                if (reserva.Estado.isCancel())
+                {
                     groupBox2.Enabled = true;
                     textBox4.BackColor = Color.Salmon;
                 }
             }
 
-            textBox3.Text = reserva.Regimen == null ? "": reserva.Regimen.ToString();
+            textBox3.Text = reserva.Regimen == null ? "" : reserva.Regimen.ToString();
             textBox7.Text = reserva.FechaRealizacion == null ? "" : reserva.FechaRealizacion.Value.ToShortDateString();
             textBox5.Text = reserva.UltimoUsuario == null ? "" : reserva.UltimoUsuario.username;
             textBox8.Text = reserva.FechaInicio.ToShortDateString();
@@ -186,7 +208,7 @@ namespace FrbaHotel.Registrar_Estadia
             textBox6.Text = reserva.CancelMotivo;
             textBox10.Text = reserva.CancelFecha == null ? "" : reserva.CancelFecha.Value.ToShortDateString();
 
-            
+            dataGridView1.Rows.Clear();
             foreach (Habitacion hab in reserva.Habitaciones)
             {
                 string[] row = new string[] { hab.Numero.ToString(), hab.Tipo.ToString() };
@@ -194,14 +216,28 @@ namespace FrbaHotel.Registrar_Estadia
             }
 
             refrescarListaHuespedes();
+        }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            getReserva(Int32.Parse( textBox1.Text));
+            completarFormConReserva();
             button3.Enabled = true;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            reserva.checkin = DateTime.Today.Date;
-            reserva.hacerCheckin();
+            if (!checkout)
+            {
+                reserva.checkin = DateTime.Today.Date;
+                reserva.hacerCheckin();
+            }
+            else
+            {
+                reserva.checkout = dateTimePicker1.Value.Date;
+                reserva.hacerCheckout();
+            }
+           
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -271,6 +307,8 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void button4_Click(object sender, EventArgs e)
         {
+            getReserva(textBox13.Text);
+            completarFormConReserva();
             button5.Enabled = true;
         }
 

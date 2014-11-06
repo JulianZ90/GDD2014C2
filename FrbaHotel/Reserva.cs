@@ -61,6 +61,10 @@ namespace FrbaHotel
             connect.Close();
 
         }
+
+
+        public void hacerCheckout()
+        {}
  
     }
 }
