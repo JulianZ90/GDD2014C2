@@ -24,5 +24,12 @@ namespace FrbaHotel
         public DateTime? CancelFecha { get; set; }
         public List<Habitacion> Habitaciones { get; set; }
 
+        public Hotel hotel { get; set; }
+        public DateTime? checkin { get; set; }
+        public DateTime? checkout { get; set; }
+        public Usuario user_checkin { get; set; }
+        public Usuario user_checkout { get; set; }
+        public List<Cliente> huespedes { get; set; }
+       
     }
 }
