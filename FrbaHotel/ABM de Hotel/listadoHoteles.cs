@@ -177,5 +177,116 @@ namespace FrbaHotel.ABM_de_Hotel
             connect.Close();
             comboBox1.DataSource = lista;
         }
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            {
+                e.Handled = false; //Se acepta
+            }
+            else if (Char.IsControl(e.KeyChar)) //Al pulsar teclas como Borrar y eso.
+            {
+                e.Handled = false; //Se acepta 
+            }
+            else //Para todo lo demas
+            {
+                e.Handled = true; //No se acepta
+            }
+        }
+        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            {
+                e.Handled = false; //Se acepta
+            }
+            else if (Char.IsControl(e.KeyChar)) //Al pulsar teclas como Borrar y eso.
+            {
+                e.Handled = false; //Se acepta 
+            }
+            else //Para todo lo demas
+            {
+                e.Handled = true; //No se acepta
+            }
+        }
+        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            {
+                e.Handled = false; //Se acepta
+            }
+            else if (Char.IsControl(e.KeyChar)) //Al pulsar teclas como Borrar y eso.
+            {
+                e.Handled = false; //Se acepta 
+            }
+            else //Para todo lo demas
+            {
+                e.Handled = true; //No se acepta
+            }
+        }
+        private void textBox4_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            {
+                e.Handled = false; //Se acepta
+            }
+            else if (Char.IsControl(e.KeyChar)) //Al pulsar teclas como Borrar y eso.
+            {
+                e.Handled = false; //Se acepta 
+            }
+            else //Para todo lo demas
+            {
+                e.Handled = true; //No se acepta
+            }
+        }
+        private void textBox5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+        private void textBox6_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            {
+                e.Handled = false; //Se acepta
+            }
+            else if (Char.IsControl(e.KeyChar)) //Al pulsar teclas como Borrar y eso.
+            {
+                e.Handled = false; //Se acepta 
+            }
+            else //Para todo lo demas
+            {
+                e.Handled = true; //No se acepta
+            }
+        }
+        private void textBox7_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            {
+                e.Handled = false; //Se acepta
+            }
+            else if (Char.IsControl(e.KeyChar)) //Al pulsar teclas como Borrar y eso.
+            {
+                e.Handled = false; //Se acepta 
+            }
+            else //Para todo lo demas
+            {
+                e.Handled = true; //No se acepta
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.textBox1.Text = string.Empty;
+            this.textBox2.Text = string.Empty;
+            this.textBox3.Text = string.Empty;
+            this.textBox4.Text = string.Empty;
+            this.textBox5.Text = string.Empty;
+            this.textBox6.Text = string.Empty;
+            this.textBox7.Text = string.Empty;
+            this.textBox8.Text = string.Empty;
+            this.checkBox2.Checked = false;
+            this.checkBox3.Checked = false;
+            this.dateTimePicker1.Value = DateTime.Today;
+            this.dataGridView1.Columns.Clear();
+            this.comboBox1.SelectedValue = 0;
+        }
     }
 }
