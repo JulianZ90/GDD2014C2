@@ -263,7 +263,87 @@ namespace FrbaHotel.ABM_de_Usuario
             else
                 comboBox3.Enabled = false;
         }
+        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar)) //Al pulsar un numero
+            {
+                e.Handled = false; //Se acepta
+            }
+            else if (Char.IsControl(e.KeyChar)) //Al pulsar teclas como Borrar y eso.
+            {
+                e.Handled = false; //Se acepta 
+            }
+            else //Para todo lo demas
+            {
+                e.Handled = true; //No se acepta
+            }
+        }
+        private void textBox4_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar)) //Al pulsar un numero
+            {
+                e.Handled = false; //Se acepta
+            }
+            else if (Char.IsControl(e.KeyChar)) //Al pulsar teclas como Borrar y eso.
+            {
+                e.Handled = false; //Se acepta 
+            }
+            else //Para todo lo demas
+            {
+                e.Handled = true; //No se acepta
+            }
+        }
+        private void textBox6_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero
+            {
+                e.Handled = false; //Se acepta
+            }
+            else if (Char.IsControl(e.KeyChar)) //Al pulsar teclas como Borrar y eso.
+            {
+                e.Handled = false; //Se acepta 
+            }
+            else //Para todo lo demas
+            {
+                e.Handled = true; //No se acepta
+            }
+        }
+        private void textBox9_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero
+            {
+                e.Handled = false; //Se acepta
+            }
+            else if (Char.IsControl(e.KeyChar)) //Al pulsar teclas como Borrar y eso.
+            {
+                e.Handled = false; //Se acepta 
+            }
+            else //Para todo lo demas
+            {
+                e.Handled = true; //No se acepta
+            }
+        }
 
-      
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.dateTimePicker1.Value = DateTime.Today;
+            this.textBox1.Text = string.Empty;
+            this.textBox2.Text = string.Empty;
+            this.textBox3.Text = string.Empty;
+            this.textBox4.Text = string.Empty;
+            this.textBox5.Text = string.Empty;
+            this.textBox6.Text = string.Empty;
+            this.textBox7.Text = string.Empty;
+            this.textBox9.Text = string.Empty;
+            this.dataGridView1.Columns.Clear();       
+            this.comboBox1.SelectedValue = 0;
+            this.comboBox2.SelectedValue = 0;
+            this.comboBox3.SelectedValue = 0;
+            this.checkBox1.Checked = false;
+            this.checkBox2.Checked = false;
+            this.checkBox3.Checked = false;
+            this.checkBox4.Checked = false;
+            this.checkBox5.Checked = false;
+        }
     }
 }

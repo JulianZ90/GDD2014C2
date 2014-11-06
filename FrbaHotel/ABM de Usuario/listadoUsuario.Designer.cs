@@ -200,6 +200,7 @@
             this.button1.TabIndex = 26;
             this.button1.Text = "Limpiar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // dateTimePicker1
             // 
@@ -216,6 +217,7 @@
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(121, 20);
             this.textBox9.TabIndex = 24;
+            this.textBox9.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox9_KeyPress);
             // 
             // label10
             // 
@@ -275,6 +277,7 @@
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(121, 20);
             this.textBox6.TabIndex = 16;
+            this.textBox6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox6_KeyPress);
             // 
             // label6
             // 
@@ -307,6 +310,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(121, 20);
             this.textBox4.TabIndex = 12;
+            this.textBox4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox4_KeyPress);
             // 
             // label4
             // 
@@ -323,6 +327,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(121, 20);
             this.textBox3.TabIndex = 10;
+            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox3_KeyPress);
             // 
             // label3
             // 
