@@ -15,6 +15,9 @@ namespace FrbaHotel.ABM_de_Cliente
         SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
         bool reserva = false;
         Reserva Reserva = null;
+        bool seleccionar = false;
+        Cliente clienteSeleccionado;
+
 
         public listadoClientes()
         {
@@ -32,12 +35,38 @@ namespace FrbaHotel.ABM_de_Cliente
             Reserva = NuevaReserva;
         }
 
+        public listadoClientes(string s)
+        {
+            InitializeComponent();
+            llenarTipoDoc();
+            llenarPais();
+            seleccionar = true;
+        }
+
+        public Cliente getClienteSeleccionado()
+        {
+            return clienteSeleccionado;
+        }
+
+        
+
         private void button1_Click(object sender, EventArgs e)
         {
             dataGridView1.Columns.Clear();
 
             if (!reserva)
             {
+                if (seleccionar) {
+                    // Add a button column ALTA. 
+                    DataGridViewButtonColumn buttonColumnSel = new DataGridViewButtonColumn();
+                    buttonColumnSel.HeaderText = "S";
+                    buttonColumnSel.Name = "sELECCIONAR";
+                    buttonColumnSel.Text = "Seleccionar";
+                    buttonColumnSel.UseColumnTextForButtonValue = true;
+                    buttonColumnSel.Width = 70;
+                    dataGridView1.Columns.Add(buttonColumnSel);
+                }
+
                 // Add a button column ALTA. 
                 DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
                 buttonColumn.HeaderText = "M";
@@ -146,7 +175,10 @@ namespace FrbaHotel.ABM_de_Cliente
             if (!reserva)
             {
                 // Ignore clicks that are not on button cells.  
-                if (e.RowIndex < 0 || e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index)
+                if (e.RowIndex < 0 || 
+                    (e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index &&
+                    e.ColumnIndex != dataGridView1.Columns["sELECCIONAR"].Index)
+                    )
                     return;
 
                 // Retrieve the cliente_id object from the "id" cell.
@@ -157,6 +189,13 @@ namespace FrbaHotel.ABM_de_Cliente
                     ABM_de_Cliente.altaCliente modif = new ABM_de_Cliente.altaCliente(cliente_id);
                     modif.Owner = this;
                     modif.ShowDialog();
+                }
+                
+                if (e.ColumnIndex == dataGridView1.Columns["sELECCIONAR"].Index)
+                {
+                    clienteSeleccionado = ((List<Cliente>)dataGridView1.DataSource).ElementAt(e.RowIndex);
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
                 }
             }
             else
@@ -261,6 +300,11 @@ namespace FrbaHotel.ABM_de_Cliente
                 dateTimePicker1.Enabled = true;
             else
                 dateTimePicker1.Enabled = false;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            new ABM_de_Cliente.altaCliente().ShowDialog();
         }
 
         

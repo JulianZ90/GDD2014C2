@@ -18,6 +18,18 @@ namespace FrbaHotel.Registrar_Estadia
         public frmEstadia()
         {
             InitializeComponent();
+            dataGridView1.Rows.Clear();
+            dataGridView1.ColumnCount = 2;
+            dataGridView1.Columns[0].Name = "Nro";
+            dataGridView1.Columns[1].Name = "Tipo";
+
+            dataGridView2.ColumnCount = 4;
+            dataGridView2.Columns[0].Name = "Tipo";
+            dataGridView2.Columns[1].Name = "Id";
+            dataGridView2.Columns[2].Name = "Nombre";
+            dataGridView2.Columns[3].Name = "Apellido";
+
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -97,6 +109,7 @@ namespace FrbaHotel.Registrar_Estadia
                 {
                     Regimen regimen = new Regimen();
                     regimen.descripcion = objReader["regimen"] as string;
+                    reserva.Regimen = regimen;
                 }
                 else
                     reserva.Regimen = null;
@@ -169,22 +182,15 @@ namespace FrbaHotel.Registrar_Estadia
             textBox6.Text = reserva.CancelMotivo;
             textBox10.Text = reserva.CancelFecha.Value.ToShortDateString();
 
-            dataGridView1.Rows.Clear();
-            dataGridView1.ColumnCount = 2;
-            dataGridView1.Columns[0].Name = "Nro";
-            dataGridView1.Columns[1].Name = "Tipo";
+            
             foreach (Habitacion hab in reserva.Habitaciones)
             {
                 string[] row = new string[] { hab.Numero.ToString(), hab.Tipo.ToString() };
                 dataGridView1.Rows.Add(row);
             }
 
-            dataGridView2.Rows.Clear();
-            dataGridView2.ColumnCount = 4;
-            dataGridView2.Columns[0].Name = "Tipo";
-            dataGridView2.Columns[1].Name = "Id";
-            dataGridView2.Columns[2].Name = "Nombre";
-            dataGridView2.Columns[3].Name = "Apellido";
+            
+
             foreach (Cliente h in reserva.huespedes)
             {
                 string[] row = new string[] { h.tipo_identidad.ToString(), h.nro_identidad.ToString(), h.nombre, h.apellido };
@@ -197,6 +203,17 @@ namespace FrbaHotel.Registrar_Estadia
 
         }
 
-
+        private void button3_Click(object sender, EventArgs e)
+        {
+            using (ABM_de_Cliente.listadoClientes busca = new ABM_de_Cliente.listadoClientes("buscar"))
+            {
+                if (busca.ShowDialog(this) == DialogResult.OK)
+                {
+                    Cliente h = busca.getClienteSeleccionado();
+                    string[] row = new string[] { h.tipo_identidad.ToString(), h.nro_identidad.ToString(), h.nombre, h.apellido };
+                    dataGridView2.Rows.Add(row);
+                }
+            }
+        }
     }
 }
