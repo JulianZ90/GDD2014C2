@@ -59,6 +59,16 @@ namespace FrbaHotel
             query.ExecuteNonQuery();
             connect.Close();
         }
+        public void delete()
+        {
+            SqlCommand query = new SqlCommand("delete from GAME_OF_QUERYS.consumible where id = @id", connect);
+            query.Parameters.AddWithValue("id", this.id);
+            //query.Parameters.AddWithValue("precio", precio);
+            //query.Parameters.AddWithValue("descripcion", descripcion);
+
+            query.ExecuteNonQuery();
+            connect.Close();
+        }
 
     }
 }

@@ -41,6 +41,8 @@ namespace FrbaHotel.Registrar_Consumible
 
             StringBuilder query = new StringBuilder();
             query.Append("select distinct * from GAME_OF_QUERYS.consumible ");
+            query.Append(" where 1=1 ");
+
             if (textBox9.Text != "")
                 query.Append("and consumible.descripcion like '%" + textBox9.Text + "%'");
             if (textBox1.Text != "")
@@ -82,6 +84,21 @@ namespace FrbaHotel.Registrar_Consumible
         {
             this.textBox9.Text = string.Empty;
             this.textBox1.Text = string.Empty;
+        }
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsDigit(e.KeyChar) | (e.KeyChar == ',') | (e.KeyChar == '.')) //Al pulsar un numero o coma o punto 
+            {
+                e.Handled = false; //Se acepta
+            }
+            else if (Char.IsControl(e.KeyChar)) //Al pulsar teclas como Borrar y eso.
+            {
+                e.Handled = false; //Se acepta 
+            }
+            else //Para todo lo demas
+            {
+                e.Handled = true; //No se acepta
+            }
         }
     }
 }

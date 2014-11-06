@@ -20,8 +20,8 @@ namespace FrbaHotel.Registrar_Consumible
         public altaConsumible(LoginId LogUser)
         {
             InitializeComponent();
+            button3.Hide();
             consumible = new consumible();
-
         }
         //modificacion
         public altaConsumible(int consumible_id)
@@ -46,7 +46,7 @@ namespace FrbaHotel.Registrar_Consumible
                 else
                 {
                     consumible.update();
-                    ((FrmPrincipal)this.Owner.MdiParent).setStatus("consumible id=" + consumible.id.ToString() + " modificado");
+                    //((FrmPrincipal)this.Owner.MdiParent).setStatus("consumible id=" + consumible.id.ToString() + " modificado");
                     this.Close();
                 }
            }
@@ -61,7 +61,6 @@ namespace FrbaHotel.Registrar_Consumible
          {
 
          }
-
          private void button2_Click(object sender, EventArgs e)
          {
                  this.textBox1.Text = string.Empty;
@@ -83,6 +82,17 @@ namespace FrbaHotel.Registrar_Consumible
                 e.Handled = true; //No se acepta
             }
          }
+
+         private void button3_Click(object sender, EventArgs e)
+         {
+             if (textBox1.Text != "") consumible.precio = Convert.ToDecimal(textBox1.Text);
+             if (textBox2.Text != "") consumible.descripcion = textBox2.Text;
+
+                 consumible.delete();
+                 //((FrmPrincipal)this.Owner.MdiParent).setStatus("consumible id=" + consumible.id.ToString() + " eliminado");
+                 this.Close();
+             }
+
+         }
         
     }
-}
