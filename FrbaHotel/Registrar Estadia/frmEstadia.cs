@@ -189,18 +189,15 @@ namespace FrbaHotel.Registrar_Estadia
                 dataGridView1.Rows.Add(row);
             }
 
-            
+            refrescarListaHuespedes();
 
-            foreach (Cliente h in reserva.huespedes)
-            {
-                string[] row = new string[] { h.tipo_identidad.ToString(), h.nro_identidad.ToString(), h.nombre, h.apellido };
-                dataGridView2.Rows.Add(row);
-            }
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            reserva.checkin = DateTime.Today.Date;
+            reserva.hacerCheckin();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -210,10 +207,21 @@ namespace FrbaHotel.Registrar_Estadia
                 if (busca.ShowDialog(this) == DialogResult.OK)
                 {
                     Cliente h = busca.getClienteSeleccionado();
-                    string[] row = new string[] { h.tipo_identidad.ToString(), h.nro_identidad.ToString(), h.nombre, h.apellido };
-                    dataGridView2.Rows.Add(row);
+                    reserva.huespedes.Add(h);
+                    refrescarListaHuespedes();
                 }
             }
         }
+
+        private void refrescarListaHuespedes()
+        {
+            dataGridView2.Rows.Clear();
+            foreach (Cliente h in reserva.huespedes)
+            {
+                string[] row = new string[] { h.tipo_identidad.ToString(), h.nro_identidad.ToString(), h.nombre, h.apellido };
+                dataGridView2.Rows.Add(row);
+            }
+        }
+
     }
 }
