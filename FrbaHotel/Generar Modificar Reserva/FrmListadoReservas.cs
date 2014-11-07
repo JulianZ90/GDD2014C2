@@ -169,7 +169,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             if (e.ColumnIndex == dataGridView1.Columns[0].Index)   //Boton modificar
             {
                 Reserva Reserva = null;
-                int HotelId = 0;
                 List<Habitacion> lstHabitaciones = new List<Habitacion>();
 
                 foreach (Reserva Item in lstReserva)

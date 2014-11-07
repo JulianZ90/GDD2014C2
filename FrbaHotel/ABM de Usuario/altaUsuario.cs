@@ -146,10 +146,14 @@ namespace FrbaHotel.ABM_de_Usuario
 
             while (objReader.Read())
             {
-                Rol Item = new Rol();
-                Item.Id = (int)objReader["id"];
-                Item.Descripcion = (string)objReader["descripcion"];
-                lista.Add(Item);
+                if((string)objReader["descripcion"] != "Guest" && (string)objReader["descripcion"] != "admin")
+                {
+                    Rol Item = new Rol();
+                    Item.Id = (int)objReader["id"];
+                    Item.Descripcion = (string)objReader["descripcion"];
+
+                    lista.Add(Item);
+                }
             }
 
             connect.Close();
