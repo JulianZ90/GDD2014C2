@@ -16,9 +16,8 @@ namespace FrbaHotel.Registrar_Estadia
         Reserva reserva;
         bool checkout = false;
         string consultaBase = @"select reserva.*, regimen.descripcion as regimen, estado_reserva.descripcion as estado,
-                cliente.id as cliente_id, cliente.nombre, cliente.apellido, cliente.nro_identidad,cliente.tipo_identidad_id as tipo_id , tipo_identidad.nombre as tipo,
-                reserva_habitacion.habitacion_id,
-                habitacion.nro as hab_nro,tipo_habitacion.descripcion as hab_tipo,
+                cliente.id as cliente_id, cliente.nombre, cliente.apellido, cliente.nro_identidad,cliente.tipo_identidad_id as tipo_id , 
+                tipo_identidad.nombre as tipo,
                 usuario.username
 
                 from GAME_OF_QUERYS.reserva
@@ -26,10 +25,6 @@ namespace FrbaHotel.Registrar_Estadia
                 left join GAME_OF_QUERYS.estado_reserva on reserva.estado_id = estado_reserva.id
                 join GAME_OF_QUERYS.cliente on reserva.cliente_id = cliente.id
                 join GAME_OF_QUERYS.tipo_identidad on cliente.tipo_identidad_id = tipo_identidad.id
-
-                join GAME_OF_QUERYS.reserva_habitacion on reserva.id = reserva_habitacion.reserva_id
-                join GAME_OF_QUERYS.habitacion on reserva_habitacion.habitacion_id = habitacion.id
-                left join GAME_OF_QUERYS.tipo_habitacion on habitacion.tipo_hab_id = tipo_habitacion.id
                 left join GAME_OF_QUERYS.usuario on reserva.usuario_ultima_modif_id = usuario.id
                 ";
 
@@ -55,6 +50,32 @@ namespace FrbaHotel.Registrar_Estadia
             button3.Hide();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text == "") return;
+            getReserva(Int32.Parse(textBox1.Text));
+
+            if (reserva == null) return;
+            completarFormConReserva();
+
+            if (!reserva.tieneIngreso())
+            {
+                button2.Enabled = true;
+                button3.Enabled = true;
+                button5.Enabled = true;
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (textBox13.Text == "") return;
+            getReserva(textBox13.Text);
+
+            if (reserva == null) return;
+            completarFormConReserva();
+
+            button5.Enabled = true;
+        }
 
         private void getReserva(int id)
         {
@@ -65,7 +86,6 @@ namespace FrbaHotel.Registrar_Estadia
             query.Parameters.AddWithValue("hotel", ((FrmPrincipal)this.MdiParent).Log.Hotel_Id);
             connect.Open();
             SqlDataReader objReader = query.ExecuteReader();
-            
 
             procesarResultadosBusqueda(objReader);
             connect.Close();
@@ -73,15 +93,16 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void getReserva(string habitaciones)
         {
-            string query_str = consultaBase + @"where reserva.check_in=(select MAX(check_in) from GAME_OF_QUERYS.reserva ) 
-                                            and habitacion.nro in (@nro) and reserva.hotel_id=@hotel and reserva.estado_id=6 ";
+            string query_str = consultaBase + @"join GAME_OF_QUERYS.reserva_habitacion on reserva.id = reserva_habitacion.reserva_id
+                                                join GAME_OF_QUERYS.habitacion on reserva_habitacion.habitacion_id = habitacion.id
+                                                where reserva.id=(select MAX(reserva.id) from GAME_OF_QUERYS.reserva ) 
+                                                and habitacion.nro in (@nro) and reserva.hotel_id=@hotel and reserva.estado_id=6 ";
             SqlCommand query = new SqlCommand(query_str, connect);
             string q = query.CommandText;
             query.Parameters.AddWithValue("nro", habitaciones);
             query.Parameters.AddWithValue("hotel", ((FrmPrincipal)this.MdiParent).Log.Hotel_Id);
             connect.Open();
             SqlDataReader objReader = query.ExecuteReader();
-            
 
             procesarResultadosBusqueda(objReader);
             connect.Close();
@@ -107,7 +128,7 @@ namespace FrbaHotel.Registrar_Estadia
                     reserva.Cliente.id = (int)objReader["cliente_id"];
                     reserva.Cliente.nombre = objReader["nombre"] as string;
                     reserva.Cliente.apellido = objReader["apellido"] as string;
-                    reserva.Cliente.nro_identidad = objReader["nro_identidad"] as long?;
+                    reserva.Cliente.nro_identidad = (int) objReader["nro_identidad"];
 
                     if (objReader["tipo_id"] != DBNull.Value)
                     {
@@ -117,8 +138,6 @@ namespace FrbaHotel.Registrar_Estadia
                     }
                     else
                         reserva.Cliente.tipo_identidad = null;
-
-                    reserva.huespedes.Add(reserva.Cliente);
                 }
                 else
                     reserva.Cliente = null;
@@ -169,21 +188,7 @@ namespace FrbaHotel.Registrar_Estadia
                 if (objReader["cancel_fecha"] != DBNull.Value)
                     reserva.CancelFecha = objReader["cancel_fecha"] as DateTime?;
                 else
-                    reserva.CancelFecha = null;
-
-                do
-                {
-                    Habitacion hab = new Habitacion();
-                    hab.Id = (int)objReader["habitacion_id"];
-                    hab.Numero = (int)objReader["hab_nro"];
-                    TipoHabitacion tipo = new TipoHabitacion();
-                    tipo.Descripcion = objReader["hab_tipo"] as string;
-                    hab.Tipo = tipo;
-
-                    habs.Add(hab);
-                } while (objReader.Read());
-
-                
+                    reserva.CancelFecha = null; 
             }
         }
 
@@ -213,31 +218,11 @@ namespace FrbaHotel.Registrar_Estadia
             textBox6.Text = reserva.CancelMotivo;
             textBox10.Text = reserva.CancelFecha == null ? "" : reserva.CancelFecha.Value.ToShortDateString();
 
-            dataGridView1.Rows.Clear();
-            foreach (Habitacion hab in reserva.Habitaciones)
-            {
-                string[] row = new string[] { hab.Numero.ToString(), hab.Tipo.ToString() };
-                dataGridView1.Rows.Add(row);
-            }
+            getHabitaciones();
+            getHuespedes();
 
+            refrescarListaHabitaciones();
             refrescarListaHuespedes();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "") return;
-            if (reserva == null) return;
-
-            getReserva(Int32.Parse(textBox1.Text));
-            completarFormConReserva();
-
-            if (reserva.tieneIngreso())
-            {
-                button2.Enabled = false;
-                button3.Enabled = false;
-            }
-
-            button3.Enabled = true;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -265,6 +250,16 @@ namespace FrbaHotel.Registrar_Estadia
                     reserva.huespedes.Add(h);
                     refrescarListaHuespedes();
                 }
+            }
+        }
+
+        private void refrescarListaHabitaciones()
+        {
+            dataGridView1.Rows.Clear();
+            foreach (Habitacion hab in reserva.Habitaciones)
+            {
+                string[] row = new string[] { hab.Numero.ToString(), hab.Tipo.ToString() };
+                dataGridView1.Rows.Add(row);
             }
         }
 
@@ -320,12 +315,61 @@ namespace FrbaHotel.Registrar_Estadia
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void getHabitaciones()
         {
-            getReserva(textBox13.Text);
-            completarFormConReserva();
-            button5.Enabled = true;
+            string query_str = @"select reserva_habitacion.habitacion_id,
+                                habitacion.nro as hab_nro,tipo_habitacion.descripcion as hab_tipo
+                                from GAME_OF_QUERYS.reserva_habitacion
+                                join GAME_OF_QUERYS.habitacion on reserva_habitacion.habitacion_id = habitacion.id
+                                left join GAME_OF_QUERYS.tipo_habitacion on habitacion.tipo_hab_id = tipo_habitacion.id
+                                where reserva_habitacion.reserva_id = @reserva";
+            SqlCommand query = new SqlCommand(query_str, connect);
+            string q = query.CommandText;
+            query.Parameters.AddWithValue("reserva", reserva.Id);
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+
+            while (objReader.Read())
+            {
+                Habitacion hab = new Habitacion();
+                hab.Id = (int)objReader["habitacion_id"];
+                hab.Numero = (int)objReader["hab_nro"];
+                TipoHabitacion tipo = new TipoHabitacion();
+                tipo.Descripcion = objReader["hab_tipo"] as string;
+                hab.Tipo = tipo;
+
+                reserva.Habitaciones.Add(hab);
+            }
+            connect.Close();
         }
 
+        private void getHuespedes()
+        {
+            string query_str = @"select tipo_identidad.nombre as tipo, cliente.nro_identidad, cliente.nombre, cliente.apellido
+                                from GAME_OF_QUERYS.cliente_reserva
+                                join GAME_OF_QUERYS.cliente on cliente.id = cliente_reserva.cliente_id
+                                join GAME_OF_QUERYS.tipo_identidad on cliente.tipo_identidad_id = tipo_identidad.id
+                                where cliente_reserva.reserva_id = @reserva";
+            SqlCommand query = new SqlCommand(query_str, connect);
+            string q = query.CommandText;
+            query.Parameters.AddWithValue("reserva", reserva.Id);
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+
+            while (objReader.Read())
+            {
+                Cliente cli = new Cliente();
+                cli.nro_identidad = (int)objReader["nro_identidad"];
+                cli.nombre = objReader["nombre"] as string;
+                cli.apellido = objReader["apellido"] as string;
+                TipoIdentidad tipo = new TipoIdentidad();
+                tipo.nombre = objReader["tipo"] as string;
+                cli.tipo_identidad = tipo;
+
+                reserva.huespedes.Add(cli);
+            }
+            connect.Close();
+        }
+        
     }
 }
