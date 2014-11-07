@@ -173,19 +173,26 @@ insert into GAME_OF_QUERYS.rol_funcionalidad(rol_id, funcionalidad_id)
 (select r.id, f.id from GAME_OF_QUERYS.rol r, GAME_OF_QUERYS.funcionalidad f WHERE r.descripcion = 'admin')
 
 
-/* cargar estado_id en reserva
+--cargar estado_id en reserva
 --reservas que tienen estadia --> estado: 6 - con ingreso
 update GAME_OF_QUERYS.reserva set estado_id = 
 (select id from GAME_OF_QUERYS.estado_reserva where descripcion='con ingreso')
-where id in (select reserva_id from GAME_OF_QUERYS.estadia)
+where fecha_inicio <= (select MAX(check_out) from GAME_OF_QUERYS.reserva)		--tomo todas las reservas que ingresaron hasta el 'dia de hoy'
+and reserva.check_in is not null
 
 --reservas viejas que no aparecen en la tabla de estadia --> estado: 5 - cancelada por no-show
 update GAME_OF_QUERYS.reserva set estado_id = (select id from GAME_OF_QUERYS.estado_reserva where descripcion='cancelada por No-Show')
-where fecha_inicio < (select MAX(check_out) from GAME_OF_QUERYS.estadia)	--max(check_out) es la maxima fecha que aparece en una estadia, entoces la tomo como el 'dia de hoy'
-and id not in (select reserva_id from GAME_OF_QUERYS.estadia)
+where fecha_inicio < (select MAX(check_out) from GAME_OF_QUERYS.reserva)	--max(check_out) es la maxima fecha que aparece, entoces la tomo como el 'dia de hoy'
+and reserva.check_in is null
 
 --reservas proximas --> estado: 1 - correcta (por ahora no hay ninguna)
 update GAME_OF_QUERYS.reserva set estado_id = (select id from GAME_OF_QUERYS.estado_reserva where descripcion='correcta')
-where fecha_inicio >= (select MAX(check_out) from GAME_OF_QUERYS.estadia)
+where fecha_inicio >= (select MAX(check_out) from GAME_OF_QUERYS.reserva)	--las reservas del dia de hoy todavia pueden ingresar mas tarde
+and reserva.check_in is null
 
+/*falta que al final de cada dia ponga como 'Canceladas por no-show' las que no se concretaron
+update GAME_OF_QUERYS.reserva set estado_id = (select id from GAME_OF_QUERYS.estado_reserva where descripcion='cancelada por No-Show')
+where fecha_inicio = (select MAX(check_out) from GAME_OF_QUERYS.reserva)
+and reserva.check_in is null
 */
+

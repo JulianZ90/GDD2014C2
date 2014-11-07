@@ -26,6 +26,15 @@ namespace FrbaHotel
         public List<Habitacion> habitaciones { get; set; }
         //public List<Mantenimiento> mantenimientos { get; set; }
 
+        public override string ToString()
+        {
+            if (String.IsNullOrEmpty(nombre))
+                return "";
+            else
+                return nombre;
+        }
+
+
         public Hotel() { }
 
         public Hotel(int id)

@@ -71,6 +71,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 Regimen RegimenReserva = new Regimen();
                 EstadoReserva EstadoReserva = new EstadoReserva();
                 Cliente ClienteReserva = new Cliente();
+                Hotel HotelReserva = new Hotel();
                 StringBuilder SBquery = new StringBuilder();
 
                 // Add a button column MODIFICAR. 
@@ -79,7 +80,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 btnModific.Name = "Modificar";
                 btnModific.Text = "Modificar";
                 btnModific.UseColumnTextForButtonValue = true;
-                btnModific.Width = 20;
+                btnModific.Width = 10;
                 dataGridView1.Columns.Add(btnModific);
 
                 // Add a button column BAJA. 
@@ -88,7 +89,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 btnbaja.Name = "Baja";
                 btnbaja.Text = "Baja";
                 btnbaja.UseColumnTextForButtonValue = true;
-                btnbaja.Width = 20;
+                btnbaja.Width = 10;
                 dataGridView1.Columns.Add(btnbaja);
 
                 // Add a CellClick handler to handle clicks in the button column.
@@ -98,23 +99,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             
 
 
-                SBquery.Append("SELECT DISTINCT reserva.id, reserva.fecha_inicio, reserva.fecha_fin, reserva.cliente_id, regimen.descripcion AS regimen, reserva.regimen_id, estado_reserva.descripcion AS estado, reserva.estado_id ");
+                SBquery.Append("SELECT DISTINCT reserva.id, reserva.hotel_id, hotel.nombre, reserva.fecha_inicio, reserva.fecha_fin, reserva.cliente_id, regimen.descripcion AS regimen, reserva.regimen_id, estado_reserva.descripcion AS estado, reserva.estado_id ");
                 SBquery.Append("FROM GAME_OF_QUERYS.reserva JOIN GAME_OF_QUERYS.regimen ON (reserva.regimen_id = regimen.id) ");
                 SBquery.Append("JOIN GAME_OF_QUERYS.estado_reserva ON (reserva.estado_id = estado_reserva.id) ");
-                if (!guest)
-                {
-                    SBquery.Append("JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva_habitacion.reserva_id = reserva.id) ");
-                    SBquery.Append("JOIN GAME_OF_QUERYS.habitacion ON (reserva_habitacion.habitacion_id = habitacion.id) "); 
-                }
-                SBquery.Append("WHERE reserva.id = @ReservaId AND (reserva.estado_id = 1 OR reserva.estado_id = 2)");
-                if (!guest)
-                    SBquery.Append(" AND habitacion.hotel_id = @hotelId");
-                
+                SBquery.Append("JOIN GAME_OF_QUERYS.hotel ON (reserva.hotel_id = hotel.id) ");
+                SBquery.Append("WHERE reserva.id = @ReservaId AND reserva.estado_id IN (1,2)");              
 
                 query = new SqlCommand(SBquery.ToString(), objConexion);
                 query.Parameters.AddWithValue("@ReservaId", Convert.ToInt32(this.txtBxNroReserva.Text));
-                if (!guest)
-                    query.Parameters.AddWithValue("@hotelId", Log.Hotel_Id);
                 objConexion.Open();
                 objReader = query.ExecuteReader();
                 if (objReader.Read())
@@ -122,6 +114,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     Reserva.Id = (int)objReader["id"];
                     Reserva.FechaInicio = (DateTime)objReader["fecha_inicio"];
                     Reserva.FechaFin = (DateTime)objReader["fecha_fin"];
+                    HotelReserva.id = (int)objReader["hotel_id"];
+                    HotelReserva.nombre = (string)objReader["nombre"];
+                    Reserva.hotel = HotelReserva;
                     ClienteReserva.id = (int)objReader["cliente_id"];
                     Reserva.Cliente = ClienteReserva;
                     RegimenReserva.descripcion = (string)objReader["regimen"];
@@ -136,11 +131,19 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     objConexion.Close();
 
                     dataGridView1.DataSource = lstReserva;
+                    
                     this.dataGridView1.Columns["Cliente"].Visible = false;
                     this.dataGridView1.Columns["FechaRealizacion"].Visible = false;
                     this.dataGridView1.Columns["UltimoUsuario"].Visible = false;
                     this.dataGridView1.Columns["CancelMotivo"].Visible = false;
                     this.dataGridView1.Columns["CancelFecha"].Visible = false;
+                    this.dataGridView1.Columns["checkin"].Visible = false;
+                    this.dataGridView1.Columns["checkout"].Visible = false;
+                    this.dataGridView1.Columns["user_checkin"].Visible = false;
+                    this.dataGridView1.Columns["user_checkout"].Visible = false;
+                    if(!guest)
+                        this.dataGridView1.Columns["hotel"].Visible = false;
+
                 }
                 else
                 {
@@ -167,11 +170,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             {
                 Reserva Reserva = null;
                 int HotelId = 0;
+                List<Habitacion> lstHabitaciones = new List<Habitacion>();
 
                 foreach (Reserva Item in lstReserva)
                     Reserva = Item;
 
-                query = new SqlCommand("SELECT habitacion_id, tipo_hab_id, hotel_id FROM GAME_OF_QUERYS.reserva_habitacion JOIN GAME_OF_QUERYS.habitacion ON (habitacion.id = reserva_habitacion.habitacion_id) WHERE reserva_id = @id", objConexion);
+                query = new SqlCommand("SELECT habitacion_id, tipo_hab_id FROM GAME_OF_QUERYS.reserva_habitacion JOIN GAME_OF_QUERYS.habitacion ON (habitacion.id = reserva_habitacion.habitacion_id) WHERE reserva_id = @id", objConexion);
                 query.Parameters.AddWithValue("@id", Reserva.Id);
                 objConexion.Open();
                 objReader = query.ExecuteReader();
@@ -182,17 +186,15 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     TipoHabitacion TipoHabitacion = new TipoHabitacion();
                     TipoHabitacion.Id = (int)objReader["tipo_hab_id"];
                     Habitacion.Tipo = TipoHabitacion;
-                    if (guest)
-                    {
-                        HotelId = (int)objReader["hotel_id"]; 
-                    }
 
-                    Reserva.Habitaciones.Add(Habitacion);
+                    lstHabitaciones.Add(Habitacion);
                 }
                 objConexion.Close();
 
+                Reserva.Habitaciones = lstHabitaciones;
+
                 if (guest)
-                    new Generar_Modificar_Reserva.FrmReserva(Reserva, HotelId, UserId).ShowDialog();
+                    new Generar_Modificar_Reserva.FrmReserva(Reserva, UserId).ShowDialog();
                 else
                     new Generar_Modificar_Reserva.FrmReserva(Reserva, Log).ShowDialog();
 

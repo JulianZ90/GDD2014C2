@@ -33,6 +33,7 @@ namespace FrbaHotel.ABM_de_Cliente
             llenarPais();
             reserva = true;
             Reserva = NuevaReserva;
+            this.button3.Hide();
         }
 
         public listadoClientes(string s)
@@ -202,7 +203,8 @@ namespace FrbaHotel.ABM_de_Cliente
             {
                 cliente_id = (int)dataGridView1.Rows[e.RowIndex].Cells["id"].Value;
 
-                SqlCommand query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.reserva(cliente_id, regimen_id, estado_id, fecha_realizacion, fecha_inicio, fecha_fin, usuario_ultima_modif_id) VALUES (@cliente, @regimen, @estado, @fechaHoy, @fechaInicio, @fechaFin, @usuario); SELECT SCOPE_IDENTITY()", connect);
+                SqlCommand query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.reserva(hotel_id, cliente_id, regimen_id, estado_id, fecha_realizacion, fecha_inicio, fecha_fin, usuario_ultima_modif_id) VALUES (@hotel, @cliente, @regimen, @estado, @fechaHoy, @fechaInicio, @fechaFin, @usuario); SELECT SCOPE_IDENTITY()", connect);
+                query.Parameters.AddWithValue("@hotel", Reserva.hotel.id);
                 query.Parameters.AddWithValue("@cliente", cliente_id);
                 query.Parameters.AddWithValue("@regimen", Reserva.Regimen.id);
                 query.Parameters.AddWithValue("@estado", Reserva.Estado.Id);

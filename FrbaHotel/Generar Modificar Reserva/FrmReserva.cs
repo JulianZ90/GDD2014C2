@@ -59,18 +59,18 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         }
 
 
-        public FrmReserva(Reserva ReservaModific, int HotelReserva, int UserId)
+        public FrmReserva(Reserva ReservaModific, int UserId)
         {
             InitializeComponent();
             IdGuest = UserId;
-            HotelId = HotelReserva;
-            IdHotelReserva = HotelReserva;
+            HotelId = ReservaModific.hotel.id;
+            IdHotelReserva = ReservaModific.hotel.id; 
             Reserva = ReservaModific;
             guest = true;
             modificacion = true;
             this.LlenarComboBoxHoteles(this.cmbBxHoteles);
             this.CondicionesIniciales();
-            this.LlenarFormulario(ReservaModific, HotelReserva);
+            this.LlenarFormulario(ReservaModific, ReservaModific.hotel.id);
         }
 
 
@@ -447,10 +447,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             {
                 //selecciona las haitaciones de un determinado hotel que esten disponibles
                 StringBuilder SBquery = new StringBuilder();
-                SBquery.Append("SELECT DISTINCT id, tipo_hab_id FROM GAME_OF_QUERYS.habitacion WHERE hotel_id = @hotelId AND estado_habitacion = 1 AND id NOT IN ");
+                SBquery.Append("SELECT id, tipo_hab_id FROM GAME_OF_QUERYS.habitacion WHERE hotel_id = @hotelId AND estado_habitacion = 1 AND id NOT IN ");
                 SBquery.Append("(SELECT DISTINCT habitacion_id FROM GAME_OF_QUERYS.reserva_habitacion ");
-                SBquery.Append("JOIN GAME_OF_QUERYS.reserva ON (reserva_habitacion.reserva_id = reserva.id) ");
-                SBquery.Append("WHERE reserva.estado_id IN (1, 2, 6) AND ((fecha_inicio > @fechaInicio AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin < @fechaFin)))");
+                SBquery.Append("JOIN GAME_OF_QUERYS.reserva ON (reserva.id = reserva_habitacion.reserva_id) ");
+                SBquery.Append("WHERE hotel_id = @hotelId AND ((estado_id IN (1, 2) AND ((fecha_inicio > @fechaInicio AND @fechaFin >= fecha_inicio) OR (fecha_inicio <= @fechaInicio AND @fechaInicio <= fecha_fin))) ");
+                SBquery.Append("OR (estado_id = 6 AND ((check_in > @fechaInicio AND @fechaFin >= check_in) OR (check_in <= @fechaInicio AND @fechaInicio <= check_out)))))");
                 query = new SqlCommand(SBquery.ToString(), objConexion);
                 query.Parameters.AddWithValue("@hotelId", HotelId);
                 query.Parameters.AddWithValue("@fechaInicio", this.dateTimeInicio.Value);
@@ -521,6 +522,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void btnReservar_Click(object sender, EventArgs e)
         {
             Reserva NuevaReserva = new Reserva();
+            Hotel HotelReserva = new Hotel();
+            if (guest)
+                HotelReserva.id = HotelId;
+            else
+                HotelReserva.id = Log.Hotel_Id;
+            NuevaReserva.hotel = HotelReserva;
             EstadoReserva EstadoReserva = new EstadoReserva();
             EstadoReserva.Id = 1;
             NuevaReserva.Estado = EstadoReserva;
@@ -538,11 +545,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 UsiarioReserva.id = Log.Usuario_Id;
 
             NuevaReserva.UltimoUsuario = UsiarioReserva;
-
-            foreach (Habitacion Item in lstHabitacionesConfirmadas)
-            {
-                NuevaReserva.Habitaciones.Add(Item);
-            }
+            NuevaReserva.Habitaciones = lstHabitacionesConfirmadas;
 
             if (MessageBox.Show("Es un nuevo cliente?", "Confirmacion", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -618,10 +621,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     {
                         //selecciona las haitaciones de un determinado hotel que esten disponibles
                         StringBuilder SBquery = new StringBuilder();
-                        SBquery.Append("SELECT DISTINCT id, tipo_hab_id FROM GAME_OF_QUERYS.habitacion WHERE hotel_id = @hotelId AND estado_habitacion = 1 AND id NOT IN ");
+                        SBquery.Append("SELECT id, tipo_hab_id FROM GAME_OF_QUERYS.habitacion WHERE hotel_id = @hotelId AND estado_habitacion = 1 AND id NOT IN ");
                         SBquery.Append("(SELECT DISTINCT habitacion_id FROM GAME_OF_QUERYS.reserva_habitacion ");
-                        SBquery.Append("JOIN GAME_OF_QUERYS.reserva ON (reserva_habitacion.reserva_id = reserva.id) ");
-                        SBquery.Append("WHERE reserva.estado_id IN (1, 2, 6) AND ((fecha_inicio > @fechaInicio AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin > @fechaFin AND @fechaFin > fecha_inicio) OR (fecha_inicio < @fechaInicio AND @fechaInicio < fecha_fin AND fecha_fin < @fechaFin)))");
+                        SBquery.Append("JOIN GAME_OF_QUERYS.reserva ON (reserva.id = reserva_habitacion.reserva_id) ");
+                        SBquery.Append("WHERE hotel_id = @hotelId AND ((estado_id IN (1, 2) AND ((fecha_inicio > @fechaInicio AND @fechaFin >= fecha_inicio) OR (fecha_inicio <= @fechaInicio AND @fechaInicio <= fecha_fin))) ");
+                        SBquery.Append("OR (estado_id = 6 AND ((check_in > @fechaInicio AND @fechaFin >= check_in) OR (check_in <= @fechaInicio AND @fechaInicio <= check_out)))))");
                         query = new SqlCommand(SBquery.ToString(), objConexion);
                         query.Parameters.AddWithValue("@hotelId", HotelId);
                         query.Parameters.AddWithValue("@fechaInicio", this.dateTimeInicio.Value);
@@ -670,8 +674,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                             //disponibilidad ok
                             if (MessageBox.Show("Hay disponibilidad. Esta seguro que quiere modificar su reserva?", "Confirmacion", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
-                                query = new SqlCommand("UPDATE GAME_OF_QUERYS.reserva SET regimen_id = @nuevoRegimen, estado_id = @nuevoEstado, fecha_inicio = @nuevaFechaInicio, fecha_fin = @nuevaFechaFin, usuario_ultima_modif_id = @ultimoUser WHERE id = @idReserva", objConexion);
+                                query = new SqlCommand("UPDATE GAME_OF_QUERYS.reserva SET regimen_id = @nuevoRegimen, hotel_id = @nuevoHotel, estado_id = @nuevoEstado, fecha_inicio = @nuevaFechaInicio, fecha_fin = @nuevaFechaFin, usuario_ultima_modif_id = @ultimoUser WHERE id = @idReserva", objConexion);
                                 query.Parameters.AddWithValue("@nuevoRegimen", RegimenId);
+                                query.Parameters.AddWithValue("@nuevoHotel", HotelId);
                                 query.Parameters.AddWithValue("@nuevoEstado", 2);
                                 query.Parameters.AddWithValue("@nuevaFechaInicio", this.dateTimeInicio.Value);
                                 query.Parameters.AddWithValue("@nuevaFechaFin", this.dateTimeFin.Value);
