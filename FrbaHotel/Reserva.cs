@@ -38,7 +38,7 @@ namespace FrbaHotel
         public void hacerCheckin()
         {
             //TODO falta agregar el user_check_in_id de la session
-            SqlCommand query = new SqlCommand("update GAME_OF_QUERYS.reserva set check_in=@checkin where id=@reserva", connect);
+            SqlCommand query = new SqlCommand("update GAME_OF_QUERYS.reserva set check_in=@checkin, estado_id=6 where id=@reserva", connect);
             query.Parameters.AddWithValue("reserva", Id);
             query.Parameters.AddWithValue("checkin", checkin);
             connect.Open();
