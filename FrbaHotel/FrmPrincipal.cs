@@ -208,6 +208,11 @@ namespace FrbaHotel
             childForm.Show();
         }
 
+        private void registrarConsumibleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Registrar_Consumible.FrmRegistrarConsumible(Log).ShowDialog();
+        }
+
         
 
 
