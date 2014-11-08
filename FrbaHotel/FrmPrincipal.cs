@@ -213,6 +213,11 @@ namespace FrbaHotel
             new Registrar_Consumible.FrmRegistrarConsumible(Log).ShowDialog();
         }
 
+        private void listadosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Listado_Estadistico.FrmListados().ShowDialog();
+        }
+
         
 
 

@@ -156,11 +156,11 @@
     </Compile>
     <Compile Include="Habitacion.cs" />
     <Compile Include="Hotel.cs" />
-    <Compile Include="Listado Estadistico\Form1.cs">
+    <Compile Include="Listado Estadistico\FrmListados.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Listado Estadistico\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Listado Estadistico\FrmListados.Designer.cs">
+      <DependentUpon>FrmListados.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginId.cs" />
     <Compile Include="Login\FrmElegirRolHotel.cs">
@@ -229,6 +229,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Modificar Reserva\FrmReserva.resx">
       <DependentUpon>FrmReserva.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\FrmListados.resx">
+      <DependentUpon>FrmListados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\FrmElegirRolHotel.resx">
       <DependentUpon>FrmElegirRolHotel.cs</DependentUpon>
