@@ -15,10 +15,15 @@ namespace FrbaHotel.Registrar_Estadia
         SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
         Reserva reserva;
         bool checkout = false;
-        string consultaBase = @"select reserva.*, regimen.descripcion as regimen, estado_reserva.descripcion as estado,
-                cliente.id as cliente_id, cliente.nombre, cliente.apellido, cliente.nro_identidad,cliente.tipo_identidad_id as tipo_id , 
-                tipo_identidad.nombre as tipo,
-                usuario.username
+        string consultaBase = @"select distinct reserva.*, 
+				regimen.descripcion as regimen, regimen.precio_base,
+				estado_reserva.descripcion as estado,
+                cliente.id as cliente_id, cliente.nombre, cliente.apellido, cliente.nro_identidad,
+                cliente.tipo_identidad_id as tipo_id,tipo_identidad.nombre as tipo,
+                cliente.calle, cliente.nro_calle, cliente.piso, cliente.depto,cliente.ciudad,
+                
+                usuario.username,
+                hotel.cantidad_estrella, hotel.recarga_estrella
 
                 from GAME_OF_QUERYS.reserva
                 join GAME_OF_QUERYS.regimen on reserva.regimen_id = regimen.id
@@ -26,6 +31,8 @@ namespace FrbaHotel.Registrar_Estadia
                 join GAME_OF_QUERYS.cliente on reserva.cliente_id = cliente.id
                 join GAME_OF_QUERYS.tipo_identidad on cliente.tipo_identidad_id = tipo_identidad.id
                 left join GAME_OF_QUERYS.usuario on reserva.usuario_ultima_modif_id = usuario.id
+                
+                join GAME_OF_QUERYS.hotel on reserva.hotel_id = hotel.id
                 ";
 
         public frmEstadia()
@@ -98,8 +105,12 @@ namespace FrbaHotel.Registrar_Estadia
         {
             string query_str = consultaBase + @"join GAME_OF_QUERYS.reserva_habitacion on reserva.id = reserva_habitacion.reserva_id
                                                 join GAME_OF_QUERYS.habitacion on reserva_habitacion.habitacion_id = habitacion.id
-                                                where reserva.id=(select MAX(reserva.id) from GAME_OF_QUERYS.reserva ) 
-                                                and habitacion.nro in (@nro) and reserva.hotel_id=@hotel and reserva.estado_id=6 ";
+                                                where reserva.id=(
+					                                select MAX(reserva.id) from GAME_OF_QUERYS.reserva 
+					                                join GAME_OF_QUERYS.reserva_habitacion on reserva.id = reserva_habitacion.reserva_id
+					                                join GAME_OF_QUERYS.habitacion on reserva_habitacion.habitacion_id = habitacion.id
+					                                where habitacion.nro in (@nro) and reserva.hotel_id=@hotel and reserva.estado_id=6 
+					                                )";
             SqlCommand query = new SqlCommand(query_str, connect);
             string q = query.CommandText;
             query.Parameters.AddWithValue("nro", habitaciones);
@@ -143,6 +154,12 @@ namespace FrbaHotel.Registrar_Estadia
                     }
                     else
                         reserva.Cliente.tipo_identidad = null;
+
+                    reserva.Cliente.calle = objReader["calle"] as string;
+                    reserva.Cliente.nro_calle = objReader["nro_calle"] as int?;
+                    reserva.Cliente.piso = objReader["piso"] as int?;
+                    reserva.Cliente.depto = objReader["depto"].ToString()[0];
+                    reserva.Cliente.ciudad = objReader["ciudad"] as string;
                 }
                 else
                     reserva.Cliente = null;
@@ -193,7 +210,16 @@ namespace FrbaHotel.Registrar_Estadia
                 if (objReader["cancel_fecha"] != DBNull.Value)
                     reserva.CancelFecha = objReader["cancel_fecha"] as DateTime?;
                 else
-                    reserva.CancelFecha = null; 
+                    reserva.CancelFecha = null;
+
+                reserva.hotel = new Hotel();
+                reserva.hotel.id = (int) objReader["hotel_id"];
+                reserva.hotel.cantidad_estrella = (int)objReader["cantidad_estrella"];
+                reserva.hotel.recarga_estrella = (int)objReader["recarga_estrella"];
+
+                reserva.Regimen.precio_base = (decimal)objReader["precio_base"];
+
+                
             }
         }
 
@@ -341,7 +367,8 @@ namespace FrbaHotel.Registrar_Estadia
         private void getHabitaciones()
         {
             string query_str = @"select reserva_habitacion.habitacion_id,
-                                habitacion.nro as hab_nro,tipo_habitacion.descripcion as hab_tipo
+                                habitacion.nro as hab_nro,tipo_habitacion.descripcion as hab_tipo,
+                                tipo_habitacion.porcentual
                                 from GAME_OF_QUERYS.reserva_habitacion
                                 join GAME_OF_QUERYS.habitacion on reserva_habitacion.habitacion_id = habitacion.id
                                 left join GAME_OF_QUERYS.tipo_habitacion on habitacion.tipo_hab_id = tipo_habitacion.id
@@ -359,6 +386,7 @@ namespace FrbaHotel.Registrar_Estadia
                 hab.Numero = (int)objReader["hab_nro"];
                 TipoHabitacion tipo = new TipoHabitacion();
                 tipo.Descripcion = objReader["hab_tipo"] as string;
+                tipo.Porcentual = (decimal) objReader["porcentual"];
                 hab.Tipo = tipo;
 
                 reserva.Habitaciones.Add(hab);

@@ -25,19 +25,23 @@ namespace FrbaHotel
         public string medios_de_pagos { get; set; }
         public Reserva reserva { get; set; }
         public List<Item> items { get; set; }
+        public long tarjeta { get; set; }
 
         public Factura(Reserva r) 
         {
             reserva = r;
+            this.items = new List<Item>();
 
             foreach (Habitacion hab in reserva.Habitaciones)
             {
                 Item item = new Item();
                 item.cant = 1;
-                item.desc = string.Format("Habitación {1}",hab.Tipo.ToString());
+                item.desc = string.Format("Habitación {0}",hab.Tipo.ToString());
 
                 ///// CALCULO DE PRECIO DE HABITACION
                 item.precio = (reserva.Regimen.precio_base * hab.Tipo.Porcentual) + (reserva.hotel.cantidad_estrella * reserva.hotel.recarga_estrella);
+                
+                items.Add(item);
             }
 
             decimal importeConsumiblesTotal = 0;
@@ -49,6 +53,8 @@ namespace FrbaHotel
                 item.precio = con.precio;
 
                 importeConsumiblesTotal += item.precio * item.cant;
+
+                items.Add(item);
             }
 
             if (reserva.Regimen.esAllInclusive())
@@ -57,30 +63,15 @@ namespace FrbaHotel
                 item.cant = 1;
                 item.desc = "Descuento por régimen All Incluive";
                 item.precio = -importeConsumiblesTotal;
+                items.Add(item);
             }
-
-
-
-
-            //detalles en limpio
-            
-            detalles = "";
-            detalles += string.Format("{0} {1}.....................{2}:{3}", reserva.Cliente.nombre, reserva.Cliente.apellido, reserva.Cliente.tipo_identidad.ToString(), reserva.Cliente.nro_identidad, Environment.NewLine);
-            detalles += string.Format("{0} {1} {2} {3} {4}", reserva.Cliente.calle, reserva.Cliente.nro_calle, reserva.Cliente.piso, reserva.Cliente.depto, reserva.Cliente.ciudad, Environment.NewLine);
-
-            detalles += string.Format("cant.\t\tDesc.\t\tPrecio unit.\t\tImporte", Environment.NewLine);
-
-            foreach (Item i in items)
-            {
-                detalles += string.Format("{0}\t\t{1}\t\t{2}\t\t{3}",i.cant, i.desc, i.precio, i.importe(),  Environment.NewLine);
-            }
-
-            detalles += string.Format("                     Total $   {0}", total(), Environment.NewLine);
         }
 
-        private decimal total()
+        public decimal total()
         {
             return items.Sum(item => item.importe());
         }
+
+        public void insert() { }
     }
 }
