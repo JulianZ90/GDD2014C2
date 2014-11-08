@@ -123,6 +123,7 @@ namespace FrbaHotel.Listado_Estadistico
                         }
                     case 5:
                         {
+                            query = new SqlCommand("GAME_OF_QUERYS.punntosCliente", objConexion);
                             break;
                         }
                 }

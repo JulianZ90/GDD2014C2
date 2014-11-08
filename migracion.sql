@@ -216,7 +216,7 @@ AS
 SELECT TOP 5 hotel_id, nombre AS 'nombre del hotel', COUNT(consumible_id) AS cantidad FROM GAME_OF_QUERYS.consumible_reserva
 JOIN GAME_OF_QUERYS.reserva ON (consumible_reserva.reserva_id = reserva.id)
 JOIN GAME_OF_QUERYS.hotel ON (hotel.id = reserva.hotel_id)
-WHERE (MONTH(fecha_inicio) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(fecha_inicio) = @year
+WHERE check_in IS NOT NULL AND check_out IS NOT NULL AND(MONTH(check_in) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(check_in) = @year
 GROUP BY hotel_id, nombre
 ORDER BY cantidad DESC
 GO
@@ -237,7 +237,28 @@ AS
 SELECT TOP 5 nombre AS 'nombre de hotel', hotel_id, habitacion_id AS 'nro de habitacion', SUM(DATEDIFF(DAY, check_in, check_out)) AS cantidad FROM GAME_OF_QUERYS.reserva
 JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva.id = reserva_habitacion.reserva_id)
 JOIN GAME_OF_QUERYS.hotel ON (hotel.id = reserva.hotel_id)
-WHERE estado_id = 6 AND (MONTH(fecha_inicio) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(fecha_inicio) = @year
+WHERE check_in IS NOT NULL AND check_out IS NOT NULL AND (MONTH(check_in) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(check_in) = @year
 GROUP BY hotel_id, nombre, habitacion_id
 ORDER BY cantidad DESC
+GO
+
+
+-- Puntos de los clientes: 1 por cada $10 de estadia y 1 por cada $5 de consumibles
+
+CREATE PROCEDURE GAME_OF_QUERYS.punntosCliente @year int, @trimestreInicio int, @trimestreFin int
+AS
+SELECT TOP 5 cliente_id, cliente.nombre + ' ' + cliente.apellido AS 'nombre y apellido', ROUND(CAST((SUM(DISTINCT((precio_base*porcentual + cantidad_estrella*recarga_estrella) * (DATEDIFF(DAY, check_in, check_out))))/10 + SUM(cantidad*precio)/5) AS FLOAT), 0, 1) AS puntos
+FROM GAME_OF_QUERYS.reserva
+JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva.id = reserva_habitacion.reserva_id)
+JOIN GAME_OF_QUERYS.consumible_reserva ON (reserva.id = consumible_reserva.reserva_id)
+JOIN GAME_OF_QUERYS.consumible ON (consumible.id = consumible_reserva.consumible_id)
+JOIN GAME_OF_QUERYS.regimen ON (reserva.regimen_id = regimen.id)
+JOIN GAME_OF_QUERYS.hotel ON (reserva.hotel_id = hotel.id)
+JOIN GAME_OF_QUERYS.habitacion ON (reserva_habitacion.habitacion_id = habitacion.id)
+JOIN GAME_OF_QUERYS.tipo_habitacion ON (tipo_habitacion.id = habitacion.tipo_hab_id)
+JOIN GAME_OF_QUERYS.cliente ON (cliente.id = reserva.cliente_id)
+WHERE check_in IS NOT NULL AND check_out IS NOT NULL
+AND (MONTH(check_in) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(check_in) = @year
+group by cliente_id, cliente.nombre, cliente.apellido
+order by puntos DESC
 GO
