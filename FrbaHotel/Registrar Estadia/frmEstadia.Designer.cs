@@ -362,9 +362,9 @@
             // button2
             // 
             this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(419, 468);
+            this.button2.Location = new System.Drawing.Point(419, 460);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(112, 23);
+            this.button2.Size = new System.Drawing.Size(112, 37);
             this.button2.TabIndex = 32;
             this.button2.Text = "Registrar Checkin";
             this.button2.UseVisualStyleBackColor = true;
@@ -535,7 +535,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(976, 503);
+            this.ClientSize = new System.Drawing.Size(544, 503);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel3);

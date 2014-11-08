@@ -97,8 +97,8 @@ namespace FrbaHotel.ABM_de_Hotel
                 hotel.nro_calle = objReader["nro_calle"] as int?;
                 hotel.ciudad = objReader["ciudad"] as string;
                 hotel.tel = objReader["tel"] as int?;
-                hotel.cantidad_estrella = objReader["cantidad_estrella"] as int?;
-                hotel.recarga_estrella = objReader["recarga_estrella"] as int?;
+                hotel.cantidad_estrella = (int)objReader["cantidad_estrella"];
+                hotel.recarga_estrella = (int) objReader["recarga_estrella"];
                 hotel.fecha_creacion = objReader["fecha_creacion"] as DateTime?;
                 hotel.mail = objReader["mail"] as string;
 

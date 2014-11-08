@@ -129,6 +129,7 @@
     <Compile Include="Cliente.cs" />
     <Compile Include="consumible.cs" />
     <Compile Include="EstadoReserva.cs" />
+    <Compile Include="Factura.cs" />
     <Compile Include="FrmGuest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -259,6 +260,9 @@
     <EmbeddedResource Include="Registrar Consumible\listadoConsumibles.resx">
       <DependentUpon>listadoConsumibles.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Registrar Estadia\frmFactura.resx">
+      <DependentUpon>frmFactura.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -296,6 +300,12 @@
     </Compile>
     <Compile Include="Registrar Estadia\frmEstadia.Designer.cs">
       <DependentUpon>frmEstadia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registrar Estadia\frmFactura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registrar Estadia\frmFactura.Designer.cs">
+      <DependentUpon>frmFactura.cs</DependentUpon>
     </Compile>
     <Compile Include="Reserva.cs" />
     <Compile Include="Rol.cs" />

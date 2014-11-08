@@ -12,7 +12,7 @@ namespace FrbaHotel
 
         public int id { get; set; }
         public string descripcion { get; set; }
-        public decimal? precio { get; set; }
+        public decimal precio { get; set; }
         public int cantidad { get; set; }
         
         public consumible() { }
@@ -29,7 +29,7 @@ namespace FrbaHotel
             if (objReader.Read())
             {
                 this.descripcion = objReader["descripcion"] as string;
-                this.precio = objReader["precio"] as decimal?;
+                this.precio = (decimal)objReader["precio"];
             }
             else
             {

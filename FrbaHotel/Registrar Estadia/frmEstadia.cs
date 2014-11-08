@@ -236,6 +236,7 @@ namespace FrbaHotel.Registrar_Estadia
         {
             if (!checkout)
             {
+                //checkin
                 reserva.checkin = DateTime.Today.Date;
 
                 Usuario usr = new Usuario();
@@ -246,6 +247,7 @@ namespace FrbaHotel.Registrar_Estadia
             }
             else
             {
+                //checkout
                 reserva.checkout = dateTimePicker1.Value.Date;
                 
                 Usuario usr = new Usuario();
@@ -254,6 +256,8 @@ namespace FrbaHotel.Registrar_Estadia
 
                 reserva.registrarConsumibles();
                 reserva.hacerCheckout();
+                
+                new Registrar_Estadia.frmFactura(reserva).ShowDialog();
             }
            
         }
