@@ -196,3 +196,48 @@ where fecha_inicio = (select MAX(check_out) from GAME_OF_QUERYS.reserva)
 and reserva.check_in is null
 */
 
+
+
+/*Stored Procedures para listados*/
+GO
+-- Hoteles con mayor cantidad de reservas canceladas
+CREATE PROCEDURE GAME_OF_QUERYS.mayoresCancelaciones @year int, @trimestreInicio int, @trimestreFin int
+AS
+SELECT TOP 5 hotel_id, nombre AS 'nombre del hotel', COUNT(*) AS cantidad FROM GAME_OF_QUERYS.reserva
+JOIN GAME_OF_QUERYS.hotel ON (hotel.id = reserva.hotel_id)
+WHERE estado_id IN (3, 4, 5) AND (MONTH(fecha_inicio) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(fecha_inicio) = @year
+GROUP BY hotel_id, nombre
+ORDER BY cantidad DESC
+GO
+
+-- Hoteles con mayor cantidad de consumibles falcturados
+CREATE PROCEDURE GAME_OF_QUERYS.mayoresConsumibles @year int, @trimestreInicio int, @trimestreFin int
+AS
+SELECT TOP 5 hotel_id, nombre AS 'nombre del hotel', COUNT(consumible_id) AS cantidad FROM GAME_OF_QUERYS.consumible_reserva
+JOIN GAME_OF_QUERYS.reserva ON (consumible_reserva.reserva_id = reserva.id)
+JOIN GAME_OF_QUERYS.hotel ON (hotel.id = reserva.hotel_id)
+WHERE (MONTH(fecha_inicio) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(fecha_inicio) = @year
+GROUP BY hotel_id, nombre
+ORDER BY cantidad DESC
+GO
+
+-- Hoteles con mayor cantidad de días fuera de servicio
+CREATE PROCEDURE GAME_OF_QUERYS.mayoresMantenimiento @year int, @trimestreInicio int, @trimestreFin int
+AS
+SELECT TOP 5 hotel_id, nombre AS 'nombre del hotel', SUM(DATEDIFF(DAY, fecha_inicio, fecha_fin)) AS cantidad FROM GAME_OF_QUERYS.mantenimiento
+JOIN GAME_OF_QUERYS.hotel ON (hotel.id = mantenimiento.hotel_id)
+WHERE (MONTH(fecha_inicio) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(fecha_inicio) = @year
+GROUP BY hotel_id, nombre
+ORDER BY cantidad DESC
+GO
+
+-- Habitaciones con mayor cantidad de días que fueron ocupadas
+CREATE PROCEDURE GAME_OF_QUERYS.HabitacionesOcupadas @year int, @trimestreInicio int, @trimestreFin int
+AS
+SELECT TOP 5 nombre AS 'nombre de hotel', hotel_id, habitacion_id AS 'nro de habitacion', SUM(DATEDIFF(DAY, check_in, check_out)) AS cantidad FROM GAME_OF_QUERYS.reserva
+JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva.id = reserva_habitacion.reserva_id)
+JOIN GAME_OF_QUERYS.hotel ON (hotel.id = reserva.hotel_id)
+WHERE estado_id = 6 AND (MONTH(fecha_inicio) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(fecha_inicio) = @year
+GROUP BY hotel_id, nombre, habitacion_id
+ORDER BY cantidad DESC
+GO
