@@ -118,12 +118,12 @@ namespace FrbaHotel.Listado_Estadistico
                         }
                     case 4:
                         {
-                            query = new SqlCommand("GAME_OF_QUERYS.HabitacionesOcupadas", objConexion);
+                            query = new SqlCommand("GAME_OF_QUERYS.habitacionesOcupadas", objConexion);
                             break;
                         }
                     case 5:
                         {
-                            query = new SqlCommand("GAME_OF_QUERYS.punntosCliente", objConexion);
+                            query = new SqlCommand("GAME_OF_QUERYS.puntosCliente", objConexion);
                             break;
                         }
                 }

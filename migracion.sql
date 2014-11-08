@@ -232,7 +232,7 @@ ORDER BY cantidad DESC
 GO
 
 -- Habitaciones con mayor cantidad de días que fueron ocupadas
-CREATE PROCEDURE GAME_OF_QUERYS.HabitacionesOcupadas @year int, @trimestreInicio int, @trimestreFin int
+CREATE PROCEDURE GAME_OF_QUERYS.habitacionesOcupadas @year int, @trimestreInicio int, @trimestreFin int
 AS
 SELECT TOP 5 nombre AS 'nombre de hotel', hotel_id, habitacion_id AS 'nro de habitacion', SUM(DATEDIFF(DAY, check_in, check_out)) AS cantidad FROM GAME_OF_QUERYS.reserva
 JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva.id = reserva_habitacion.reserva_id)
@@ -245,7 +245,7 @@ GO
 
 -- Puntos de los clientes: 1 por cada $10 de estadia y 1 por cada $5 de consumibles
 
-CREATE PROCEDURE GAME_OF_QUERYS.punntosCliente @year int, @trimestreInicio int, @trimestreFin int
+CREATE PROCEDURE GAME_OF_QUERYS.puntosCliente @year int, @trimestreInicio int, @trimestreFin int
 AS
 SELECT TOP 5 cliente_id, cliente.nombre + ' ' + cliente.apellido AS 'nombre y apellido', ROUND(CAST((SUM(DISTINCT((precio_base*porcentual + cantidad_estrella*recarga_estrella) * (DATEDIFF(DAY, check_in, check_out))))/10 + SUM(cantidad*precio)/5) AS FLOAT), 0, 1) AS puntos
 FROM GAME_OF_QUERYS.reserva
