@@ -254,6 +254,8 @@ namespace FrbaHotel.Registrar_Estadia
 
                 reserva.registrarConsumibles();
                 reserva.hacerCheckout();
+                
+                new Registrar_Estadia.frmFactura(reserva).ShowDialog();
             }
            
         }

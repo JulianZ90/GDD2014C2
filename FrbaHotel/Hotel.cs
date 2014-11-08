@@ -17,8 +17,8 @@ namespace FrbaHotel
         public string ciudad { get; set; }
         public Pais pais { get; set; }
         public int? tel { get; set; }
-        public int? cantidad_estrella { get; set; }
-        public int? recarga_estrella { get; set; }
+        public int cantidad_estrella { get; set; }
+        public int recarga_estrella { get; set; }
         public DateTime? fecha_creacion { get; set; }
         public string mail { get; set; }
 

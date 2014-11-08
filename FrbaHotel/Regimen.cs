@@ -19,5 +19,11 @@ namespace FrbaHotel
             else
                 return descripcion;
         }
+
+        public bool esAllInclusive()
+        {
+            return this.descripcion == "All inclusive";
+        }
+
     }
 }
