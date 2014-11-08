@@ -35,7 +35,7 @@ namespace FrbaHotel.Registrar_Estadia
             panel1.Show();
             panel2.Hide();
             panel3.Hide();
-            dateTimePicker1.Hide();
+            panel4.Hide();
         }
 
         public frmEstadia(string s)
@@ -52,6 +52,7 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //chekcin
             if (textBox1.Text == "") return;
             getReserva(Int32.Parse(textBox1.Text));
 
@@ -68,6 +69,7 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void button4_Click(object sender, EventArgs e)
         {
+            //checkout
             if (textBox13.Text == "") return;
             getReserva(textBox13.Text);
 
@@ -75,6 +77,7 @@ namespace FrbaHotel.Registrar_Estadia
             completarFormConReserva();
 
             button5.Enabled = true;
+            button2.Enabled = true;
         }
 
         private void getReserva(int id)
@@ -116,8 +119,10 @@ namespace FrbaHotel.Registrar_Estadia
                 reserva = new Reserva();
                 List<Habitacion> habs = new List<Habitacion>();
                 List<Cliente> huespedes = new List<Cliente>();
+                List<consumible> con = new List<consumible>();
                 reserva.Habitaciones = habs;
                 reserva.huespedes = huespedes;
+                reserva.consumibles = con;
 
 
                 reserva.Id = (int)objReader["id"];
@@ -220,9 +225,11 @@ namespace FrbaHotel.Registrar_Estadia
 
             getHabitaciones();
             getHuespedes();
+            getConsumibles();
 
             refrescarListaHabitaciones();
             refrescarListaHuespedes();
+            refrescarListaConsumibles();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -230,11 +237,22 @@ namespace FrbaHotel.Registrar_Estadia
             if (!checkout)
             {
                 reserva.checkin = DateTime.Today.Date;
+
+                Usuario usr = new Usuario();
+                usr.id = ((FrmPrincipal)this.MdiParent).Log.Usuario_Id;
+                reserva.user_checkin = usr;
+
                 reserva.hacerCheckin();
             }
             else
             {
                 reserva.checkout = dateTimePicker1.Value.Date;
+                
+                Usuario usr = new Usuario();
+                usr.id = ((FrmPrincipal)this.MdiParent).Log.Usuario_Id;
+                reserva.user_checkout = usr;
+
+                reserva.registrarConsumibles();
                 reserva.hacerCheckout();
             }
            
@@ -273,6 +291,17 @@ namespace FrbaHotel.Registrar_Estadia
             }
         }
 
+
+        public void refrescarListaConsumibles()
+        {
+            dataGridView3.Rows.Clear();
+            foreach (consumible h in reserva.consumibles)
+            {
+                string[] row = new string[] { h.descripcion.ToString(), h.precio.ToString(), h.cantidad.ToString() };
+                dataGridView3.Rows.Add(row);
+            }
+        }
+
         private void frmEstadia_Load(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
@@ -302,16 +331,6 @@ namespace FrbaHotel.Registrar_Estadia
                     reserva.consumibles.Add(h);
                     refrescarListaConsumibles();
                 }
-            }
-        }
-
-        private void refrescarListaConsumibles()
-        {
-            dataGridView3.Rows.Clear();
-            foreach (consumible h in reserva.consumibles)
-            {
-                string[] row = new string[] { h.descripcion, h.precio.ToString(), "1" };
-                dataGridView2.Rows.Add(row);
             }
         }
 
@@ -369,6 +388,38 @@ namespace FrbaHotel.Registrar_Estadia
                 reserva.huespedes.Add(cli);
             }
             connect.Close();
+        }
+
+        private void getConsumibles()
+        {
+            string query_str = @"select * from GAME_OF_QUERYS.consumible_reserva 
+                                        join GAME_OF_QUERYS.consumible on consumible.id = consumible_reserva.consumible_id
+                                        where consumible_reserva.reserva_id = @reserva";
+            SqlCommand query = new SqlCommand(query_str, connect);
+            string q = query.CommandText;
+            query.Parameters.AddWithValue("reserva", reserva.Id);
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+
+            while (objReader.Read())
+            {
+                consumible c = new consumible();
+                c.descripcion = objReader["descripcion"] as string;
+                c.cantidad = (int)objReader["cantidad"];
+                c.precio = (decimal)objReader["precio"];
+                c.id = (int)objReader["id"];
+
+                reserva.consumibles.Add(c);
+            }
+            connect.Close();
+        }
+
+        private void actualizarCantidades(object sender, DataGridViewCellEventArgs e)
+        {
+            for (int counter = 0; counter < (dataGridView3.Rows.Count); counter++)
+            {
+                reserva.consumibles.ElementAt(counter).cantidad = int.Parse(dataGridView3.Rows[counter].Cells["cantidad"].Value.ToString());
+            }
         }
         
     }

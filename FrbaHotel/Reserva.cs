@@ -38,9 +38,10 @@ namespace FrbaHotel
         public void hacerCheckin()
         {
             //TODO falta agregar el user_check_in_id de la session
-            SqlCommand query = new SqlCommand("update GAME_OF_QUERYS.reserva set check_in=@checkin, estado_id=6 where id=@reserva", connect);
+            SqlCommand query = new SqlCommand("update GAME_OF_QUERYS.reserva set check_in=@checkin, user_check_in_id=@user, estado_id=6 where id=@reserva", connect);
             query.Parameters.AddWithValue("reserva", Id);
             query.Parameters.AddWithValue("checkin", checkin);
+            query.Parameters.AddWithValue("user", user_checkin.id);
             connect.Open();
             query.ExecuteNonQuery();
 
@@ -55,16 +56,21 @@ namespace FrbaHotel
                 query.Parameters.AddWithValue("cliente", h.id);
                 query.ExecuteNonQuery();
             }
-            
-
 
             connect.Close();
-
         }
 
 
         public void hacerCheckout()
-        {}
+        {
+            SqlCommand query = new SqlCommand("update GAME_OF_QUERYS.reserva set check_out=@checkout, user_check_out_id=@user where id=@reserva", connect);
+            query.Parameters.AddWithValue("reserva", Id);
+            query.Parameters.AddWithValue("checkout", checkout);
+            query.Parameters.AddWithValue("user", user_checkout.id);
+            connect.Open();
+            query.ExecuteNonQuery();
+            connect.Close();
+        }
 
 
         public bool isCancel()
@@ -75,6 +81,25 @@ namespace FrbaHotel
         public bool tieneIngreso()
         { 
             return this.Estado.Descripcion == "con ingreso";
+        }
+
+        public void registrarConsumibles()
+        {
+            SqlCommand query = new SqlCommand("delete GAME_OF_QUERYS.consumible_reserva where consumible_reserva.reserva_id=@reserva", connect);
+            query.Parameters.AddWithValue("reserva", Id);
+            connect.Open();
+            query.ExecuteNonQuery();
+
+            foreach (consumible h in consumibles)
+            {
+                query = new SqlCommand("insert into GAME_OF_QUERYS.consumible_reserva (reserva_id,consumible_id, cantidad) values(@reserva , @consu,@cant) ", connect);
+                query.Parameters.AddWithValue("reserva", Id);
+                query.Parameters.AddWithValue("consu", h.id);
+                query.Parameters.AddWithValue("cant", h.cantidad);
+                query.ExecuteNonQuery();
+            }
+
+            connect.Close();
         }
  
     }
