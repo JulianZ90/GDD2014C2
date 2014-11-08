@@ -73,7 +73,7 @@ namespace FrbaHotel.Registrar_Consumible
             {
                 consumible consumible = new consumible();
                 consumible.id = (int)objReader["id"];
-                consumible.precio = objReader["precio"] as decimal?;
+                consumible.precio = (decimal)objReader["precio"];
                 consumible.descripcion = objReader["descripcion"] as string;
               
                 lista.Add(consumible);

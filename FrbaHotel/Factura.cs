@@ -7,7 +7,7 @@ namespace FrbaHotel
 {
     class Factura
     {
-        class Item
+        public class Item
         {
             public int cant { get; set; }
             public string desc { get; set; }

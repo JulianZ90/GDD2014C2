@@ -52,8 +52,8 @@ namespace FrbaHotel
                 this.calle = objReader["calle"] as string;
                 this.nro_calle = objReader["nro_calle"] as int?;
                 this.ciudad = objReader["ciudad"] as string;
-                this.cantidad_estrella = objReader["cantidad_estrella"] as int?;
-                this.recarga_estrella = objReader["recarga_estrella"] as int?;
+                this.cantidad_estrella = (int)objReader["cantidad_estrella"];
+                this.recarga_estrella = (int)objReader["recarga_estrella"];
                 this.tel = objReader["tel"] as int?;
                 this.mail = objReader["mail"] as string;
                 this.fecha_creacion = objReader["fecha_creacion"] as DateTime?;
