@@ -119,8 +119,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 this.btnReservar.Hide();
             }
             this.StartPosition = FormStartPosition.CenterParent;
-            this.dateTimeInicio.Value = DateTime.Today;
-            this.dateTimeFin.Value = DateTime.Today.AddDays(1);
+            this.dateTimeInicio.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
+            this.dateTimeFin.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]).AddDays(1);
             this.LlenarComboBoxTipoHabitacion(this.cmbBxTipoHab);
             this.txtBxCostoTotal.ReadOnly = true;
             this.txtBxCostoDiario.ReadOnly = true;
@@ -286,8 +286,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            this.dateTimeInicio.Value = DateTime.Today;
-            this.dateTimeFin.Value = DateTime.Today.AddDays(1);
+            this.dateTimeInicio.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
+            this.dateTimeFin.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]).AddDays(1);
             this.txtBxRegimen.Text = string.Empty;
             this.dataGridViewRegimen.Columns.Clear();
             this.dataGridViewRegimen.Hide();
@@ -426,7 +426,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void btnDisponibilidad_Click(object sender, EventArgs e)
         {
-            if ((this.dateTimeInicio.Value >= DateTime.Today) && (this.dateTimeFin.Value >= DateTime.Today.AddDays(1)) && (this.dateTimeFin.Value > this.dateTimeInicio.Value))
+            if ((this.dateTimeInicio.Value >= DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"])) && (this.dateTimeFin.Value >= DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]).AddDays(1)) && (this.dateTimeFin.Value > this.dateTimeInicio.Value))
             {
                 fechasValidas = true;
             }
@@ -534,7 +534,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             NuevaReserva.Estado = EstadoReserva;
             NuevaReserva.FechaInicio = this.dateTimeInicio.Value;
             NuevaReserva.FechaFin = this.dateTimeFin.Value;
-            NuevaReserva.FechaRealizacion = DateTime.Today;
+            NuevaReserva.FechaRealizacion = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
             Regimen RegimenReserva = new Regimen();
             RegimenReserva.id = RegimenId;
             NuevaReserva.Regimen = RegimenReserva;
@@ -613,7 +613,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     }
 
                     //hay disponibilidad?
-                    if ((this.dateTimeInicio.Value >= DateTime.Today) && (this.dateTimeFin.Value >= DateTime.Today.AddDays(1)) && (this.dateTimeFin.Value > this.dateTimeInicio.Value))
+                    if ((this.dateTimeInicio.Value >= DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"])) && (this.dateTimeFin.Value >= DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]).AddDays(1)) && (this.dateTimeFin.Value > this.dateTimeInicio.Value))
                         fechasValidas = true;    
                     else
                         MessageBox.Show("Fechas inválidas");
@@ -723,6 +723,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             {
                 MessageBox.Show("No se modifico ningun campo");
             }
+        }
+
+        private void FrmReserva_Load(object sender, EventArgs e)
+        {
+
         }
 
 

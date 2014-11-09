@@ -330,7 +330,7 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.dateTimePicker1.Value = DateTime.Today;
+            this.dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
             this.textBox1.Text = string.Empty;
             this.textBox2.Text = string.Empty;
             this.textBox3.Text = string.Empty;
@@ -348,6 +348,11 @@ namespace FrbaHotel.ABM_de_Usuario
             this.checkBox3.Checked = false;
             this.checkBox4.Checked = false;
             this.checkBox5.Checked = false;
+        }
+
+        private void listadoUsuario_Load(object sender, EventArgs e)
+        {
+            dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
         }
     }
 }

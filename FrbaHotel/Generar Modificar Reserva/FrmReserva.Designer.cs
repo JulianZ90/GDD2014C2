@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblModific = new System.Windows.Forms.Label();
+            this.txtBxCostoTotal = new System.Windows.Forms.TextBox();
             this.btnEliminarHab = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -37,6 +39,7 @@
             this.cmbBxTipoHab = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtBxDetalle = new System.Windows.Forms.TextBox();
+            this.lblCosto = new System.Windows.Forms.Label();
             this.btnAgregarHabitacion = new System.Windows.Forms.Button();
             this.cmbBxHoteles = new System.Windows.Forms.ComboBox();
             this.lblHotel = new System.Windows.Forms.Label();
@@ -50,12 +53,9 @@
             this.dateTimeInicio = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtBxCostoTotal = new System.Windows.Forms.TextBox();
-            this.lblCosto = new System.Windows.Forms.Label();
             this.btnReservar = new System.Windows.Forms.Button();
             this.btnDisponibilidad = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
-            this.lblModific = new System.Windows.Forms.Label();
             this.btnModificar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -91,6 +91,25 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Reserva";
+            // 
+            // lblModific
+            // 
+            this.lblModific.AutoSize = true;
+            this.lblModific.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblModific.ForeColor = System.Drawing.Color.DarkRed;
+            this.lblModific.Location = new System.Drawing.Point(568, 155);
+            this.lblModific.Name = "lblModific";
+            this.lblModific.Size = new System.Drawing.Size(232, 30);
+            this.lblModific.TabIndex = 21;
+            this.lblModific.Text = "Para modificar las habitaciones, por favor\r\ningrese todas las habitaciones desead" +
+                "as\r\n";
+            // 
+            // txtBxCostoTotal
+            // 
+            this.txtBxCostoTotal.Location = new System.Drawing.Point(677, 321);
+            this.txtBxCostoTotal.Name = "txtBxCostoTotal";
+            this.txtBxCostoTotal.Size = new System.Drawing.Size(100, 20);
+            this.txtBxCostoTotal.TabIndex = 16;
             // 
             // btnEliminarHab
             // 
@@ -166,6 +185,16 @@
             this.txtBxDetalle.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtBxDetalle.Size = new System.Drawing.Size(356, 98);
             this.txtBxDetalle.TabIndex = 17;
+            // 
+            // lblCosto
+            // 
+            this.lblCosto.AutoSize = true;
+            this.lblCosto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCosto.Location = new System.Drawing.Point(602, 324);
+            this.lblCosto.Name = "lblCosto";
+            this.lblCosto.Size = new System.Drawing.Size(72, 13);
+            this.lblCosto.TabIndex = 15;
+            this.lblCosto.Text = "Costo total:";
             // 
             // btnAgregarHabitacion
             // 
@@ -283,23 +312,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Desde:";
             // 
-            // txtBxCostoTotal
-            // 
-            this.txtBxCostoTotal.Location = new System.Drawing.Point(677, 321);
-            this.txtBxCostoTotal.Name = "txtBxCostoTotal";
-            this.txtBxCostoTotal.Size = new System.Drawing.Size(100, 20);
-            this.txtBxCostoTotal.TabIndex = 16;
-            // 
-            // lblCosto
-            // 
-            this.lblCosto.AutoSize = true;
-            this.lblCosto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCosto.Location = new System.Drawing.Point(602, 324);
-            this.lblCosto.Name = "lblCosto";
-            this.lblCosto.Size = new System.Drawing.Size(72, 13);
-            this.lblCosto.TabIndex = 15;
-            this.lblCosto.Text = "Costo total:";
-            // 
             // btnReservar
             // 
             this.btnReservar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -333,18 +345,6 @@
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
-            // lblModific
-            // 
-            this.lblModific.AutoSize = true;
-            this.lblModific.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblModific.ForeColor = System.Drawing.Color.DarkRed;
-            this.lblModific.Location = new System.Drawing.Point(568, 155);
-            this.lblModific.Name = "lblModific";
-            this.lblModific.Size = new System.Drawing.Size(232, 30);
-            this.lblModific.TabIndex = 21;
-            this.lblModific.Text = "Para modificar las habitaciones, por favor\r\ningrese todas las habitaciones desead" +
-                "as\r\n";
-            // 
             // btnModificar
             // 
             this.btnModificar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -368,6 +368,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "FrmReserva";
             this.Text = "Nueva Reserva";
+            this.Load += new System.EventHandler(this.FrmReserva_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

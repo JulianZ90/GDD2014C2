@@ -264,7 +264,7 @@ namespace FrbaHotel.Registrar_Estadia
             if (!checkout)
             {
                 //checkin
-                reserva.checkin = DateTime.Today.Date;
+                reserva.checkin = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]).Date;
 
                 Usuario usr = new Usuario();
                 usr.id = ((FrmPrincipal)this.MdiParent).Log.Usuario_Id;
@@ -350,6 +350,8 @@ namespace FrbaHotel.Registrar_Estadia
             dataGridView3.Columns[0].Name = "Descripcion";
             dataGridView3.Columns[1].Name = "Precio";
             dataGridView3.Columns[2].Name = "Cantidad";
+
+            dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
         }
 
         private void button5_Click(object sender, EventArgs e)

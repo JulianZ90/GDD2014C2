@@ -462,10 +462,15 @@ namespace FrbaHotel.ABM_de_Cliente
             this.checkBox2.Checked = false;
             this.checkBox3.Checked = false;
             this.checkBox4.Checked = false;
-            this.dateTimePicker1.Value = DateTime.Today;
+            this.dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
             this.dataGridView1.Columns.Clear();
             this.comboBox1.SelectedValue = 0;
             this.comboBox2.SelectedValue = 0;
+        }
+
+        private void listadoClientes_Load(object sender, EventArgs e)
+        {
+            dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
         }
     }
 }

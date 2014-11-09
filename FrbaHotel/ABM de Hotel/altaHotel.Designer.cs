@@ -333,6 +333,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "altaHotel";
             this.Text = "altaHotel";
+            this.Load += new System.EventHandler(this.altaHotel_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

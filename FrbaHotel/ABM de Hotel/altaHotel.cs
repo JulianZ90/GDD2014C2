@@ -295,8 +295,13 @@ namespace FrbaHotel.ABM_de_Hotel
             this.textBox8.Text = string.Empty;
             this.checkBox2.Checked = true;
             this.checkBox3.Checked = true;
-            this.dateTimePicker1.Value = DateTime.Today;
+            this.dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
             this.comboBox1.SelectedValue = 0;
+        }
+
+        private void altaHotel_Load(object sender, EventArgs e)
+        {
+            dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
         }
     }
 }

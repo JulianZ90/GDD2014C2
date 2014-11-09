@@ -337,6 +337,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "listadoHoteles";
             this.Text = "listadoHoteles";
+            this.Load += new System.EventHandler(this.listadoHoteles_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

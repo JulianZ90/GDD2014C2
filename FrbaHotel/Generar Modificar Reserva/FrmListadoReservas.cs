@@ -228,7 +228,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 query.Parameters.AddWithValue("@motivo", DBNull.Value);
             else
                 query.Parameters.AddWithValue("@motivo", this.txtBxMotivos.Text);
-            query.Parameters.AddWithValue("@fecha", DateTime.Today);
+            query.Parameters.AddWithValue("@fecha", DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]));
             if (guest)
                 query.Parameters.AddWithValue("@usuarioId", UserId);
             else

@@ -398,9 +398,14 @@ namespace FrbaHotel.ABM_de_Cliente
             this.checkBox2.Checked = true;
             this.checkBox3.Checked = true;
             this.checkBox4.Checked = true;
-            this.dateTimePicker1.Value = DateTime.Today;
+            this.dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
             this.comboBox1.SelectedValue = 0;
             this.comboBox2.SelectedValue = 0;
+        }
+
+        private void altaCliente_Load(object sender, EventArgs e)
+        {
+            dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
         }
     }
 }

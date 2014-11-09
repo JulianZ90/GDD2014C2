@@ -422,6 +422,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "altaCliente";
             this.Text = "altaCliente";
+            this.Load += new System.EventHandler(this.altaCliente_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

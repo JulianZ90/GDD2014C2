@@ -103,6 +103,9 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void frmMantenimiento_Load(object sender, EventArgs e)
         {
+            dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]); 
+            dateTimePicker2.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
+            monthCalendar1.TodayDate = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
             reload();
         }
 
@@ -123,14 +126,20 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void setDesdeHasta(object sender, DateRangeEventArgs e)
         {
+            this.dateTimePicker1.ValueChanged -= new System.EventHandler(this.dateTimePicker1_ValueChanged);
+            this.dateTimePicker2.ValueChanged -= new System.EventHandler(this.dateTimePicker2_ValueChanged);
+
             dateTimePicker1.Value = monthCalendar1.SelectionStart;
             dateTimePicker2.Value = monthCalendar1.SelectionEnd;
+
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
+            this.dateTimePicker2.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
         }
 
         private void setDesdeHasta(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 ) return;
-            monthCalendar1.SelectionStart   = (DateTime) dataGridView1.Rows[e.RowIndex].Cells["fecha_inicio"].Value;
+            monthCalendar1.SelectionStart   = (DateTime)dataGridView1.Rows[e.RowIndex].Cells["fecha_inicio"].Value;
             monthCalendar1.SelectionEnd     = (DateTime)dataGridView1.Rows[e.RowIndex].Cells["fecha_fin"].Value;
         }
 

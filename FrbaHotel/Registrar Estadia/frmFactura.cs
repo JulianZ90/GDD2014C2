@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace FrbaHotel.Registrar_Estadia
 {
@@ -17,14 +18,10 @@ namespace FrbaHotel.Registrar_Estadia
         {
             InitializeComponent();
 
-
-            
-
-
             factura = new Factura(r);
 
             textBox1.Text = r.Id.ToString();
-            textBox2.Text = DateTime.Today.ToShortDateString();
+            textBox2.Text = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]).ToShortDateString();
 
             txtDetalles.Clear();
             txtDetalles.Text += string.Format("{0} {1}                        {2}:{3}\r\n", factura.reserva.Cliente.nombre, factura.reserva.Cliente.apellido, factura.reserva.Cliente.tipo_identidad.ToString(), factura.reserva.Cliente.nro_identidad);
@@ -66,7 +63,7 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void button1_Click(object sender, EventArgs e)
         {
-            factura.fecha = DateTime.Today;
+            factura.fecha = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
             factura.medios_de_pagos = comboBox1.SelectedText;
             
             if (textBox3.Text!="")
