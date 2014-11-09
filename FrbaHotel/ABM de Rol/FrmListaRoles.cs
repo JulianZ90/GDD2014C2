@@ -14,7 +14,7 @@ namespace FrbaHotel.ABM_de_Rol
 {
     public partial class FrmListaRoles : Form
     {
-        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        SqlConnection objConexion = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
         SqlCommand query = null;
 
         public FrmListaRoles()

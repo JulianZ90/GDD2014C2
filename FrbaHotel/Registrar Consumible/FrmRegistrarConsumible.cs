@@ -14,7 +14,7 @@ namespace FrbaHotel.Registrar_Consumible
     public partial class FrmRegistrarConsumible : Form
     {
         LoginId Log = null;
-        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        SqlConnection objConexion = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
         SqlCommand query = null;
         SqlDataReader objReader = null;
 

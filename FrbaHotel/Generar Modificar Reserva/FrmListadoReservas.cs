@@ -13,7 +13,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 {
     public partial class FrmListadoReservas : Form
     {
-        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        SqlConnection objConexion = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
         SqlCommand query = null;
         SqlDataReader objReader = null;
         List<Reserva> lstReserva = new List<Reserva>();

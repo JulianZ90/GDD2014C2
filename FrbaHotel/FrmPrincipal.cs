@@ -15,7 +15,7 @@ namespace FrbaHotel
     {
         private int childFormNumber = 0;
         public LoginId Log = null;
-        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        SqlConnection objConexion = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
         
 
         public FrmPrincipal(LoginId IdLog)

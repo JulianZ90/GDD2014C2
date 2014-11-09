@@ -13,7 +13,7 @@ namespace FrbaHotel.ABM_de_Rol
 {
     public partial class FrmRol : Form
     {
-        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        SqlConnection objConexion = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
         List<Funcionalidad> LstCheckedFunc = new List<Funcionalidad>();
         bool Nuevo = false;  //flag para ver si ingresa un rol nuevo o si es para modificar/eliminar
         Rol Rol = null;

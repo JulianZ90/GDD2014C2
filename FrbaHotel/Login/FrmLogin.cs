@@ -13,7 +13,7 @@ namespace FrbaHotel.Login
 {
     public partial class FrmLogin : Form
     {
-        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        SqlConnection objConexion = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
 
         public FrmLogin()
         {

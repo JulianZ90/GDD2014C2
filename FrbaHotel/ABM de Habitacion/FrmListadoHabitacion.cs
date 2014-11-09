@@ -15,7 +15,7 @@ namespace FrbaHotel.ABM_de_Habitacion
     public partial class FrmListadoHabitacion : Form
     {
         LoginId Log = null;
-        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        SqlConnection objConexion = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
         SqlCommand query = null;
         SqlDataReader objReader = null;
 

@@ -13,7 +13,7 @@ namespace FrbaHotel.Login
 {
     public partial class FrmElegirRolHotel : Form
     {
-        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        SqlConnection objConexion = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
         SqlCommand query = null;
         SqlDataReader objReader = null;
         LoginId LoginId = new LoginId();

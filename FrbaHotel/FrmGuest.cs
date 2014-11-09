@@ -14,7 +14,7 @@ namespace FrbaHotel
 {
     public partial class FrmGuest : Form
     {
-        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        SqlConnection objConexion = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
         SqlCommand query = null;
         SqlDataReader objReader = null;
         int idUser;

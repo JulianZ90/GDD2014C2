@@ -18,7 +18,7 @@ namespace FrbaHotel.ABM_de_Habitacion
         int IdHabitacion;
         int IdHotel;
         string nroHabitacion;
-        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        SqlConnection objConexion = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
         SqlCommand query = null;
         SqlDataReader objReader = null;
         string vista = null;

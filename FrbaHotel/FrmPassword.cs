@@ -47,7 +47,7 @@ namespace FrbaHotel
                 string claveHash = Sb.ToString();
 
 
-                SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+                SqlConnection objConexion = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
                 SqlCommand query = new SqlCommand("UPDATE GAME_OF_QUERYS.usuario SET password = @newPass WHERE id = @idUser", objConexion);
                 query.Parameters.AddWithValue("@newPass", claveHash);
                 query.Parameters.AddWithValue("@idUser", userId);

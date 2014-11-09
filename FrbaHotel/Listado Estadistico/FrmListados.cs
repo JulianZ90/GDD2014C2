@@ -13,7 +13,7 @@ namespace FrbaHotel.Listado_Estadistico
 {
     public partial class FrmListados : Form
     {
-        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        SqlConnection objConexion = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
         SqlCommand query = null;
 
         public FrmListados()
