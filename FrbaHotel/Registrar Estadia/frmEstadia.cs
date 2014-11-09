@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace FrbaHotel.Registrar_Estadia
 {
     public partial class frmEstadia : Form
     {
-        SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
+        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
         Reserva reserva;
         bool checkout = false;
         string consultaBase = @"select distinct reserva.*, 

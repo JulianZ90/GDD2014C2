@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace FrbaHotel
 {
     public class consumible
     {
-        SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
+        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
 
         public int id { get; set; }
         public string descripcion { get; set; }

@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace FrbaHotel.Registrar_Consumible
 {
     public partial class listadoConsumibles : Form
     {
-        SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
+        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
 		consumible consumibleSeleccionado;
         bool seleccionar = false;
 

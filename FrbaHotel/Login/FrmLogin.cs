@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Configuration;
+
 namespace FrbaHotel.Login
 {
     public partial class FrmLogin : Form
