@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace FrbaHotel.ABM_de_Rol
 {
     public partial class FrmRol : Form
     {
-        SqlConnection objConexion = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
+        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
         List<Funcionalidad> LstCheckedFunc = new List<Funcionalidad>();
         bool Nuevo = false;  //flag para ver si ingresa un rol nuevo o si es para modificar/eliminar
         Rol Rol = null;

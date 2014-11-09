@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data.SqlClient;
 
 namespace FrbaHotel
 {
     class Factura
     {
+        SqlConnection connect = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
+
         public class Item
         {
             public int cant { get; set; }
@@ -27,7 +30,7 @@ namespace FrbaHotel
         public List<Item> items { get; set; }
         public long tarjeta { get; set; }
 
-        public Factura(Reserva r) 
+        public Factura(Reserva r)
         {
             reserva = r;
             this.items = new List<Item>();
@@ -72,6 +75,17 @@ namespace FrbaHotel
             return items.Sum(item => item.importe());
         }
 
-        public void insert() { }
+        public void insert() 
+        { 
+            SqlCommand query = new SqlCommand("insert into GAME_OF_QUERYS.factura (fecha, medio_de_pago, reserva_id, tarjeta) values(@fecha, @medio, @reserva_id, @tarjeta)",connect);
+            query.Parameters.AddWithValue("fecha", fecha);
+            query.Parameters.AddWithValue("medio", medios_de_pagos);
+            query.Parameters.AddWithValue("reserva_id", reserva.Id);
+            query.Parameters.AddWithValue("tarjeta", tarjeta);
+
+            connect.Open();
+            query.ExecuteNonQuery();
+            connect.Close(); 
+        }
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
+using System.Configuration;
 
 namespace FrbaHotel
 {
@@ -46,7 +47,7 @@ namespace FrbaHotel
                 string claveHash = Sb.ToString();
 
 
-                SqlConnection objConexion = new SqlConnection("Data Source=localhost\\SQLSERVER2008;Initial Catalog=GD2C2014;User Id=gd;Password=gd2014;");
+                SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
                 SqlCommand query = new SqlCommand("UPDATE GAME_OF_QUERYS.usuario SET password = @newPass WHERE id = @idUser", objConexion);
                 query.Parameters.AddWithValue("@newPass", claveHash);
                 query.Parameters.AddWithValue("@idUser", userId);

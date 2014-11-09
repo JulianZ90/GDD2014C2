@@ -68,8 +68,13 @@ namespace FrbaHotel.Registrar_Estadia
         {
             factura.fecha = DateTime.Today;
             factura.medios_de_pagos = comboBox1.SelectedText;
-            factura.tarjeta = long.Parse(textBox3.Text);
+            
+            if (textBox3.Text!="")
+                factura.tarjeta = long.Parse(textBox3.Text);
+
             factura.insert();
+
+            MessageBox.Show("Factura registrada");
         }
     }
 }
