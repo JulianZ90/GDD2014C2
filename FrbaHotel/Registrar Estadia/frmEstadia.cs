@@ -45,6 +45,7 @@ namespace FrbaHotel.Registrar_Estadia
             panel2.Hide();
             panel3.Hide();
             panel4.Hide();
+            label17.Hide();
         }
 
         public frmEstadia(string s)
@@ -57,6 +58,8 @@ namespace FrbaHotel.Registrar_Estadia
             groupBox2.Show();
             button2.Text = "Registrar Checkout y facturar";
             button3.Hide();
+            label17.Hide();
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -68,12 +71,18 @@ namespace FrbaHotel.Registrar_Estadia
             if (reserva == null) return;
             completarFormConReserva();
 
-            if (!reserva.tieneIngreso())
+            if (!reserva.tieneIngreso() && !ingresoInvalido())
             {
                 button2.Enabled = true;
                 button3.Enabled = true;
                 button5.Enabled = true;
             }
+
+            if(ingresoInvalido())
+                label17.Show();
+            else
+                label17.Hide();
+
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -476,6 +485,14 @@ namespace FrbaHotel.Registrar_Estadia
             {
                 reserva.consumibles.ElementAt(counter).cantidad = int.Parse(dataGridView3.Rows[counter].Cells["cantidad"].Value.ToString());
             }
+        }
+
+        public bool ingresoInvalido() //ingreso valido solo el mismo dia de la reserva
+        {
+            if (reserva.FechaInicio != DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]))
+                return true;
+            else
+                return false;
         }
         
     }

@@ -74,6 +74,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label16 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.label17 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -531,11 +532,23 @@
             this.panel4.Size = new System.Drawing.Size(129, 42);
             this.panel4.TabIndex = 44;
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.Red;
+            this.label17.Location = new System.Drawing.Point(355, 9);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(154, 26);
+            this.label17.TabIndex = 45;
+            this.label17.Text = "Ingreso solo permitido el\r\ndia de inicio de la reserva";
+            // 
             // frmEstadia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(544, 503);
+            this.Controls.Add(this.label17);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel3);
@@ -631,5 +644,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label17;
     }
 }
