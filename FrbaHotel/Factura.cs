@@ -30,6 +30,7 @@ namespace FrbaHotel
         public Reserva reserva { get; set; }
         public List<Item> items { get; set; }
         public long tarjeta { get; set; }
+        public decimal totalAPagar { get; set; }
 
         public Factura(Reserva r)
         {
@@ -69,24 +70,38 @@ namespace FrbaHotel
                 item.precio = -importeConsumiblesTotal;
                 items.Add(item);
             }
+
+            totalAPagar = items.Sum(item => item.importe());
         }
 
         public decimal total()
         {
-            return items.Sum(item => item.importe());
+            return this.totalAPagar;
         }
 
         public void insert() 
-        { 
-            SqlCommand query = new SqlCommand("insert into GAME_OF_QUERYS.factura (fecha, medio_de_pago, reserva_id, tarjeta) values(@fecha, @medio, @reserva_id, @tarjeta)",connect);
+        {
+            SqlCommand query = new SqlCommand("insert into GAME_OF_QUERYS.factura (fecha, medio_de_pago, reserva_id, tarjeta, total) values(@fecha, @medio, @reserva_id, @tarjeta, @total); SELECT SCOPE_IDENTITY()", connect);
             query.Parameters.AddWithValue("fecha", fecha);
             query.Parameters.AddWithValue("medio", medios_de_pagos);
             query.Parameters.AddWithValue("reserva_id", reserva.Id);
             query.Parameters.AddWithValue("tarjeta", tarjeta);
+            query.Parameters.AddWithValue("total", totalAPagar);
 
             connect.Open();
-            query.ExecuteNonQuery();
-            connect.Close(); 
+            int factura_id = Convert.ToInt32(query.ExecuteScalar());
+            foreach (Item i in items)
+            {
+                query = new SqlCommand("insert into GAME_OF_QUERYS.item (factura_id,cant,desc,precio) values (@factura_id, @cant, @desc, @precio)", connect);
+                query.Parameters.AddWithValue("factura_id",factura_id);
+                query.Parameters.AddWithValue("cant", i.cant);
+                query.Parameters.AddWithValue("desc", i.desc);
+                query.Parameters.AddWithValue("precio", i.precio);
+                query.ExecuteNonQuery();
+            }
+            connect.Close();
+
+
         }
     }
 }
