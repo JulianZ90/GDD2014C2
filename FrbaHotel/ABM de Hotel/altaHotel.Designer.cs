@@ -36,8 +36,6 @@
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.textBox8 = new System.Windows.Forms.TextBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -85,8 +83,6 @@
             this.groupBox1.Controls.Add(this.textBox5);
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.textBox8);
-            this.groupBox1.Controls.Add(this.checkBox3);
-            this.groupBox1.Controls.Add(this.checkBox2);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.listBox1);
             this.groupBox1.Controls.Add(this.dateTimePicker1);
@@ -113,10 +109,11 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(82, 135);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(100, 21);
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 43;
             // 
             // label10
@@ -124,9 +121,9 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(221, 109);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(89, 13);
+            this.label10.Size = new System.Drawing.Size(93, 13);
             this.label10.TabIndex = 42;
-            this.label10.Text = "Recarga estrellas";
+            this.label10.Text = "Recarga estrellas*";
             // 
             // textBox5
             // 
@@ -141,9 +138,9 @@
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(221, 84);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(90, 13);
+            this.label13.Size = new System.Drawing.Size(94, 13);
             this.label13.TabIndex = 40;
-            this.label13.Text = "Cantidad estrellas";
+            this.label13.Text = "Cantidad estrellas*";
             // 
             // textBox8
             // 
@@ -152,30 +149,6 @@
             this.textBox8.Size = new System.Drawing.Size(90, 20);
             this.textBox8.TabIndex = 41;
             this.textBox8.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox8_KeyPress);
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Location = new System.Drawing.Point(188, 138);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(15, 14);
-            this.checkBox3.TabIndex = 38;
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(391, 55);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(15, 14);
-            this.checkBox2.TabIndex = 37;
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // label11
             // 
@@ -200,7 +173,7 @@
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dateTimePicker1.Location = new System.Drawing.Point(285, 53);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(100, 20);
+            this.dateTimePicker1.Size = new System.Drawing.Size(121, 20);
             this.dateTimePicker1.TabIndex = 25;
             // 
             // label8
@@ -208,9 +181,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(221, 58);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(43, 13);
+            this.label8.Size = new System.Drawing.Size(47, 13);
             this.label8.TabIndex = 19;
-            this.label8.Text = "Creción";
+            this.label8.Text = "Creción*";
             // 
             // textBox7
             // 
@@ -250,9 +223,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(18, 141);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 13);
+            this.label5.Size = new System.Drawing.Size(33, 13);
             this.label5.TabIndex = 13;
-            this.label5.Text = "País";
+            this.label5.Text = "País*";
             // 
             // textBox4
             // 
@@ -267,9 +240,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(18, 112);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(40, 13);
+            this.label4.Size = new System.Drawing.Size(44, 13);
             this.label4.TabIndex = 11;
-            this.label4.Text = "Ciudad";
+            this.label4.Text = "Ciudad*";
             // 
             // textBox3
             // 
@@ -284,9 +257,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(18, 84);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(50, 13);
+            this.label3.Size = new System.Drawing.Size(54, 13);
             this.label3.TabIndex = 9;
-            this.label3.Text = "Nro Calle";
+            this.label3.Text = "Nro Calle*";
             // 
             // textBox2
             // 
@@ -301,9 +274,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 58);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(30, 13);
+            this.label2.Size = new System.Drawing.Size(34, 13);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Calle";
+            this.label2.Text = "Calle*";
             // 
             // textBox1
             // 
@@ -318,9 +291,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(18, 32);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 13);
+            this.label1.Size = new System.Drawing.Size(48, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Nombre";
+            this.label1.Text = "Nombre*";
             // 
             // altaHotel
             // 
@@ -366,8 +339,6 @@
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.ComboBox comboBox1;
     }
 }

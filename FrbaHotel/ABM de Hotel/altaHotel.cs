@@ -37,16 +37,54 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void button1_Click(object sender, EventArgs e)
         {
-            hotel.nombre = textBox1.Text;
-            hotel.calle = textBox2.Text;
+            if (textBox1.Text != "")
+                hotel.nombre = textBox1.Text;
+            else 
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
+
+            if(textBox2.Text !="")
+                hotel.calle = textBox2.Text;
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
+
             if (textBox3.Text != "") hotel.nro_calle = Int32.Parse(textBox3.Text);
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
+
+            if(textBox4.Text!="")
             hotel.ciudad = textBox4.Text;
-            if (checkBox3.Checked) hotel.pais = (Pais)comboBox1.SelectedItem;
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            } 
+            
+            hotel.pais = (Pais)comboBox1.SelectedItem;
             if (textBox6.Text != "") hotel.tel = long.Parse(textBox6.Text);
             hotel.mail = textBox7.Text;
-            if (checkBox2.Checked) hotel.fecha_creacion = dateTimePicker1.Value.Date;
+            hotel.fecha_creacion = dateTimePicker1.Value.Date;
             if (textBox8.Text != "") hotel.cantidad_estrella = Int32.Parse(textBox8.Text);
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
+
             if (textBox5.Text != "") hotel.recarga_estrella = Int32.Parse(textBox5.Text);
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
 
             hotel.regimenes = listBox1.SelectedItems.Cast<Regimen>().ToList();
 
@@ -54,12 +92,14 @@ namespace FrbaHotel.ABM_de_Hotel
             {
                 // no tiene id todavia, es un alta
                 hotel.insert();
-                ((FrmPrincipal)this.MdiParent).setStatus("Hotel creado");
+                MessageBox.Show("Hotel creado");
+                button1.Enabled = false;
+                return;
             }
             else
             {
                 hotel.update();
-                ((FrmPrincipal)this.Owner.MdiParent).setStatus("Hotel id=" + hotel.id.ToString() + " modificado");
+                MessageBox.Show("Hotel id=" + hotel.id.ToString() + " modificado");
                 this.Close();
             }
         }
@@ -86,25 +126,8 @@ namespace FrbaHotel.ABM_de_Hotel
 
             connect.Close();
             comboBox1.DataSource = lista;
-        }
 
-        // public void cargarConHotel(Hotel h)
-        //{ }
-
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBox3.Checked)
-                comboBox1.Enabled = true;
-            else
-                comboBox1.Enabled = false;
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBox2.Checked)
-                dateTimePicker1.Enabled = true;
-            else
-                dateTimePicker1.Enabled = false;
+            comboBox1.SelectedIndex = 0;
         }
 
         private void llenarRegimenes()
@@ -129,6 +152,7 @@ namespace FrbaHotel.ABM_de_Hotel
 
             connect.Close();
             listBox1.DataSource = lista;
+            listBox1.SelectedIndex = -1;
 
         }
 
@@ -138,34 +162,12 @@ namespace FrbaHotel.ABM_de_Hotel
             textBox2.Text = h.calle;
             textBox3.Text = h.nro_calle.ToString();
             textBox4.Text = h.ciudad;
-
-            if (h.pais!= null)
-            {
-                comboBox1.Enabled = true;
-                checkBox3.Checked = true;
-                comboBox1.SelectedItem = h.pais;
-            }
-            else
-            {
-                comboBox1.Enabled = false;
-                checkBox3.Checked = false;
-            }
-
+            comboBox1.SelectedItem = h.pais;
             textBox6.Text = h.tel.ToString();
             textBox7.Text = h.mail;
-
-            if (h.fecha_creacion!= null)
-            {
-                dateTimePicker1.Enabled = true;
-                checkBox2.Checked = true;
+            
+            if(h.fecha_creacion != null)
                 dateTimePicker1.Value = (DateTime)h.fecha_creacion;
-            }
-            else
-            {
-                dateTimePicker1.Enabled = false;
-                checkBox2.Checked = false;
-            }
-
             textBox8.Text = h.cantidad_estrella.ToString();
             textBox5.Text = h.recarga_estrella.ToString();
 
@@ -293,10 +295,9 @@ namespace FrbaHotel.ABM_de_Hotel
             this.textBox6.Text = string.Empty;
             this.textBox7.Text = string.Empty;
             this.textBox8.Text = string.Empty;
-            this.checkBox2.Checked = true;
-            this.checkBox3.Checked = true;
             this.dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
-            this.comboBox1.SelectedValue = 0;
+            this.comboBox1.SelectedIndex = 0;
+            button1.Enabled = true;
         }
 
         private void altaHotel_Load(object sender, EventArgs e)

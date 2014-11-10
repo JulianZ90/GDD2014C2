@@ -151,7 +151,7 @@ namespace FrbaHotel
             query.ExecuteNonQuery();
 
 
-            query = new SqlCommand("update GAME_OF_QUERYS.hotel set calle=@calle, nro_calle=@nro_calle, ciudad=@ciudad, cantidad_estrella=@cantidad_estrella, recarga_estrella=@recarga_estrella, pais_id= @pais_id, tel=@tel, mail=@mail, fecha_creacion=@fecha_creacion, nombre=@nombre where hotel.id = @hote_id", connect);
+            query = new SqlCommand("update GAME_OF_QUERYS.hotel set calle=@calle, nro_calle=@nro_calle, ciudad=@ciudad, cantidad_estrella=@cantidad_estrella, recarga_estrella=@recarga_estrella, pais_id= @pais_id, tel=@tel, mail=@mail, fecha_creacion=@fecha_creacion, nombre=@nombre where hotel.id = @hotel_id", connect);
             query.Parameters.AddWithValue("hotel_id", this.id);
             query.Parameters.AddWithValue("calle", calle);
 
