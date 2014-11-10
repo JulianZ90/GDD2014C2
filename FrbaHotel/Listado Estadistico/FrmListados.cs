@@ -78,18 +78,24 @@ namespace FrbaHotel.Listado_Estadistico
                     case 1:
                         {
                             trimInicio = 1;
-                            trimFin = 4;
+                            trimFin = 3;
                             break;
                         }
                     case 2:
                         {
-                            trimInicio = 5;
-                            trimFin = 8;
+                            trimInicio = 4;
+                            trimFin = 6;
                             break;
                         }
                     case 3:
                         {
-                            trimInicio = 9;
+                            trimInicio = 7;
+                            trimFin = 9;
+                            break;
+                        }
+                    case 4:
+                        {
+                            trimInicio = 10;
                             trimFin = 12;
                             break;
                         }
@@ -99,7 +105,7 @@ namespace FrbaHotel.Listado_Estadistico
                 DataTable dt = new DataTable();
 
                 int index = ((KeyValuePair<int, string>)cmbBxListados.SelectedItem).Key;
-                //falta esto
+                
                 switch (index)
                 {
                     case 1:

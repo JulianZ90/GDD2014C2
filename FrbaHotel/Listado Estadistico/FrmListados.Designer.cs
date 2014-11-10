@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cmbBxListados = new System.Windows.Forms.ComboBox();
-            this.txtBxYear = new System.Windows.Forms.TextBox();
-            this.numUpDownTrim = new System.Windows.Forms.NumericUpDown();
-            this.btnBuscar = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.btnLimpiar = new System.Windows.Forms.Button();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.numUpDownTrim = new System.Windows.Forms.NumericUpDown();
+            this.txtBxYear = new System.Windows.Forms.TextBox();
+            this.cmbBxListados = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDownTrim)).BeginInit();
@@ -63,54 +63,33 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Listado";
             // 
-            // label1
+            // btnLimpiar
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 34);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(28, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Año";
+            this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiar.Location = new System.Drawing.Point(318, 138);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(79, 26);
+            this.btnLimpiar.TabIndex = 7;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
-            // label2
+            // btnBuscar
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(215, 34);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 30);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Trimestre\r\n(1, 2 o 3)";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 92);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 15);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Listado";
-            // 
-            // cmbBxListados
-            // 
-            this.cmbBxListados.FormattingEnabled = true;
-            this.cmbBxListados.Location = new System.Drawing.Point(60, 89);
-            this.cmbBxListados.Name = "cmbBxListados";
-            this.cmbBxListados.Size = new System.Drawing.Size(349, 23);
-            this.cmbBxListados.TabIndex = 3;
-            // 
-            // txtBxYear
-            // 
-            this.txtBxYear.Location = new System.Drawing.Point(60, 31);
-            this.txtBxYear.Name = "txtBxYear";
-            this.txtBxYear.Size = new System.Drawing.Size(109, 21);
-            this.txtBxYear.TabIndex = 4;
-            this.txtBxYear.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBxYear_KeyPress);
+            this.btnBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBuscar.Location = new System.Drawing.Point(218, 138);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(79, 26);
+            this.btnBuscar.TabIndex = 6;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // numUpDownTrim
             // 
             this.numUpDownTrim.Location = new System.Drawing.Point(289, 32);
             this.numUpDownTrim.Maximum = new decimal(new int[] {
-            3,
+            4,
             0,
             0,
             0});
@@ -128,16 +107,48 @@
             0,
             0});
             // 
-            // btnBuscar
+            // txtBxYear
             // 
-            this.btnBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuscar.Location = new System.Drawing.Point(218, 138);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(79, 26);
-            this.btnBuscar.TabIndex = 6;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            this.txtBxYear.Location = new System.Drawing.Point(60, 31);
+            this.txtBxYear.Name = "txtBxYear";
+            this.txtBxYear.Size = new System.Drawing.Size(109, 21);
+            this.txtBxYear.TabIndex = 4;
+            this.txtBxYear.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBxYear_KeyPress);
+            // 
+            // cmbBxListados
+            // 
+            this.cmbBxListados.FormattingEnabled = true;
+            this.cmbBxListados.Location = new System.Drawing.Point(60, 89);
+            this.cmbBxListados.Name = "cmbBxListados";
+            this.cmbBxListados.Size = new System.Drawing.Size(349, 23);
+            this.cmbBxListados.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(7, 92);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(47, 15);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Listado";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(215, 31);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(68, 30);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "  Trimestre\r\n(1, 2, 3 o 4)";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(26, 34);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(28, 15);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Año";
             // 
             // panel1
             // 
@@ -146,17 +157,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(424, 209);
             this.panel1.TabIndex = 1;
-            // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(318, 138);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(79, 26);
-            this.btnLimpiar.TabIndex = 7;
-            this.btnLimpiar.Text = "Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // dataGridView1
             // 
