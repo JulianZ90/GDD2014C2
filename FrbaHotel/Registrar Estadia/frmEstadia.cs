@@ -16,6 +16,7 @@ namespace FrbaHotel.Registrar_Estadia
         SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
         Reserva reserva;
         bool checkout = false;
+        bool cancel = false;
         string consultaBase = @"select distinct reserva.*, 
 				regimen.descripcion as regimen, regimen.precio_base,
 				estado_reserva.descripcion as estado,
@@ -145,7 +146,7 @@ namespace FrbaHotel.Registrar_Estadia
                     reserva.Cliente.id = (int)objReader["cliente_id"];
                     reserva.Cliente.nombre = objReader["nombre"] as string;
                     reserva.Cliente.apellido = objReader["apellido"] as string;
-                    reserva.Cliente.nro_identidad = (int) objReader["nro_identidad"];
+                    reserva.Cliente.nro_identidad = (int)objReader["nro_identidad"];
 
                     if (objReader["tipo_id"] != DBNull.Value)
                     {
@@ -214,14 +215,14 @@ namespace FrbaHotel.Registrar_Estadia
                     reserva.CancelFecha = null;
 
                 reserva.hotel = new Hotel();
-                reserva.hotel.id = (int) objReader["hotel_id"];
+                reserva.hotel.id = (int)objReader["hotel_id"];
                 reserva.hotel.cantidad_estrella = (int)objReader["cantidad_estrella"];
                 reserva.hotel.recarga_estrella = (int)objReader["recarga_estrella"];
 
                 reserva.Regimen.precio_base = (decimal)objReader["precio_base"];
 
-                
             }
+            
         }
 
         private void completarFormConReserva()
@@ -237,6 +238,7 @@ namespace FrbaHotel.Registrar_Estadia
                 {
                     groupBox2.Enabled = true;
                     textBox4.BackColor = Color.Salmon;
+                    cancel = true;
                 }
             }
 
@@ -263,20 +265,27 @@ namespace FrbaHotel.Registrar_Estadia
         {
             if (!checkout)
             {
-                //checkin
-                reserva.checkin = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]).Date;
-
-                if (reserva.huespedes.Count < reserva.Habitaciones.Count) // al menos un husped por habitacion
+                if (!cancel)
                 {
-                    MessageBox.Show("Ingrese al menos "+ reserva.Habitaciones.Count.ToString()+" huespedes");
-                    return;
+                    //checkin
+                    reserva.checkin = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]).Date;
+
+                    if (reserva.huespedes.Count < reserva.Habitaciones.Count) // al menos un husped por habitacion
+                    {
+                        MessageBox.Show("Ingrese al menos " + reserva.Habitaciones.Count.ToString() + " huespedes");
+                        return;
+                    }
+
+                    Usuario usr = new Usuario();
+                    usr.id = ((FrmPrincipal)this.MdiParent).Log.Usuario_Id;
+                    reserva.user_checkin = usr;
+
+                    reserva.hacerCheckin();
                 }
-
-                Usuario usr = new Usuario();
-                usr.id = ((FrmPrincipal)this.MdiParent).Log.Usuario_Id;
-                reserva.user_checkin = usr;
-
-                reserva.hacerCheckin();
+                else
+                {
+                    MessageBox.Show("Reserva cancelada. No puede hacer el check-in");
+                }
             }
             else
             {
