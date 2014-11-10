@@ -18,10 +18,9 @@ namespace FrbaHotel.Registrar_Consumible
         consumible consumible;
         
         //alta
-        public altaConsumible(LoginId LogUser)
+        public altaConsumible()
         {
             InitializeComponent();
-            button3.Hide();
             consumible = new consumible();
         }
         //modificacion
@@ -36,19 +35,30 @@ namespace FrbaHotel.Registrar_Consumible
         private void button1_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "") consumible.precio = Convert.ToDecimal(textBox1.Text);
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
+
             if (textBox2.Text != "") consumible.descripcion = textBox2.Text;
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
 
                 if (consumible.id < 1)
                 {
                     // no tiene id todavia, es un alta
                     consumible.insert();
-                   // ((FrmPrincipal)this.MdiParent).setStatus("consumible creado");
+                    MessageBox.Show("Consumible creado");
+                    button1.Enabled = false;
                 }
                 else
                 {
                     consumible.update();
-                    //((FrmPrincipal)this.Owner.MdiParent).setStatus("consumible id=" + consumible.id.ToString() + " modificado");
-                    this.Close();
+                    MessageBox.Show("Consumible id="+consumible.id.ToString() + " modificado");
                 }
            }
           
@@ -64,8 +74,9 @@ namespace FrbaHotel.Registrar_Consumible
          }
          private void button2_Click(object sender, EventArgs e)
          {
-                 this.textBox1.Text = string.Empty;
-                 this.textBox2.Text = string.Empty;
+             this.textBox1.Text = string.Empty;
+             this.textBox2.Text = string.Empty;
+             button1.Enabled = true;
          }
 
          private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
