@@ -92,7 +92,7 @@ namespace FrbaHotel
             int factura_id = Convert.ToInt32(query.ExecuteScalar());
             foreach (Item i in items)
             {
-                query = new SqlCommand("insert into GAME_OF_QUERYS.item (factura_id,cant,desc,precio) values (@factura_id, @cant, @desc, @precio)", connect);
+                query = new SqlCommand("insert into GAME_OF_QUERYS.item (factura_id,cant,descripcion,precio) values (@factura_id, @cant, @desc, @precio)", connect);
                 query.Parameters.AddWithValue("factura_id",factura_id);
                 query.Parameters.AddWithValue("cant", i.cant);
                 query.Parameters.AddWithValue("desc", i.desc);

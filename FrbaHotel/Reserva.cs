@@ -93,10 +93,11 @@ namespace FrbaHotel
 
             foreach (consumible h in consumibles)
             {
-                query = new SqlCommand("insert into GAME_OF_QUERYS.consumible_reserva (reserva_id,consumible_id, cantidad) values(@reserva , @consu,@cant) ", connect);
+                query = new SqlCommand("insert into GAME_OF_QUERYS.consumible_reserva (reserva_id,consumible_id, cantidad, habitacion_id) values(@reserva , @consu,@cant,@hab) ", connect);
                 query.Parameters.AddWithValue("reserva", Id);
                 query.Parameters.AddWithValue("consu", h.id);
                 query.Parameters.AddWithValue("cant", h.cantidad);
+                query.Parameters.AddWithValue("hab", h.habitacion.Id);
                 query.ExecuteNonQuery();
             }
 

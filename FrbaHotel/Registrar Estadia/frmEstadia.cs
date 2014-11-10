@@ -355,7 +355,7 @@ namespace FrbaHotel.Registrar_Estadia
             dataGridView3.Rows.Clear();
             foreach (consumible h in reserva.consumibles)
             {
-                string[] row = new string[] { h.descripcion.ToString(), h.precio.ToString(), h.cantidad.ToString() };
+                string[] row = new string[] { h.descripcion.ToString(), h.precio.ToString(), h.cantidad.ToString(), h.habitacion.Numero.ToString() };
                 dataGridView3.Rows.Add(row);
             }
         }
@@ -373,10 +373,11 @@ namespace FrbaHotel.Registrar_Estadia
             dataGridView2.Columns[2].Name = "Nombre";
             dataGridView2.Columns[3].Name = "Apellido";
 
-            dataGridView3.ColumnCount = 3;
-            dataGridView3.Columns[0].Name = "Descripcion";
+            dataGridView3.ColumnCount = 4;
+            dataGridView3.Columns[0].Name = "Desc.";
             dataGridView3.Columns[1].Name = "Precio";
-            dataGridView3.Columns[2].Name = "Cantidad";
+            dataGridView3.Columns[2].Name = "Cant";
+            dataGridView3.Columns[3].Name = "Habitac";
 
             dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
         }
@@ -460,9 +461,12 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void getConsumibles()
         {
-            string query_str = @"select * from GAME_OF_QUERYS.consumible_reserva 
-                                        join GAME_OF_QUERYS.consumible on consumible.id = consumible_reserva.consumible_id
-                                        where consumible_reserva.reserva_id = @reserva";
+            string query_str = @"select consumible_reserva.*, consumible.*, habitacion.id as hab_id, 
+                    habitacion.nro as hab_nro
+                    from GAME_OF_QUERYS.consumible_reserva 
+                    join GAME_OF_QUERYS.consumible on consumible.id = consumible_reserva.consumible_id
+                    join GAME_OF_QUERYS.habitacion on consumible_reserva.habitacion_id = habitacion.id
+                    where consumible_reserva.reserva_id = @reserva";
             SqlCommand query = new SqlCommand(query_str, connect);
             string q = query.CommandText;
             query.Parameters.AddWithValue("reserva", reserva.Id);
@@ -475,6 +479,11 @@ namespace FrbaHotel.Registrar_Estadia
                 c.descripcion = objReader["descripcion"] as string;
                 c.cantidad = (int)objReader["cantidad"];
                 c.precio = (decimal)objReader["precio"];
+
+                Habitacion hab = new Habitacion();
+                hab.Id = (int)objReader["hab_id"];
+                hab.Numero = (int)objReader["hab_nro"];
+                c.habitacion = hab;
                 c.id = (int)objReader["id"];
 
                 reserva.consumibles.Add(c);
@@ -486,7 +495,20 @@ namespace FrbaHotel.Registrar_Estadia
         {
             for (int counter = 0; counter < (dataGridView3.Rows.Count); counter++)
             {
-                reserva.consumibles.ElementAt(counter).cantidad = int.Parse(dataGridView3.Rows[counter].Cells["cantidad"].Value.ToString());
+                try
+                {
+                    reserva.consumibles.ElementAt(counter).cantidad = int.Parse(dataGridView3.Rows[counter].Cells["Cant"].Value.ToString());
+
+                    int hab_nro = int.Parse(dataGridView3.Rows[counter].Cells["Habitac"].Value.ToString());
+                    if (reserva.Habitaciones.Any(hab => hab.Numero == hab_nro))
+                        reserva.consumibles.ElementAt(counter).habitacion.Numero = hab_nro;
+                    else
+                        MessageBox.Show("Elija una habitacion que pertenezca a esta reserva");
+                }
+                catch
+                {
+                    MessageBox.Show("Ingrese un valor correcto");
+                }
             }
         }
 

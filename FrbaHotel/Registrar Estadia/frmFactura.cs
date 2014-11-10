@@ -18,6 +18,8 @@ namespace FrbaHotel.Registrar_Estadia
         {
             InitializeComponent();
 
+            comboBox1.SelectedIndex = 0;
+
             factura = new Factura(r);
 
             textBox1.Text = r.Id.ToString();
