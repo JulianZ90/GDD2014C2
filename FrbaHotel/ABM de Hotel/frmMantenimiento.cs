@@ -72,21 +72,28 @@ namespace FrbaHotel.ABM_de_Hotel
         private void button1_Click(object sender, EventArgs e)
         {
             Mantenimiento mant = new Mantenimiento();
-
             mant.hotel = hotel;
             mant.fecha_inicio = dateTimePicker1.Value.Date;
             mant.fecha_fin = dateTimePicker2.Value.Date;
             mant.descripcion = textBox1.Text;
 
-            if (hotel.hotelDisponible(mant.fecha_inicio, mant.fecha_fin, hotel.id))
-            { 
-                mant.insert();
-                reload();
+
+            if (mant.fecha_inicio >= DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]))
+            {
+                if (hotel.hotelDisponible(mant.fecha_inicio, mant.fecha_fin, hotel.id))
+                {
+                    mant.insert();
+                    reload();
+                }
+                else
+                {
+                    MessageBox.Show("Hay reservas para ese periodo");
+                }
             }
             else
             {
-                MessageBox.Show("Hay reservas para ese periodo");
-            }            
+                MessageBox.Show("No se puede ingresar un mantenimiento con fecha anterior al dia de hoy");
+            }
         }
 
         void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -97,12 +104,18 @@ namespace FrbaHotel.ABM_de_Hotel
 
             // Retrieve the hotel_id object from the "id" cell.
             int mant_id = (int)dataGridView1.Rows[e.RowIndex].Cells["id"].Value;
+            DateTime mant_fecha_inicio = (DateTime)dataGridView1.Rows[e.RowIndex].Cells["fecha_inicio"].Value;
 
             if (e.ColumnIndex == dataGridView1.Columns["bAJA"].Index)
             {
                 Mantenimiento mant = new Mantenimiento();
                 mant.id = mant_id;
-                mant.delete();
+                mant.fecha_inicio = mant_fecha_inicio;
+
+                bool elimino = mant.delete();
+
+                if (!elimino)
+                    MessageBox.Show("No se puede eliminar mantenimientos en curso");
 
                 reload();
             }

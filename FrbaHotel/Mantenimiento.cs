@@ -31,13 +31,21 @@ namespace FrbaHotel
             connect.Close();
         }
 
-        public void delete()
+        public bool delete()
         {
-            SqlCommand query = new SqlCommand("delete from GAME_OF_QUERYS.mantenimiento where id=@id ", connect);
-            query.Parameters.AddWithValue("id", this.id);
-            connect.Open();
-            query.ExecuteNonQuery();
-            connect.Close();
+            if (this.fecha_inicio > DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]))
+            {
+                SqlCommand query = new SqlCommand("delete from GAME_OF_QUERYS.mantenimiento where id=@id ", connect);
+                query.Parameters.AddWithValue("id", this.id);
+                connect.Open();
+                query.ExecuteNonQuery();
+                connect.Close();
+
+                return true;
+            }
+            else
+                return false;
+
         }
 
     }
