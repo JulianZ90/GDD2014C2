@@ -24,6 +24,7 @@ namespace FrbaHotel
             this.StartPosition = FormStartPosition.CenterParent;
             Log = IdLog;
             this.MostrarFuncionalidades();
+            setStatus("Fecha actual de hoy " + ConfigurationSettings.AppSettings["fechaHoy"]);
         }
 
         private void MostrarFuncionalidades()
@@ -50,12 +51,6 @@ namespace FrbaHotel
             childForm.MdiParent = this;
             childForm.Text = "Ventana " + childFormNumber++;
             childForm.Show();
-        }
-
-
-        private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            toolStrip.Visible = toolBarToolStripMenuItem.Checked;
         }
 
         private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -217,6 +212,11 @@ namespace FrbaHotel
         private void listadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new Listado_Estadistico.FrmListados().ShowDialog();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
 
         

@@ -75,6 +75,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -106,10 +107,10 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(159, 167);
+            this.textBox3.Location = new System.Drawing.Point(115, 167);
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
+            this.textBox3.Size = new System.Drawing.Size(144, 20);
             this.textBox3.TabIndex = 7;
             // 
             // label4
@@ -124,10 +125,10 @@
             // textBox4
             // 
             this.textBox4.BackColor = System.Drawing.SystemColors.Control;
-            this.textBox4.Location = new System.Drawing.Point(159, 141);
+            this.textBox4.Location = new System.Drawing.Point(115, 141);
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
+            this.textBox4.Size = new System.Drawing.Size(144, 20);
             this.textBox4.TabIndex = 9;
             // 
             // label3
@@ -506,6 +507,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.label18);
             this.panel3.Controls.Add(this.button5);
             this.panel3.Controls.Add(this.label15);
             this.panel3.Controls.Add(this.dataGridView3);
@@ -542,6 +544,16 @@
             this.label17.Size = new System.Drawing.Size(154, 26);
             this.label17.TabIndex = 45;
             this.label17.Text = "Ingreso solo permitido el\r\ndia de inicio de la reserva";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.label18.Location = new System.Drawing.Point(36, 130);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(177, 13);
+            this.label18.TabIndex = 42;
+            this.label18.Text = "Campos Cant y Habitacion editables";
             // 
             // frmEstadia
             // 
@@ -645,5 +657,6 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
     }
 }
