@@ -26,11 +26,11 @@ insert into GAME_OF_QUERYS.tipo_identidad (nombre) values ('Pasaporte')
 
 insert into GAME_OF_QUERYS.cliente (tipo_identidad_id, nro_identidad, apellido,nombre,
 					fecha_nac, mail, calle, nro_calle, piso,
-					depto,nacionalidad,permitido_ingreso)
+					depto,nacionalidad,permitido_ingreso, pais_origen_id)
 select distinct (select id from GAME_OF_QUERYS.tipo_identidad where nombre='Pasaporte'),Cliente_Pasaporte_Nro, Cliente_Apellido,
 				Cliente_Nombre,cast(Cliente_Fecha_Nac as Date), Cliente_Mail,
 				Cliente_Dom_Calle, Cliente_Nro_Calle, Cliente_Piso,
-				Cliente_Depto,Cliente_Nacionalidad,'1'
+				Cliente_Depto,Cliente_Nacionalidad,'1','1'
 from gd_esquema.Maestra
 
 /*cargar tipo_habitacion (5)*/
