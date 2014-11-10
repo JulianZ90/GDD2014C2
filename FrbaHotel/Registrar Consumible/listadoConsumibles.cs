@@ -84,8 +84,6 @@ namespace FrbaHotel.Registrar_Consumible
         }
         void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            
-
             if (!seleccionar)
             {
                 // Ignore clicks that are not on button cells.  
