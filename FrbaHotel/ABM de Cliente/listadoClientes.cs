@@ -242,15 +242,7 @@ namespace FrbaHotel.ABM_de_Cliente
                     query.ExecuteNonQuery();
                     connect.Close();
                 }
-
-                //agrego el cliente id y reserva id a la tabla cliente_reserva
-                query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.cliente_reserva(cliente_id, reserva_id) VALUES(@clienteId, @reservaId)", connect);
-                query.Parameters.AddWithValue("@clienteId", cliente_id);
-                query.Parameters.AddWithValue("@reservaId", reserva_id);
-                connect.Open();
-                query.ExecuteNonQuery();
-                connect.Close();
-
+                
                 MessageBox.Show("Su código de reserva es: " + reserva_id + ". Recuerde que necesitará este código para modificar o cancelar su reserva.");
                 this.Close();
 
