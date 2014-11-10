@@ -86,10 +86,18 @@ namespace FrbaHotel.Registrar_Consumible
         {
             // Ignore clicks that are not on button cells.  
             if (e.RowIndex < 0 ||
-                    (e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index &&
-                    e.ColumnIndex != dataGridView1.Columns["sELECCIONAR"].Index)
+                    (e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index)
                     )
                 return;
+
+            if (seleccionar)
+            {
+                if (e.RowIndex < 0 ||
+                    (
+                    e.ColumnIndex != dataGridView1.Columns["sELECCIONAR"].Index)
+                    )
+                    return;
+            }
 
             // Retrieve the consumible_id object from the "id" cell.
             int consumible_id = (int)dataGridView1.Rows[e.RowIndex].Cells["id"].Value;
@@ -100,11 +108,15 @@ namespace FrbaHotel.Registrar_Consumible
                 modif.Owner = this;
                 modif.ShowDialog();
             }
-            if (e.ColumnIndex == dataGridView1.Columns["sELECCIONAR"].Index)
+
+            if (seleccionar)
             {
-                consumibleSeleccionado = ((List<consumible>)dataGridView1.DataSource).ElementAt(e.RowIndex);
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                if (e.ColumnIndex == dataGridView1.Columns["sELECCIONAR"].Index)
+                {
+                    consumibleSeleccionado = ((List<consumible>)dataGridView1.DataSource).ElementAt(e.RowIndex);
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
             }
         }
 
