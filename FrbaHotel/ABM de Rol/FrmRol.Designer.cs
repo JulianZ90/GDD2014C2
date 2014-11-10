@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblExiste = new System.Windows.Forms.Label();
             this.checkBxEstado = new System.Windows.Forms.CheckBox();
             this.txtBxRol = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -36,7 +37,6 @@
             this.ChLstBxFunc = new System.Windows.Forms.CheckedListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnGuardar = new System.Windows.Forms.Button();
-            this.lblExiste = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,6 +52,17 @@
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Rol";
+            // 
+            // lblExiste
+            // 
+            this.lblExiste.AutoSize = true;
+            this.lblExiste.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExiste.ForeColor = System.Drawing.Color.Red;
+            this.lblExiste.Location = new System.Drawing.Point(157, 70);
+            this.lblExiste.Name = "lblExiste";
+            this.lblExiste.Size = new System.Drawing.Size(152, 18);
+            this.lblExiste.TabIndex = 7;
+            this.lblExiste.Text = "Usuario existente";
             // 
             // checkBxEstado
             // 
@@ -94,7 +105,7 @@
             this.ChLstBxFunc.FormattingEnabled = true;
             this.ChLstBxFunc.Location = new System.Drawing.Point(26, 216);
             this.ChLstBxFunc.Name = "ChLstBxFunc";
-            this.ChLstBxFunc.Size = new System.Drawing.Size(149, 154);
+            this.ChLstBxFunc.Size = new System.Drawing.Size(193, 154);
             this.ChLstBxFunc.TabIndex = 8;
             this.ChLstBxFunc.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.ChLstBxFunc_ItemCheck);
             // 
@@ -119,18 +130,7 @@
             this.btnGuardar.UseVisualStyleBackColor = true;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
-            // lblExiste
-            // 
-            this.lblExiste.AutoSize = true;
-            this.lblExiste.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExiste.ForeColor = System.Drawing.Color.Red;
-            this.lblExiste.Location = new System.Drawing.Point(157, 70);
-            this.lblExiste.Name = "lblExiste";
-            this.lblExiste.Size = new System.Drawing.Size(152, 18);
-            this.lblExiste.TabIndex = 7;
-            this.lblExiste.Text = "Usuario existente";
-            // 
-            // altaRol
+            // FrmRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -141,7 +141,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "altaRol";
+            this.Name = "FrmRol";
             this.Text = "Alta Rol";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

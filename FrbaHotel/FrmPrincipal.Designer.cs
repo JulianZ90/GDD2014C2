@@ -52,7 +52,6 @@
             this.estadíaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.facturacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.altaHotelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,7 +111,6 @@
             this.regimenToolStripMenuItem,
             this.reservasToolStripMenuItem,
             this.estadíaToolStripMenuItem,
-            this.facturacionToolStripMenuItem,
             this.listadosToolStripMenuItem,
             this.toolStripMenuItem4,
             this.consumiblesToolStripMenuItem,
@@ -273,12 +271,6 @@
             this.checkOutToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.checkOutToolStripMenuItem.Text = "Checkout";
             this.checkOutToolStripMenuItem.Click += new System.EventHandler(this.checkOutToolStripMenuItem_Click);
-            // 
-            // facturacionToolStripMenuItem
-            // 
-            this.facturacionToolStripMenuItem.Name = "facturacionToolStripMenuItem";
-            this.facturacionToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.facturacionToolStripMenuItem.Text = "Facturacion";
             // 
             // listadosToolStripMenuItem
             // 
@@ -564,7 +556,6 @@
         private System.Windows.Forms.ToolStripMenuItem modificarOCancelarReservaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem estadíaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem regimenToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem facturacionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listadosToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
         private System.Windows.Forms.ToolStripMenuItem checkInToolStripMenuItem;
