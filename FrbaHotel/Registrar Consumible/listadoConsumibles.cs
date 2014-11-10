@@ -81,6 +81,10 @@ namespace FrbaHotel.Registrar_Consumible
             }
             connect.Close();
             dataGridView1.DataSource = lista;
+            this.dataGridView1.Columns["cantidad"].Visible = false;
+            this.dataGridView1.Columns["habitacion"].Visible = false;
+
+
         }
         void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -146,6 +150,11 @@ namespace FrbaHotel.Registrar_Consumible
         public consumible getConsumibleSeleccionado()
         {
             return consumibleSeleccionado;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            new Registrar_Consumible.altaConsumible().ShowDialog();
         }
     }
 }

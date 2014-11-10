@@ -38,6 +38,7 @@ namespace FrbaHotel
                 return;
             }
             objReader.Close();
+            connect.Close();
         }
         public void insert()
         {
@@ -58,7 +59,7 @@ namespace FrbaHotel
             query.Parameters.AddWithValue("id", this.id);
             query.Parameters.AddWithValue("precio", precio);
             query.Parameters.AddWithValue("descripcion", descripcion);
-
+            connect.Open();
             query.ExecuteNonQuery();
             connect.Close();
         }
@@ -68,7 +69,7 @@ namespace FrbaHotel
             query.Parameters.AddWithValue("id", this.id);
             //query.Parameters.AddWithValue("precio", precio);
             //query.Parameters.AddWithValue("descripcion", descripcion);
-
+            connect.Open();
             query.ExecuteNonQuery();
             connect.Close();
         }

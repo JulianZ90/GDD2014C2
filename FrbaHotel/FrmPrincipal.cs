@@ -160,7 +160,9 @@ namespace FrbaHotel
 
         private void nuevoConsumibleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new Registrar_Consumible.altaConsumible(Log).ShowDialog();
+            Form childForm = new Registrar_Consumible.altaConsumible();
+            childForm.MdiParent = this;
+            childForm.Show();
         }
 
         private void altaClienteToolStripMenuItem_Click(object sender, EventArgs e)
