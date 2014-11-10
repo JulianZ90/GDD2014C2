@@ -246,6 +246,7 @@ namespace FrbaHotel.Registrar_Estadia
                 if (reserva.isCancel())
                 {
                     groupBox2.Enabled = true;
+                    button3.Enabled = false;
                     textBox4.BackColor = Color.Salmon;
                     cancel = true;
                 }
