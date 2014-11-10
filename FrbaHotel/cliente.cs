@@ -22,7 +22,7 @@ namespace FrbaHotel
         public string calle { get; set; }
         public int? nro_calle { get; set; }
         public int? piso { get; set; }
-        public char depto { get; set; }
+        public string depto { get; set; }
         public string ciudad { get; set; }
         public string nacionalidad { get; set; }
         public bool permitido_ingreso { get; set; }
@@ -50,7 +50,10 @@ namespace FrbaHotel
                 this.calle = objReader["calle"] as string;
                 this.nro_calle = objReader["nro_calle"] as int?;
                 this.piso = objReader["piso"] as int?;
-                this.depto = objReader["depto"].ToString()[0];
+                if (objReader["depto"] != DBNull.Value)
+                    this.depto = objReader["depto"] as string;
+                else
+                    this.depto = null;
                 this.ciudad = objReader["ciudad"] as string;
                 this.nacionalidad = objReader["nacionalidad"] as string;
                 this.nro_identidad = objReader["nro_identidad"] as int?;
@@ -110,7 +113,11 @@ namespace FrbaHotel
             else
                 query.Parameters.AddWithValue("piso", piso);
 
-            query.Parameters.AddWithValue("depto", depto);
+            if (depto == null)
+                query.Parameters.AddWithValue("depto", DBNull.Value);
+            else
+                query.Parameters.AddWithValue("depto", depto);
+
             query.Parameters.AddWithValue("ciudad", ciudad);
             query.Parameters.AddWithValue("nacionalidad", nacionalidad);
             query.Parameters.AddWithValue("permitido", permitido_ingreso);
@@ -159,7 +166,10 @@ namespace FrbaHotel
             else
                 query.Parameters.AddWithValue("piso", piso);
 
-            query.Parameters.AddWithValue("depto", depto);
+            if (depto == null)
+                query.Parameters.AddWithValue("depto", DBNull.Value);
+            else
+                query.Parameters.AddWithValue("depto", depto);
             query.Parameters.AddWithValue("ciudad", ciudad);
 
             query.Parameters.AddWithValue("nacionalidad", nacionalidad);
@@ -212,7 +222,10 @@ namespace FrbaHotel
                 query.Parameters.AddWithValue("piso", DBNull.Value);
             else
                 query.Parameters.AddWithValue("piso", piso);
-            query.Parameters.AddWithValue("depto", depto);
+            if (depto == null)
+                query.Parameters.AddWithValue("depto", DBNull.Value);
+            else
+                query.Parameters.AddWithValue("depto", depto);
             query.Parameters.AddWithValue("ciudad", ciudad);
             query.Parameters.AddWithValue("nacionalidad", nacionalidad);
             query.Parameters.AddWithValue("permitido", permitido_ingreso);

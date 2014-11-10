@@ -159,7 +159,7 @@ namespace FrbaHotel.Registrar_Estadia
                     reserva.Cliente.calle = objReader["calle"] as string;
                     reserva.Cliente.nro_calle = objReader["nro_calle"] as int?;
                     reserva.Cliente.piso = objReader["piso"] as int?;
-                    reserva.Cliente.depto = objReader["depto"].ToString()[0];
+                    reserva.Cliente.depto = objReader["depto"].ToString();
                     reserva.Cliente.ciudad = objReader["ciudad"] as string;
                 }
                 else

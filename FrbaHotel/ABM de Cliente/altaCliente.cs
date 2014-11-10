@@ -107,7 +107,11 @@ namespace FrbaHotel.ABM_de_Cliente
             }
 
             if (textBox11.Text != "") cliente.piso = Int32.Parse(textBox11.Text);
-            if (textBox7.Text != "") cliente.depto = textBox7.Text[0];
+            if (textBox7.Text != "")
+                cliente.depto = textBox7.Text;
+            else
+                cliente.depto = null;
+
             
             if(textBox8.Text !="")
             cliente.ciudad = textBox8.Text;
@@ -191,7 +195,8 @@ namespace FrbaHotel.ABM_de_Cliente
             textBox5.Text = c.calle;
             textBox6.Text = c.nro_calle.ToString();
             textBox11.Text = c.piso.ToString();
-            textBox7.Text = c.depto.ToString();
+            if(c.depto != null)
+                textBox7.Text = c.depto.ToString();
             textBox8.Text = c.ciudad;
             textBox10.Text = c.nacionalidad;
             checkBox1.Checked = c.permitido_ingreso;

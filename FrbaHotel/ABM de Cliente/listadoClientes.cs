@@ -156,7 +156,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 cliente.calle = objReader["calle"] as string;
                 cliente.nro_calle = objReader["nro_calle"] as int?;
                 cliente.piso = objReader["piso"] as int?;
-                cliente.depto = objReader["depto"].ToString()[0];
+                cliente.depto = objReader["depto"].ToString();
                 cliente.ciudad = objReader["ciudad"] as string;
                 cliente.nacionalidad = objReader["nacionalidad"] as string;
                 cliente.nro_identidad = objReader["nro_identidad"] as int?;
