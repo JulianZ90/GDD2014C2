@@ -430,7 +430,22 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             if ((this.dateTimeInicio.Value >= DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"])) && (this.dateTimeFin.Value >= DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]).AddDays(1)) && (this.dateTimeFin.Value > this.dateTimeInicio.Value))
             {
-                fechasValidas = true;
+                query = new SqlCommand("SELECT COUNT(*) FROM GAME_OF_QUERYS.mantenimiento WHERE hotel_id = @hotel  AND ((fecha_inicio <= @fechaFin AND fecha_fin >= @fechaFin) OR (fecha_inicio <= @fechaInicio AND fecha_fin >= @fechaInicio))", objConexion);
+                query.Parameters.AddWithValue("@hotel", HotelId);
+                query.Parameters.AddWithValue("@fechaInicio", this.dateTimeInicio.Value);
+                query.Parameters.AddWithValue("@fechaFin", this.dateTimeFin.Value);
+                objConexion.Open();
+                int cantidad = (int)query.ExecuteScalar();
+                objConexion.Close();
+
+                if (cantidad >= 1)
+                {
+                    MessageBox.Show("Hotel en mantenimiento en las fechas indicadas");
+                }
+                else
+                {
+                    fechasValidas = true;
+                }
             }
             else
             {
@@ -616,7 +631,24 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                     //hay disponibilidad?
                     if ((this.dateTimeInicio.Value >= DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"])) && (this.dateTimeFin.Value >= DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]).AddDays(1)) && (this.dateTimeFin.Value > this.dateTimeInicio.Value))
-                        fechasValidas = true;    
+                    {
+                        query = new SqlCommand("SELECT COUNT(*) FROM GAME_OF_QUERYS.mantenimiento WHERE hotel_id = @hotel  AND ((fecha_inicio <= @fechaFin AND fecha_fin >= @fechaFin) OR (fecha_inicio <= @fechaInicio AND fecha_fin >= @fechaInicio))", objConexion);
+                        query.Parameters.AddWithValue("@hotel", HotelId);
+                        query.Parameters.AddWithValue("@fechaInicio", this.dateTimeInicio.Value);
+                        query.Parameters.AddWithValue("@fechaFin", this.dateTimeFin.Value);
+                        objConexion.Open();
+                        int cantidad = (int)query.ExecuteScalar();
+                        objConexion.Close();
+
+                        if (cantidad >= 1)
+                        {
+                            MessageBox.Show("Hotel en mantenimiento en las fechas indicadas");
+                        }
+                        else
+                        {
+                            fechasValidas = true;
+                        }
+                    }       
                     else
                         MessageBox.Show("Fechas inválidas");
 

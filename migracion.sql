@@ -234,11 +234,12 @@ GO
 -- Habitaciones con mayor cantidad de días que fueron ocupadas
 CREATE PROCEDURE GAME_OF_QUERYS.habitacionesOcupadas @year int, @trimestreInicio int, @trimestreFin int
 AS
-SELECT TOP 5 nombre AS 'nombre de hotel', hotel_id, habitacion_id AS 'nro de habitacion', SUM(DATEDIFF(DAY, check_in, check_out)) AS cantidad FROM GAME_OF_QUERYS.reserva
+SELECT TOP 5 nombre AS 'nombre de hotel', reserva.hotel_id, nro AS 'nro de habitacion', SUM(DATEDIFF(DAY, check_in, check_out)) AS cantidad FROM GAME_OF_QUERYS.reserva
 JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva.id = reserva_habitacion.reserva_id)
+JOIN GAME_OF_QUERYS.habitacion ON (reserva_habitacion.habitacion_id = habitacion.id)
 JOIN GAME_OF_QUERYS.hotel ON (hotel.id = reserva.hotel_id)
 WHERE check_in IS NOT NULL AND check_out IS NOT NULL AND (MONTH(check_in) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(check_in) = @year
-GROUP BY hotel_id, nombre, habitacion_id
+GROUP BY reserva.hotel_id, nombre, nro
 ORDER BY cantidad DESC
 GO
 
