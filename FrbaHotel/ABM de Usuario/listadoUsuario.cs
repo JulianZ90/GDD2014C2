@@ -109,7 +109,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 user.nombre = objReader["nombre"] as string;
                 user.apellido = objReader["apellido"] as string;
                 user.mail = objReader["mail"] as string;
-                user.tel = objReader["tel"] as int?;
+                user.tel = objReader["tel"] as long?;
                 user.direccion = objReader["direccion"] as string;
                 user.fecha_nac = objReader["fecha_nac"] as DateTime?;
                 user.estado = (bool)objReader["estado"]; 

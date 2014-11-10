@@ -42,8 +42,22 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void button1_Click(object sender, EventArgs e)
         {
-            user.username = textBox1.Text;
-            user.password = getHash(textBox2.Text);
+            if (textBox1.Text != "")
+                user.username = textBox1.Text;
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
+
+            if(textBox2.Text != "")
+                user.password = getHash(textBox2.Text);
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
+
             user.nombre = textBox3.Text;
             user.apellido = textBox4.Text;
             user.mail = textBox5.Text;
@@ -61,13 +75,11 @@ namespace FrbaHotel.ABM_de_Usuario
             {
                 // no tiene id todavia, es un alta
                 user.insert();
-                ((FrmPrincipal)this.MdiParent).setStatus("Usuario creado");
+                button1.Enabled = false;
             }
             else
             {
                 user.update();
-                ((FrmPrincipal)this.Owner.MdiParent).setStatus("Usuario id="+user.id.ToString()+" modificado");
-                this.Close();
             }
         }
 
@@ -106,6 +118,8 @@ namespace FrbaHotel.ABM_de_Usuario
 
             connect.Close();
             combo.DataSource = lista;
+
+            combo.SelectedIndex = 0;
         }
 
         private void llenarHoteles()
@@ -318,10 +332,11 @@ namespace FrbaHotel.ABM_de_Usuario
             this.textBox6.Text = string.Empty;
             this.textBox7.Text = string.Empty;
             this.textBox9.Text = string.Empty;
-            this.comboBox1.SelectedValue = 0;
+            this.comboBox1.SelectedIndex = 0;
             this.checkBox1.Checked = true;
             this.checkBox2.Checked = true;
             this.checkBox3.Checked = true;
+            button1.Enabled = true;
         }
 
         private void altaUsuario_Load(object sender, EventArgs e)

@@ -62,6 +62,7 @@
             this.Controls.Add(this.btnModificarReserva);
             this.Controls.Add(this.btnGenerarReserva);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.IsMdiContainer = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmGuest";
