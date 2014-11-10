@@ -114,11 +114,12 @@ when matched then
 
 /*cargar consumible_reserva (207341)*/
 
-insert into GAME_OF_QUERYS.consumible_reserva (consumible_id,reserva_id,cantidad)
-select distinct c.id, m.Reserva_Codigo, COUNT(m.Consumible_Descripcion)
+insert into GAME_OF_QUERYS.consumible_reserva (consumible_id,reserva_id,cantidad, habitacion_id)
+select distinct c.id, m.Reserva_Codigo, COUNT(m.Consumible_Descripcion), r.habitacion_id
 from gd_esquema.Maestra m 
 join GAME_OF_QUERYS.consumible c	on m.Consumible_Codigo= c.id
-group by c.id,m.Reserva_Codigo
+join GAME_OF_QUERYS.reserva_habitacion r on r.reserva_id = m.Reserva_Codigo
+group by c.id,m.Reserva_Codigo, r.habitacion_id
 
 
 
