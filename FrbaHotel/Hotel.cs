@@ -151,7 +151,7 @@ namespace FrbaHotel
             query.ExecuteNonQuery();
 
 
-            query = new SqlCommand("update GAME_OF_QUERYS.hotel set calle=@calle, nro_calle=@nro_calle, ciudad=@ciudad, cantidad_estrella=@cantidad_estrella, recarga_estrella=@recarga_estrella, pais_id= @pais_id, tel=@tel, mail=@mail, fecha_creacion=@fecha_creacion, nombre=@nombre where hotel.id = @hote_id", connect);
+            query = new SqlCommand("update GAME_OF_QUERYS.hotel set calle=@calle, nro_calle=@nro_calle, ciudad=@ciudad, cantidad_estrella=@cantidad_estrella, recarga_estrella=@recarga_estrella, pais_id= @pais_id, tel=@tel, mail=@mail, fecha_creacion=@fecha_creacion, nombre=@nombre where hotel.id = @hotel_id", connect);
             query.Parameters.AddWithValue("hotel_id", this.id);
             query.Parameters.AddWithValue("calle", calle);
 
@@ -202,6 +202,31 @@ namespace FrbaHotel
             }
             connect.Close();
         
+        }
+
+        public bool hotelDisponible(DateTime inicio, DateTime fin, int hotel)
+        { 
+            string query_str = @"select COUNT(id) as cant from GAME_OF_QUERYS.reserva
+                            where fecha_inicio between '@ini' and '@fin'
+                            and fecha_fin between '@ini' and '@fin'
+                            and estado_id in (1,2,6)
+                            and hotel_id=@hotel";
+
+            SqlCommand query = new SqlCommand(query_str, connect);
+            string q = query.CommandText;
+            query.Parameters.AddWithValue("ini", inicio);
+            query.Parameters.AddWithValue("fin", fin);
+            query.Parameters.AddWithValue("hotel", hotel);
+            connect.Open();
+            int cant = (int)query.ExecuteScalar();
+            connect.Close();
+
+            if (cant > 0)
+                return false;
+            else
+            {
+                return true;
+            }
         }
 
     }

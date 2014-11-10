@@ -295,5 +295,10 @@ namespace FrbaHotel.ABM_de_Hotel
         {
             dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            new ABM_de_Hotel.altaHotel().ShowDialog();
+        }
     }
 }

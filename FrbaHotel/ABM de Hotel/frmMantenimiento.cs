@@ -78,8 +78,15 @@ namespace FrbaHotel.ABM_de_Hotel
             mant.fecha_fin = dateTimePicker2.Value.Date;
             mant.descripcion = textBox1.Text;
 
-            mant.insert();
-            reload();
+            if (hotel.hotelDisponible(mant.fecha_inicio, mant.fecha_fin, hotel.id))
+            { 
+                mant.insert();
+                reload();
+            }
+            else
+            {
+                MessageBox.Show("Har reservas para ese periodo");
+            }            
         }
 
         void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
