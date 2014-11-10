@@ -53,7 +53,7 @@ namespace FrbaHotel
                 this.depto = objReader["depto"].ToString()[0];
                 this.ciudad = objReader["ciudad"] as string;
                 this.nacionalidad = objReader["nacionalidad"] as string;
-                this.nro_identidad = objReader["nro_identidad"] as long?;
+                this.nro_identidad = objReader["nro_identidad"] as int?;
 
                 if (objReader["tipo_identidad_id"] != DBNull.Value)
                 {
@@ -139,7 +139,7 @@ namespace FrbaHotel
 
             query.Parameters.AddWithValue("nombre", nombre);
             query.Parameters.AddWithValue("apellido", apellido);
-            query.Parameters.AddWithValue("fec_nac", fecha_nac.Value.Date);
+            query.Parameters.AddWithValue("fecha_nac", fecha_nac.Value.Date);
             query.Parameters.AddWithValue("mail", mail);
 
             if (tel == null)
@@ -163,6 +163,8 @@ namespace FrbaHotel
             query.Parameters.AddWithValue("ciudad", ciudad);
 
             query.Parameters.AddWithValue("nacionalidad", nacionalidad);
+            query.Parameters.AddWithValue("permitido", permitido_ingreso);
+            query.Parameters.AddWithValue("pais", pais.id);
 
 
             query.ExecuteNonQuery();

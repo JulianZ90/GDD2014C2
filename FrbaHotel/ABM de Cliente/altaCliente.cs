@@ -118,7 +118,7 @@ namespace FrbaHotel.ABM_de_Cliente
             }
 
             cliente.nacionalidad = textBox10.Text;
-            if (checkBox4.Checked) cliente.pais = (Pais)comboBox2.SelectedItem;
+            cliente.pais = (Pais)comboBox2.SelectedItem;
             cliente.permitido_ingreso = checkBox1.Checked;
 
             if (cliente.id < 1)

@@ -95,7 +95,7 @@ namespace FrbaHotel.ABM_de_Cliente
             StringBuilder query = new StringBuilder();
             query.Append("select distinct cliente.*, tipo_identidad.nombre as tipo, pais.nombre as pais from GAME_OF_QUERYS.cliente ");
             query.Append(" left join GAME_OF_QUERYS.tipo_identidad on tipo_identidad.id = cliente.tipo_identidad_id ");
-            query.Append(" left join GAME_OF_QUERYS.pais on pais.id= cliente.id ");
+            query.Append(" left join GAME_OF_QUERYS.pais on pais.id= cliente.pais_origen_id ");
             query.Append(" where 1=1 ");
 
             if (checkBox3.Checked)
@@ -159,11 +159,15 @@ namespace FrbaHotel.ABM_de_Cliente
                 cliente.depto = objReader["depto"].ToString()[0];
                 cliente.ciudad = objReader["ciudad"] as string;
                 cliente.nacionalidad = objReader["nacionalidad"] as string;
-                cliente.nro_identidad = objReader["nro_identidad"] as long?; // TODO esto no anda
+                cliente.nro_identidad = objReader["nro_identidad"] as int?;
 
                 TipoIdentidad tipo = new TipoIdentidad();
                 tipo.nombre = objReader["tipo"] as string;
                 cliente.tipo_identidad = tipo;
+
+                Pais pais = new Pais();
+                pais.id = (int)objReader["pais_origen_id"];
+                cliente.pais = pais;
 
                 lista.Add(cliente);
             }
@@ -177,11 +181,19 @@ namespace FrbaHotel.ABM_de_Cliente
             if (!reserva)
             {
                 // Ignore clicks that are not on button cells.  
-                if (e.RowIndex < 0 || 
-                    (e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index &&
-                    e.ColumnIndex != dataGridView1.Columns["sELECCIONAR"].Index)
+                if (e.RowIndex < 0 ||
+                    (e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index)
                     )
                     return;
+
+                if (seleccionar)
+                {
+                    if (e.RowIndex < 0 ||
+                        (
+                        e.ColumnIndex != dataGridView1.Columns["sELECCIONAR"].Index)
+                        )
+                        return;
+                }
 
                 // Retrieve the cliente_id object from the "id" cell.
                 cliente_id = (int)dataGridView1.Rows[e.RowIndex].Cells["id"].Value;
@@ -192,12 +204,15 @@ namespace FrbaHotel.ABM_de_Cliente
                     modif.Owner = this;
                     modif.ShowDialog();
                 }
-                
-                if (e.ColumnIndex == dataGridView1.Columns["sELECCIONAR"].Index)
+
+                if (seleccionar)
                 {
-                    clienteSeleccionado = ((List<Cliente>)dataGridView1.DataSource).ElementAt(e.RowIndex);
-                    this.DialogResult = DialogResult.OK;
-                    this.Close();
+                    if (e.ColumnIndex == dataGridView1.Columns["sELECCIONAR"].Index)
+                    {
+                        clienteSeleccionado = ((List<Cliente>)dataGridView1.DataSource).ElementAt(e.RowIndex);
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
                 }
             }
             else
@@ -458,7 +473,6 @@ namespace FrbaHotel.ABM_de_Cliente
             this.textBox9.Text = string.Empty;
             this.textBox10.Text = string.Empty;
             this.textBox11.Text = string.Empty;
-            this.checkBox1.Checked = true;
             this.checkBox2.Checked = false;
             this.checkBox3.Checked = false;
             this.checkBox4.Checked = false;
