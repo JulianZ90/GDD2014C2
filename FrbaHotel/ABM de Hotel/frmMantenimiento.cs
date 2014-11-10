@@ -85,7 +85,7 @@ namespace FrbaHotel.ABM_de_Hotel
             }
             else
             {
-                MessageBox.Show("Har reservas para ese periodo");
+                MessageBox.Show("Hay reservas para ese periodo");
             }            
         }
 
