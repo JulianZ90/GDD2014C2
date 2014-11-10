@@ -180,18 +180,22 @@ namespace FrbaHotel.ABM_de_Cliente
             int cliente_id;
             if (!reserva)
             {
-                // Ignore clicks that are not on button cells.  
-                if (e.RowIndex < 0 ||
-                    (e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index)
-                    )
-                    return;
+                
 
-                if (seleccionar)
+                if (!seleccionar)
+                {
+                    // Ignore clicks that are not on button cells.  
+                    if (e.RowIndex < 0 ||
+                            (e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index)
+                        )
+                    return;
+                }
+                else
                 {
                     if (e.RowIndex < 0 ||
-                        (
-                        e.ColumnIndex != dataGridView1.Columns["sELECCIONAR"].Index)
-                        )
+                            (e.ColumnIndex != dataGridView1.Columns["sELECCIONAR"].Index &&
+                            e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index)
+                       )
                         return;
                 }
 

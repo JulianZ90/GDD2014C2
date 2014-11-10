@@ -84,17 +84,21 @@ namespace FrbaHotel.Registrar_Consumible
         }
         void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Ignore clicks that are not on button cells.  
-            if (e.RowIndex < 0 ||
-                    (e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index)
+            
+
+            if (!seleccionar)
+            {
+                // Ignore clicks that are not on button cells.  
+                if (e.RowIndex < 0 ||
+                        (e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index)
                     )
                 return;
-
-            if (seleccionar)
+            }
+            else
             {
                 if (e.RowIndex < 0 ||
-                    (
-                    e.ColumnIndex != dataGridView1.Columns["sELECCIONAR"].Index)
+                        (e.ColumnIndex != dataGridView1.Columns["sELECCIONAR"].Index && 
+                        e.ColumnIndex != dataGridView1.Columns["mODIFICAR"].Index)
                     )
                     return;
             }
