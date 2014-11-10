@@ -88,6 +88,19 @@ namespace FrbaHotel.ABM_de_Hotel
 
             hotel.regimenes = listBox1.SelectedItems.Cast<Regimen>().ToList();
 
+            if (hotel.regimenes.Count == 0)
+            {
+                MessageBox.Show("Tiene que asignar al menos un regimen");
+                return;
+            }
+
+            if (!hotel.regimenesEnUso())
+            {
+                MessageBox.Show("Modificacion no permitida. Un regimen que desea eliminar se necesita para una futura reserva.");
+                return;
+            }
+
+
             if (hotel.id < 1)
             {
                 // no tiene id todavia, es un alta

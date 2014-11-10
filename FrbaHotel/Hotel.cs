@@ -228,5 +228,40 @@ namespace FrbaHotel
             }
         }
 
+        public bool regimenesEnUso()
+        {
+            List<Regimen> lstRegimenesNecesarios = new List<Regimen>();
+
+            SqlCommand query = new SqlCommand("SELECT DISTINCT regimen_id FROM GAME_OF_QUERYS.reserva WHERE fecha_fin > @fechaHoy AND estado_id IN (1, 2, 6)", connect);
+            query.Parameters.AddWithValue("@fechaHoy", DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]));
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+            while (objReader.Read())
+            {
+                Regimen Regimen = new Regimen();
+                Regimen.id = (int)objReader["regimen_id"];
+                lstRegimenesNecesarios.Add(Regimen);
+            }
+            connect.Close();
+
+            foreach (Regimen Item in this.regimenes)
+            {
+                foreach (Regimen Regimen in lstRegimenesNecesarios)
+                {
+                    if (Regimen.id == Item.id)
+                    {
+                        lstRegimenesNecesarios.Remove(Regimen);
+                        break;
+                    }
+                }
+            }
+
+            if (lstRegimenesNecesarios.Count > 0)
+                return false;
+            else
+                return true;
+
+        }
+
     }
 }
