@@ -18,7 +18,7 @@ namespace FrbaHotel
         public int? nro_calle { get; set; }
         public string ciudad { get; set; }
         public Pais pais { get; set; }
-        public int? tel { get; set; }
+        public long? tel { get; set; }
         public int cantidad_estrella { get; set; }
         public int recarga_estrella { get; set; }
         public DateTime? fecha_creacion { get; set; }
@@ -56,7 +56,7 @@ namespace FrbaHotel
                 this.ciudad = objReader["ciudad"] as string;
                 this.cantidad_estrella = (int)objReader["cantidad_estrella"];
                 this.recarga_estrella = (int)objReader["recarga_estrella"];
-                this.tel = objReader["tel"] as int?;
+                this.tel = objReader["tel"] as long?;
                 this.mail = objReader["mail"] as string;
                 this.fecha_creacion = objReader["fecha_creacion"] as DateTime?;
                 this.nombre = objReader["nombre"] as string;
