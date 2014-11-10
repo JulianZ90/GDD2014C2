@@ -204,19 +204,18 @@ namespace FrbaHotel
         
         }
 
-        public bool hotelDisponible(DateTime inicio, DateTime fin, int hotel)
+        public bool hotelDisponible(DateTime i, DateTime f, int h)
         { 
             string query_str = @"select COUNT(id) as cant from GAME_OF_QUERYS.reserva
-                            where fecha_inicio between '@ini' and '@fin'
-                            and fecha_fin between '@ini' and '@fin'
+                            where fecha_inicio between '2014-05-06' and '2014-05-29'
+                            and fecha_fin between '2014-05-06' and '2014-05-29'
                             and estado_id in (1,2,6)
                             and hotel_id=@hotel";
 
             SqlCommand query = new SqlCommand(query_str, connect);
-            string q = query.CommandText;
-            query.Parameters.AddWithValue("ini", inicio);
-            query.Parameters.AddWithValue("fin", fin);
-            query.Parameters.AddWithValue("hotel", hotel);
+            query.Parameters.AddWithValue("@ini",i);
+            query.Parameters.AddWithValue("@fin", f);
+            query.Parameters.AddWithValue("@hotel", h);
             connect.Open();
             int cant = (int)query.ExecuteScalar();
             connect.Close();
