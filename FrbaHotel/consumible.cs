@@ -15,6 +15,7 @@ namespace FrbaHotel
         public string descripcion { get; set; }
         public decimal precio { get; set; }
         public int cantidad { get; set; }
+        public Habitacion habitacion { get; set; }
         
         public consumible() { }
 
