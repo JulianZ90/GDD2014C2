@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Windows.Forms;
 
 
 namespace FrbaHotel
@@ -48,11 +49,11 @@ namespace FrbaHotel
                 this.nombre = objReader["nombre"] as string;
                 this.apellido = objReader["apellido"] as string;
                 this.mail = objReader["mail"] as string;
-                this.tel = objReader["tel"] as int?;
+                this.tel = objReader["tel"] as long?;
                 this.direccion = objReader["direccion"] as string;
                 this.fecha_nac = objReader["fecha_nac"] as DateTime?;
                 this.estado = (bool)objReader["estado"];
-                this.nro_identidad = objReader["nro_identidad"] as long?;
+                this.nro_identidad = objReader["nro_identidad"] as int?;
 
                 if (objReader["tipo_identidad_id"] != DBNull.Value)
                 {
@@ -129,7 +130,18 @@ namespace FrbaHotel
             
 
             connect.Open();
-            int user_id = Convert.ToInt32(query.ExecuteScalar());
+            int user_id;
+            try
+            {
+                user_id = Convert.ToInt32(query.ExecuteScalar());
+            }
+            catch (SqlException l)
+            {
+                MessageBox.Show("Nombre de usuario repetido");
+                connect.Close();
+                return;
+            }
+            
            
             // por cada hotel le agrego todos los roles asignados. 
             // la idea es que despues seleccionemos que roles a que hotel
@@ -145,6 +157,8 @@ namespace FrbaHotel
                 }
             }
             connect.Close();
+
+            MessageBox.Show("Usuario creado");
                 
          }
 
@@ -192,6 +206,8 @@ namespace FrbaHotel
             }
             
             connect.Close();
+
+            MessageBox.Show("Usuario con id=" + id.ToString() + " modificado");
         }
 
     }
