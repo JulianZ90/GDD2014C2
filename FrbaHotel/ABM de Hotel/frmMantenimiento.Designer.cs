@@ -143,7 +143,7 @@
             this.dataGridView1.RowTemplate.Height = 18;
             this.dataGridView1.Size = new System.Drawing.Size(266, 212);
             this.dataGridView1.TabIndex = 10;
-            this.dataGridView1.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.setDesdeHasta);
+            /*this.dataGridView1.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.setDesdeHasta);*/
             // 
             // frmMantenimiento
             // 
