@@ -42,7 +42,7 @@ namespace FrbaHotel.ABM_de_Hotel
             if (textBox3.Text != "") hotel.nro_calle = Int32.Parse(textBox3.Text);
             hotel.ciudad = textBox4.Text;
             if (checkBox3.Checked) hotel.pais = (Pais)comboBox1.SelectedItem;
-            if (textBox6.Text != "") hotel.tel = Int32.Parse(textBox6.Text);
+            if (textBox6.Text != "") hotel.tel = long.Parse(textBox6.Text);
             hotel.mail = textBox7.Text;
             if (checkBox2.Checked) hotel.fecha_creacion = dateTimePicker1.Value.Date;
             if (textBox8.Text != "") hotel.cantidad_estrella = Int32.Parse(textBox8.Text);

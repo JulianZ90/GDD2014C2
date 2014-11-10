@@ -58,17 +58,65 @@ namespace FrbaHotel.ABM_de_Cliente
         private void button1_Click(object sender, EventArgs e)
         {
             if (checkBox3.Checked) cliente.tipo_identidad = (TipoIdentidad)comboBox1.SelectedItem;
+
             if (textBox9.Text != "") cliente.nro_identidad = long.Parse(textBox9.Text);
-            cliente.apellido = textBox1.Text;
-            cliente.nombre = textBox2.Text;
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
+            
+            if(textBox1.Text !="") cliente.apellido = textBox1.Text;
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
+
+            if(textBox2.Text !="") cliente.nombre = textBox2.Text;
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
+
             if (checkBox2.Checked) cliente.fecha_nac = dateTimePicker1.Value.Date;
             cliente.mail = textBox3.Text;
-            if (textBox4.Text != "") cliente.tel = Int32.Parse(textBox4.Text);
+            
+            if (textBox4.Text != "") cliente.tel = long.Parse(textBox4.Text);
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
+
+            if(textBox5.Text != "")
             cliente.calle = textBox5.Text;
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
+
+
             if (textBox6.Text != "") cliente.nro_calle = Int32.Parse(textBox6.Text);
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
+
             if (textBox11.Text != "") cliente.piso = Int32.Parse(textBox11.Text);
             if (textBox7.Text != "") cliente.depto = textBox7.Text[0];
+            
+            if(textBox8.Text !="")
             cliente.ciudad = textBox8.Text;
+            else
+            {
+                MessageBox.Show("Campos obligatorios incompletos");
+                return;
+            }
+
             cliente.nacionalidad = textBox10.Text;
             if (checkBox4.Checked) cliente.pais = (Pais)comboBox2.SelectedItem;
             cliente.permitido_ingreso = checkBox1.Checked;
@@ -108,13 +156,13 @@ namespace FrbaHotel.ABM_de_Cliente
                 else
                 {
                     cliente.insert();
-                    ((FrmPrincipal)this.MdiParent).setStatus("Cliente creado");
+                    MessageBox.Show("Cliente Creado");
                 }
             }
             else
             {
                 cliente.update();
-                ((FrmPrincipal)this.Owner.MdiParent).setStatus("Cliente id=" + cliente.id.ToString() + " modificado");
+                MessageBox.Show("Cliente id=" + cliente.id.ToString() + " modificado");
                 this.Close();
             }
 
@@ -197,6 +245,7 @@ namespace FrbaHotel.ABM_de_Cliente
 
             connect.Close();
             comboBox1.DataSource = lista;
+            comboBox1.SelectedIndex = 0;
         }
 
         private void llenarPais()
@@ -221,6 +270,7 @@ namespace FrbaHotel.ABM_de_Cliente
 
             connect.Close();
             comboBox2.DataSource = lista;
+            comboBox2.SelectedIndex = 0;
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
@@ -399,8 +449,8 @@ namespace FrbaHotel.ABM_de_Cliente
             this.checkBox3.Checked = true;
             this.checkBox4.Checked = true;
             this.dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
-            this.comboBox1.SelectedValue = 0;
-            this.comboBox2.SelectedValue = 0;
+            this.comboBox1.SelectedIndex = 0;
+            this.comboBox2.SelectedIndex = 0;
         }
 
         private void altaCliente_Load(object sender, EventArgs e)

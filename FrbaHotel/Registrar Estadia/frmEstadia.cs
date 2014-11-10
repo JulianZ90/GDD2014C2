@@ -266,6 +266,12 @@ namespace FrbaHotel.Registrar_Estadia
                 //checkin
                 reserva.checkin = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]).Date;
 
+                if (reserva.huespedes.Count < reserva.Habitaciones.Count) // al menos un husped por habitacion
+                {
+                    MessageBox.Show("Ingrese al menos "+ reserva.Habitaciones.Count.ToString()+" huespedes");
+                    return;
+                }
+
                 Usuario usr = new Usuario();
                 usr.id = ((FrmPrincipal)this.MdiParent).Log.Usuario_Id;
                 reserva.user_checkin = usr;
@@ -423,6 +429,12 @@ namespace FrbaHotel.Registrar_Estadia
                 reserva.huespedes.Add(cli);
             }
             connect.Close();
+
+            //si esta la lista huespedes vacia, le meto el usuario que reservo
+            if (reserva.huespedes.Count == 0)
+            {
+                reserva.huespedes.Add(reserva.Cliente);
+            }
         }
 
         private void getConsumibles()

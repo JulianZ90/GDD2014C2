@@ -18,7 +18,7 @@ namespace FrbaHotel
         public string  nombre { get; set; }
         public string apellido { get; set; }
         public string mail { get; set; }
-        public int? tel { get; set; }
+        public long? tel { get; set; }
         public string direccion { get; set; }
         public DateTime? fecha_nac { get; set; }
         public bool estado { get; set; }
