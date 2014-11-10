@@ -125,6 +125,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.txtBxCostoTotal.ReadOnly = true;
             this.txtBxCostoDiario.ReadOnly = true;
             this.txtBxDetalle.ReadOnly = true;
+            this.dataGridViewRegimen.RowHeadersVisible = false;
+            this.dataGridViewRegimen.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewRegimen.AllowUserToResizeRows = false;
+            this.dataGridViewRegimen.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridViewRegimen.MultiSelect = false;
+            this.dataGridViewRegimen.ReadOnly = true;
         }
 
 
@@ -204,7 +210,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void CompletarDataGridViewRegimenes(DataGridView DataGridView)
         {
             lstRegimenes.Clear();
-
+            List<Regimen> lstDataGrid = new List<Regimen>();
             query = new SqlCommand("SELECT regimen.id, regimen.descripcion, regimen.precio_base FROM GAME_OF_QUERYS.hotel_reg JOIN GAME_OF_QUERYS.regimen ON (regimen.id = hotel_reg.reg_id) where hotel_id = @hotelId AND regimen.estado = 1", objConexion);
 
             if (guest)   //el id del hotel lo saco del cmbBxHotel
@@ -222,19 +228,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 Regimen.descripcion = (string)objReader["descripcion"];
                 Regimen.estado = true;
                 lstRegimenes.Add(Regimen);
+                lstDataGrid.Add(Regimen);
             }
             objConexion.Close();
 
-            DataGridView.RowHeadersVisible = false;
-            DataGridView.DataSource = lstRegimenes;
+            DataGridView.DataSource = lstDataGrid;//lstRegimenes;
             DataGridView.Columns["id"].Visible = false;
-            DataGridView.Columns["precio_base"].Visible = false;
-            DataGridView.Columns["estado"].Visible = false;
-            DataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            DataGridView.AllowUserToResizeRows = false;
-            DataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
-            DataGridView.MultiSelect = false;
-            DataGridView.ReadOnly = true;
+            DataGridView.Columns["estado"].Visible = false;          
         }
 
 
@@ -279,7 +279,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     this.dataGridViewRegimen.Hide();
                 }
                 else
+                {
                     this.CompletarDataGridViewRegimenes(this.dataGridViewRegimen);
+                }
             }
         }
 
