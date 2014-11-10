@@ -291,6 +291,8 @@ namespace FrbaHotel.Registrar_Estadia
                     reserva.user_checkin = usr;
 
                     reserva.hacerCheckin();
+                    MessageBox.Show("Check-in realizado con exito");
+                    this.Close();
                 }
                 else
                 {
