@@ -158,8 +158,8 @@ namespace FrbaHotel.ABM_de_Habitacion
             dataGridView.DataSource = lstHabitaciones;
 
 
-            dataGridView.Columns["id"].Visible = false;
-            dataGridView.Columns["hotel_id"].Visible = false;
+            dataGridView.Columns["Id"].Visible = false;
+            dataGridView.Columns["Hotel"].Visible = false;
 
         }
 
