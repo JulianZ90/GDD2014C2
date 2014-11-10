@@ -110,13 +110,17 @@ namespace FrbaHotel
 
         private void nuevoRolToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new ABM_de_Rol.FrmRol().ShowDialog();
-
+            Form childForm = new ABM_de_Rol.FrmRol();
+            childForm.MdiParent = this;
+            childForm.Show();
         }
 
         private void modificarOEliminarRolToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new ABM_de_Rol.FrmListaRoles().ShowDialog();
+            Form childForm = new ABM_de_Rol.FrmListaRoles();
+            childForm.MdiParent = this;
+            childForm.Show();
+
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -131,12 +135,16 @@ namespace FrbaHotel
 
         private void nuevaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new ABM_de_Habitacion.FrmHabitacion(Log).ShowDialog();
+            Form childForm = new ABM_de_Habitacion.FrmHabitacion(Log);
+            childForm.MdiParent = this;
+            childForm.Show();
         }
 
         private void listarHabitacionesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new ABM_de_Habitacion.FrmListadoHabitacion(Log).ShowDialog();
+            Form childForm = new ABM_de_Habitacion.FrmListadoHabitacion(Log);
+            childForm.MdiParent = this;
+            childForm.Show();
         }
 
         private void altaHotelToolStripMenuItem_Click(object sender, EventArgs e)
@@ -155,7 +163,9 @@ namespace FrbaHotel
 
         private void nuevaReservaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new Generar_Modificar_Reserva.FrmReserva(Log).ShowDialog();
+            Form childForm = new Generar_Modificar_Reserva.FrmReserva(Log);
+            childForm.MdiParent = this;
+            childForm.Show();
         }
 
         private void nuevoConsumibleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -181,7 +191,9 @@ namespace FrbaHotel
 
         private void modificarOCancelarReservaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new Generar_Modificar_Reserva.FrmListadoReservas(Log).ShowDialog();
+            Form childForm = new Generar_Modificar_Reserva.FrmListadoReservas(Log);
+            childForm.MdiParent = this;
+            childForm.Show();
         }
 
         private void modificarConsumibleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -208,22 +220,16 @@ namespace FrbaHotel
 
         private void registrarConsumibleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new Registrar_Consumible.FrmRegistrarConsumible(Log).ShowDialog();
+            Form childForm = new Registrar_Consumible.FrmRegistrarConsumible(Log);
+            childForm.MdiParent = this;
+            childForm.Show();
         }
 
         private void listadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new Listado_Estadistico.FrmListados().ShowDialog();
+            Form childForm = new Listado_Estadistico.FrmListados();
+            childForm.MdiParent = this;
+            childForm.Show();
         }
-
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        
-
-
-
     }
 }

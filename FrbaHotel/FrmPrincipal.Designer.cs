@@ -65,11 +65,7 @@
             this.toolBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tileVerticalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tileHorizontalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.arrangeIconsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -366,49 +362,17 @@
             // windowsMenu
             // 
             this.windowsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cascadeToolStripMenuItem,
-            this.tileVerticalToolStripMenuItem,
-            this.tileHorizontalToolStripMenuItem,
-            this.closeAllToolStripMenuItem,
-            this.arrangeIconsToolStripMenuItem});
+            this.closeAllToolStripMenuItem});
             this.windowsMenu.Name = "windowsMenu";
             this.windowsMenu.Size = new System.Drawing.Size(67, 20);
             this.windowsMenu.Text = "&Ventanas";
             // 
-            // cascadeToolStripMenuItem
-            // 
-            this.cascadeToolStripMenuItem.Name = "cascadeToolStripMenuItem";
-            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.cascadeToolStripMenuItem.Text = "&Cascada";
-            this.cascadeToolStripMenuItem.Click += new System.EventHandler(this.CascadeToolStripMenuItem_Click);
-            // 
-            // tileVerticalToolStripMenuItem
-            // 
-            this.tileVerticalToolStripMenuItem.Name = "tileVerticalToolStripMenuItem";
-            this.tileVerticalToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.tileVerticalToolStripMenuItem.Text = "Mosaico &vertical";
-            this.tileVerticalToolStripMenuItem.Click += new System.EventHandler(this.TileVerticalToolStripMenuItem_Click);
-            // 
-            // tileHorizontalToolStripMenuItem
-            // 
-            this.tileHorizontalToolStripMenuItem.Name = "tileHorizontalToolStripMenuItem";
-            this.tileHorizontalToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.tileHorizontalToolStripMenuItem.Text = "Mosaico &horizontal";
-            this.tileHorizontalToolStripMenuItem.Click += new System.EventHandler(this.TileHorizontalToolStripMenuItem_Click);
-            // 
             // closeAllToolStripMenuItem
             // 
             this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
-            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.closeAllToolStripMenuItem.Text = "C&errar todo";
             this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.CloseAllToolStripMenuItem_Click);
-            // 
-            // arrangeIconsToolStripMenuItem
-            // 
-            this.arrangeIconsToolStripMenuItem.Name = "arrangeIconsToolStripMenuItem";
-            this.arrangeIconsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.arrangeIconsToolStripMenuItem.Text = "&Organizar iconos";
-            this.arrangeIconsToolStripMenuItem.Click += new System.EventHandler(this.ArrangeIconsToolStripMenuItem_Click);
             // 
             // statusStrip
             // 
@@ -453,17 +417,13 @@
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
-        private System.Windows.Forms.ToolStripMenuItem tileHorizontalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileMenu;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewMenu;
         private System.Windows.Forms.ToolStripMenuItem toolBarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem statusBarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem windowsMenu;
-        private System.Windows.Forms.ToolStripMenuItem cascadeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tileVerticalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem arrangeIconsToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;

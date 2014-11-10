@@ -68,7 +68,11 @@ namespace FrbaHotel.Registrar_Estadia
             if (textBox1.Text == "") return;
             getReserva(Int32.Parse(textBox1.Text));
 
-            if (reserva == null) return;
+            if (reserva == null)
+            {
+                MessageBox.Show("No se encontró la reserva");
+                return;
+            }
             completarFormConReserva();
 
             if (!reserva.tieneIngreso() && !ingresoInvalido())
@@ -91,7 +95,11 @@ namespace FrbaHotel.Registrar_Estadia
             if (textBox13.Text == "") return;
             getReserva(textBox13.Text);
 
-            if (reserva == null) return;
+            if (reserva == null)
+            {
+                MessageBox.Show("No se encontró la habitación");
+                return;
+            }
             completarFormConReserva();
 
             button5.Enabled = true;

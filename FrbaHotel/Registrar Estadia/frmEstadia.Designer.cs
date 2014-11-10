@@ -72,10 +72,10 @@
             this.label15 = new System.Windows.Forms.Label();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label18 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -516,6 +516,16 @@
             this.panel3.Size = new System.Drawing.Size(248, 161);
             this.panel3.TabIndex = 42;
             // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.label18.Location = new System.Drawing.Point(36, 121);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(177, 13);
+            this.label18.TabIndex = 42;
+            this.label18.Text = "Campos Cant y Habitacion editables";
+            // 
             // label16
             // 
             this.label16.AutoSize = true;
@@ -544,16 +554,6 @@
             this.label17.Size = new System.Drawing.Size(154, 26);
             this.label17.TabIndex = 45;
             this.label17.Text = "Ingreso solo permitido el\r\ndia de inicio de la reserva";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label18.Location = new System.Drawing.Point(36, 130);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(177, 13);
-            this.label18.TabIndex = 42;
-            this.label18.Text = "Campos Cant y Habitacion editables";
             // 
             // frmEstadia
             // 
