@@ -183,6 +183,7 @@
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Mantenimiento.cs" />
+    <Compile Include="MedioPago.cs" />
     <Compile Include="Pais.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

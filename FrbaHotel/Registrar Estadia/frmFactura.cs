@@ -7,18 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
+using System.Data.SqlClient;
 
 namespace FrbaHotel.Registrar_Estadia
 {
     public partial class frmFactura : Form
     {
+        SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
         Factura factura;
 
         public frmFactura(Reserva r)
         {
             InitializeComponent();
 
-            comboBox1.SelectedIndex = 0;
+            llenarMedioPago();
 
             factura = new Factura(r);
 
@@ -66,14 +68,41 @@ namespace FrbaHotel.Registrar_Estadia
         private void button1_Click(object sender, EventArgs e)
         {
             factura.fecha = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
-            factura.medios_de_pagos = comboBox1.SelectedText;
+            factura.medios_de_pagos = (MedioPago) comboBox1.SelectedItem;
             
             if (textBox3.Text!="")
                 factura.tarjeta = long.Parse(textBox3.Text);
 
             factura.insert();
+            button1.Enabled = false;
 
             MessageBox.Show("Factura registrada");
+        }
+
+        private void llenarMedioPago()
+        {
+            comboBox1.DisplayMember = "nombre";
+            comboBox1.ValueMember = "id";
+
+            List<MedioPago> lista = new List<MedioPago>();
+
+            SqlCommand query = new SqlCommand("select id, nombre from GAME_OF_QUERYS.medio_de_pago", connect);
+
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+
+            while (objReader.Read())
+            {
+                MedioPago m = new MedioPago();
+                m.id = (int)objReader["id"];
+                m.nombre = (string)objReader["nombre"];
+                lista.Add(m);
+            }
+
+            connect.Close();
+            comboBox1.DataSource = lista;
+
+            comboBox1.SelectedIndex = 0;
         }
     }
 }

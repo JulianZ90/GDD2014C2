@@ -26,7 +26,7 @@ namespace FrbaHotel
         public int id { get; set; }
         public DateTime fecha { get; set; }
         public string detalles { get; set; }
-        public string medios_de_pagos { get; set; }
+        public MedioPago medios_de_pagos { get; set; }
         public Reserva reserva { get; set; }
         public List<Item> items { get; set; }
         public long tarjeta { get; set; }
@@ -40,13 +40,27 @@ namespace FrbaHotel
             foreach (Habitacion hab in reserva.Habitaciones)
             {
                 Item item = new Item();
-                item.cant = 1;
-                item.desc = string.Format("Habitación {0}",hab.Tipo.ToString());
 
                 ///// CALCULO DE PRECIO DE HABITACION
-                item.precio = (reserva.Regimen.precio_base * hab.Tipo.Porcentual) + (reserva.hotel.cantidad_estrella * reserva.hotel.recarga_estrella);
+                decimal precioPorDia = (reserva.Regimen.precio_base * hab.Tipo.Porcentual) + (reserva.hotel.cantidad_estrella * reserva.hotel.recarga_estrella);
+                double cantidadDeNochesEfectivamenteAlojados = ((DateTime)reserva.checkout - reserva.FechaInicio).TotalDays;
                 
+                item.cant = (int)cantidadDeNochesEfectivamenteAlojados;
+                item.precio = item.cant * precioPorDia;
+
+                item.desc = string.Format("Habitación {0}",hab.Tipo.ToString());
                 items.Add(item);
+
+                if (reserva.FechaFin != reserva.checkout)
+                {
+                    Item item2 = new Item();
+                    double cantidadDeNochesSinUsar = (reserva.FechaFin - (DateTime)reserva.checkout).TotalDays;
+                    item2.cant = (int)cantidadDeNochesSinUsar;
+                    item2.precio = item2.cant * precioPorDia;
+                    item2.desc = string.Format("No Usada: Habitación {0}", hab.Tipo.ToString());
+                    items.Add(item2);
+
+                }
             }
 
             decimal importeConsumiblesTotal = 0;
@@ -81,9 +95,9 @@ namespace FrbaHotel
 
         public void insert() 
         {
-            SqlCommand query = new SqlCommand("insert into GAME_OF_QUERYS.factura (fecha, medio_de_pago, reserva_id, tarjeta, total) values(@fecha, @medio, @reserva_id, @tarjeta, @total); SELECT SCOPE_IDENTITY()", connect);
+            SqlCommand query = new SqlCommand("insert into GAME_OF_QUERYS.factura (fecha, medio_de_pago_id, reserva_id, tarjeta, total) values(@fecha, @medio, @reserva_id, @tarjeta, @total); SELECT SCOPE_IDENTITY()", connect);
             query.Parameters.AddWithValue("fecha", fecha);
-            query.Parameters.AddWithValue("medio", medios_de_pagos);
+            query.Parameters.AddWithValue("medio", medios_de_pagos.id);
             query.Parameters.AddWithValue("reserva_id", reserva.Id);
             query.Parameters.AddWithValue("tarjeta", tarjeta);
             query.Parameters.AddWithValue("total", totalAPagar);

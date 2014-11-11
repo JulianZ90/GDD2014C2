@@ -163,7 +163,7 @@ namespace FrbaHotel.Registrar_Estadia
                     reserva.Cliente.id = (int)objReader["cliente_id"];
                     reserva.Cliente.nombre = objReader["nombre"] as string;
                     reserva.Cliente.apellido = objReader["apellido"] as string;
-                    reserva.Cliente.nro_identidad = (int)objReader["nro_identidad"];
+                    reserva.Cliente.nro_identidad = (long)objReader["nro_identidad"];
 
                     if (objReader["tipo_id"] != DBNull.Value)
                     {
@@ -449,7 +449,7 @@ namespace FrbaHotel.Registrar_Estadia
             while (objReader.Read())
             {
                 Cliente cli = new Cliente();
-                cli.nro_identidad = (int)objReader["nro_identidad"];
+                cli.nro_identidad = (long)objReader["nro_identidad"];
                 cli.nombre = objReader["nombre"] as string;
                 cli.apellido = objReader["apellido"] as string;
                 TipoIdentidad tipo = new TipoIdentidad();
