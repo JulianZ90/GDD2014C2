@@ -57,9 +57,11 @@ namespace FrbaHotel.ABM_de_Usuario
             query.Append("select distinct usuario.*, tipo_identidad.nombre as tipo from GAME_OF_QUERYS.usuario ");
             query.Append(" left join GAME_OF_QUERYS.tipo_identidad on tipo_identidad.id = usuario.tipo_identidad_id ");
             query.Append(" left join GAME_OF_QUERYS.hotel_usuario_rol on hotel_usuario_rol.usuario_id= usuario.id ");
-            query.Append(" where hotel_usuario_rol.hotel_id =" + ((FrmPrincipal)this.MdiParent).Log.Hotel_Id);
 
-            
+            if (((FrmPrincipal)this.MdiParent).Log.Rol_Id == 4)
+                query.Append(" where 1=1 ");
+            else
+                query.Append(" where hotel_usuario_rol.hotel_id =" + ((FrmPrincipal)this.MdiParent).Log.Hotel_Id);
 
             if (textBox1.Text != "")
                 query.Append("and usuario.username like '%" + textBox1.Text + "%'");
@@ -139,6 +141,12 @@ namespace FrbaHotel.ABM_de_Usuario
             // Retrieve the user_id object from the "id" cell.
             int user_id = (int) dataGridView1.Rows[e.RowIndex].Cells["id"].Value;
 
+            if (user_id == 1 || user_id == 2)
+            {
+                MessageBox.Show("Admin o guest no son modificables");
+                return;
+            }
+
             if (e.ColumnIndex == dataGridView1.Columns["mODIFICAR"].Index)
             {
                 ABM_de_Usuario.altaUsuario modif  = new ABM_de_Usuario.altaUsuario(user_id);
@@ -156,7 +164,7 @@ namespace FrbaHotel.ABM_de_Usuario
 
                 dataGridView1.Rows[e.RowIndex].Cells["estado"].Value = false;
                 
-                ((FrmPrincipal)MdiParent).setStatus("Usuario con id="+ user_id + " borrado con exito");
+                MessageBox.Show("Usuario con id="+ user_id + " inhabilitado");
             }
 
         }
