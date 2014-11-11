@@ -16,13 +16,15 @@ namespace FrbaHotel.ABM_de_Hotel
     {
         Hotel hotel = null;
         SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        LoginId Log = null;
 
-        public altaHotel()
+        public altaHotel(LoginId Login)
         {
             InitializeComponent();
             llenarComboPais();
             llenarRegimenes();
             hotel = new Hotel();
+            Log = Login;
         }
 
         public altaHotel(int id)
@@ -104,7 +106,7 @@ namespace FrbaHotel.ABM_de_Hotel
             if (hotel.id < 1)
             {
                 // no tiene id todavia, es un alta
-                hotel.insert();
+                hotel.insert(Log);
                 MessageBox.Show("Hotel creado");
                 button1.Enabled = false;
                 return;

@@ -89,7 +89,7 @@ namespace FrbaHotel
             connect.Close();
         }
 
-        public void insert()
+        public void insert(LoginId Log)
         {
             SqlCommand query = new SqlCommand("insert into GAME_OF_QUERYS.hotel (calle, nro_calle, ciudad, cantidad_estrella, recarga_estrella, pais_id , tel, mail, fecha_creacion, nombre) values (@calle, @nro_calle, @ciudad, @cantidad_estrella, @recarga_estrella, @pais_id , @tel, @mail, @fecha_creacion, @nombre); SELECT SCOPE_IDENTITY()", connect);
             query.Parameters.AddWithValue("calle", calle);
@@ -141,6 +141,15 @@ namespace FrbaHotel
                 query.ExecuteNonQuery();
             }
             connect.Close();
+
+            query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.hotel_usuario_rol(hotel_id, usuario_id, rol_id) VALUES (@hotel, @usuario, @rol)", connect);
+            query.Parameters.AddWithValue("@hotel", hotel_id);
+            query.Parameters.AddWithValue("@usuario", Log.Usuario_Id);
+            query.Parameters.AddWithValue("@rol", 1);   //harccodeado el id del administrador
+            connect.Open();
+            query.ExecuteNonQuery();
+            connect.Close();
+
         }
 
         public void update()

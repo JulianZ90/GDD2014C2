@@ -149,14 +149,14 @@ namespace FrbaHotel
 
         private void altaHotelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form childForm = new ABM_de_Hotel.altaHotel();
+            Form childForm = new ABM_de_Hotel.altaHotel(Log);
             childForm.MdiParent = this;
             childForm.Show();
         }
 
         private void listadoHotelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form childForm = new ABM_de_Hotel.listadoHoteles();
+            Form childForm = new ABM_de_Hotel.listadoHoteles(Log);
             childForm.MdiParent = this;
             childForm.Show();
         }

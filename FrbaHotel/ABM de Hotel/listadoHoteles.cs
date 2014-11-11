@@ -15,11 +15,13 @@ namespace FrbaHotel.ABM_de_Hotel
     public partial class listadoHoteles : Form
     {
         SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        LoginId Log = null;
 
-        public listadoHoteles()
+        public listadoHoteles(LoginId Login)
         {
             InitializeComponent();
             llenarComboPais();
+            Log = Login;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -298,7 +300,7 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void button3_Click(object sender, EventArgs e)
         {
-            new ABM_de_Hotel.altaHotel().ShowDialog();
+            new ABM_de_Hotel.altaHotel(Log).ShowDialog();
         }
     }
 }
