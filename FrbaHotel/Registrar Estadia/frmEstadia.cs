@@ -57,6 +57,7 @@ namespace FrbaHotel.Registrar_Estadia
             panel2.Show();
             groupBox2.Show();
             button2.Text = "Registrar Checkout y facturar";
+            this.button2.Enabled = false;
             button3.Hide();
             label17.Hide();
 
@@ -91,6 +92,7 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void button4_Click(object sender, EventArgs e)
         {
+            reserva = null;
             //checkout
             if (textBox13.Text == "") return;
             getReserva(textBox13.Text);
@@ -98,8 +100,24 @@ namespace FrbaHotel.Registrar_Estadia
             if (reserva == null)
             {
                 MessageBox.Show("No se encontró la habitación");
+                this.dataGridView1.Rows.Clear();
+                this.dataGridView2.Rows.Clear();
+                this.dataGridView3.Rows.Clear();
+                this.textBox13.Text = string.Empty;
+                this.textBox2.Text = string.Empty;
+                this.textBox12.Text = string.Empty;
+                this.textBox11.Text = string.Empty;
+                this.textBox3.Text = string.Empty;
+                this.textBox4.Text = string.Empty;
+                this.textBox7.Text = string.Empty;
+                this.textBox5.Text = string.Empty;
+                this.textBox8.Text = string.Empty;
+                this.textBox9.Text = string.Empty;
+                this.dateTimePicker1.Value = DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]);
+                this.button2.Enabled = false;
                 return;
             }
+
             completarFormConReserva();
 
             button5.Enabled = true;
