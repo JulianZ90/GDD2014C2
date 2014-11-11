@@ -331,6 +331,14 @@ namespace FrbaHotel.Registrar_Estadia
                 if (busca.ShowDialog(this) == DialogResult.OK)
                 {
                     Cliente h = busca.getClienteSeleccionado();
+                    foreach (Cliente Huesped in reserva.huespedes)
+                    {
+                        if (h.id == Huesped.id)
+                        {
+                            MessageBox.Show("Deben ser huespedes distintos");
+                            return;
+                        }
+                    }
                     reserva.huespedes.Add(h);
                     refrescarListaHuespedes();
                 }
