@@ -128,8 +128,8 @@ namespace FrbaHotel.Registrar_Estadia
 					                                select MAX(reserva.id) from GAME_OF_QUERYS.reserva 
 					                                join GAME_OF_QUERYS.reserva_habitacion on reserva.id = reserva_habitacion.reserva_id
 					                                join GAME_OF_QUERYS.habitacion on reserva_habitacion.habitacion_id = habitacion.id
-					                                where habitacion.nro in (@nro) and reserva.hotel_id=@hotel and reserva.estado_id=6 
-					                                )";
+					                                where habitacion.nro = @nro and reserva.hotel_id=@hotel and reserva.estado_id=6 
+					                                and check_in is not null and check_out is null)";
             SqlCommand query = new SqlCommand(query_str, connect);
             string q = query.CommandText;
             query.Parameters.AddWithValue("nro", habitaciones);
