@@ -132,10 +132,16 @@ from gd_esquema.Maestra m
 join GAME_OF_QUERYS.cliente c on m.cliente_pasaporte_nro=c.nro_identidad and m.Cliente_Mail=c.mail
 
 
+
+/*cargar medios de pago*/
+insert into GAME_OF_QUERYS.medio_de_pago(nombre) values ('Efectivo')
+insert into GAME_OF_QUERYS.medio_de_pago(nombre) values ('Tarjeta de credito')
+
+
 /*cargar factura (89603)*/
 set identity_insert GD2C2014.GAME_OF_QUERYS.factura on
-insert into GAME_OF_QUERYS.factura (id,fecha,reserva_id)
-select distinct m.Factura_Nro, CAST(m.Factura_Fecha as DATE), r.id 
+insert into GAME_OF_QUERYS.factura (id,fecha,reserva_id, medio_de_pago_id)
+select distinct m.Factura_Nro, CAST(m.Factura_Fecha as DATE), r.id, (select id from GAME_OF_QUERYS.medio_de_pago where nombre='Efectivo')
 from gd_esquema.Maestra m 
 join GAME_OF_QUERYS.reserva r on m.Reserva_Codigo=r.id
 where m.Factura_Nro is not null

@@ -96,13 +96,6 @@ namespace FrbaHotel.ABM_de_Hotel
                 return;
             }
 
-            if (!hotel.regimenesEnUso())
-            {
-                MessageBox.Show("Modificacion no permitida. Un regimen que desea eliminar se necesita para una futura reserva.");
-                return;
-            }
-
-
             if (hotel.id < 1)
             {
                 // no tiene id todavia, es un alta
@@ -113,6 +106,11 @@ namespace FrbaHotel.ABM_de_Hotel
             }
             else
             {
+                if (!hotel.regimenesEnUso())
+                {
+                    MessageBox.Show("Modificacion no permitida. Un regimen que desea eliminar se necesita para una futura reserva.");
+                    return;
+                }
                 hotel.update();
                 MessageBox.Show("Hotel id=" + hotel.id.ToString() + " modificado");
                 this.Close();
@@ -196,7 +194,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsLetter(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            if (Char.IsLetter(e.KeyChar) | (e.KeyChar == ' ')) //Al pulsar una letra o espacio
             {
                 e.Handled = false; //Se acepta
             }
@@ -211,7 +209,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
         private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsLetter(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            if (Char.IsLetter(e.KeyChar) | (e.KeyChar == ' ')) //Al pulsar una letra o espacio
             {
                 e.Handled = false; //Se acepta
             }
@@ -226,7 +224,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
         private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero
             {
                 e.Handled = false; //Se acepta
             }
@@ -241,7 +239,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
         private void textBox4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsLetter(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            if (Char.IsLetter(e.KeyChar) | (e.KeyChar == ' ')) //Al pulsar una letra o espacio
             {
                 e.Handled = false; //Se acepta
             }
@@ -256,7 +254,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
         private void textBox5_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero
             {
                 e.Handled = false; //Se acepta
             }
@@ -271,7 +269,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
         private void textBox6_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero
             {
                 e.Handled = false; //Se acepta
             }
@@ -286,7 +284,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
         private void textBox8_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero
             {
                 e.Handled = false; //Se acepta
             }
