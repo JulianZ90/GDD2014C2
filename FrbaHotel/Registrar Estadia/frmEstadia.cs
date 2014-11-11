@@ -397,6 +397,8 @@ namespace FrbaHotel.Registrar_Estadia
                 if (busca.ShowDialog(this) == DialogResult.OK)
                 {
                     consumible h = busca.getConsumibleSeleccionado();
+                    h.cantidad = 1;
+                    h.habitacion = reserva.Habitaciones[0];
                     reserva.consumibles.Add(h);
                     refrescarListaConsumibles();
                 }
