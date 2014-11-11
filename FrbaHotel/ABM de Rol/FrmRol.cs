@@ -93,8 +93,8 @@ namespace FrbaHotel.ABM_de_Rol
 
                     foreach (Funcionalidad Item in LstCheckedFunc)
                     {
-                        query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.rol_funcionalidad (rol_id, funcionalidad_id) VALUES (@idRol, @idFunc)", objConexion);    //falta verificar si ese rol puede realizar todas las funcionalidades
-                        query.Parameters.AddWithValue("@idRol", idRol);                                                                                             //capaz habria que hacer un trigger que no deje insertar las que son si o si del administrador
+                        query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.rol_funcionalidad (rol_id, funcionalidad_id) VALUES (@idRol, @idFunc)", objConexion);    
+                        query.Parameters.AddWithValue("@idRol", idRol);                                                                                             
                         query.Parameters.AddWithValue("@idFunc", Item.Id);
                         objConexion.Open();
                         query.ExecuteNonQuery();
@@ -121,8 +121,8 @@ namespace FrbaHotel.ABM_de_Rol
 
                 foreach (Funcionalidad Item in LstCheckedFunc)
                 {
-                    query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.rol_funcionalidad (rol_id, funcionalidad_id) VALUES (@idRol, @idFunc)", objConexion);    //falta verificar si ese rol puede realizar todas las funcionalidades
-                    query.Parameters.AddWithValue("@idRol", Rol.Id);                                                                                             //capaz habria que hacer un trigger que no deje insertar las que son si o si del administrador
+                    query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.rol_funcionalidad (rol_id, funcionalidad_id) VALUES (@idRol, @idFunc)", objConexion);    
+                    query.Parameters.AddWithValue("@idRol", Rol.Id);                                                                                             
                     query.Parameters.AddWithValue("@idFunc", Item.Id);
                     objConexion.Open();
                     query.ExecuteNonQuery();
