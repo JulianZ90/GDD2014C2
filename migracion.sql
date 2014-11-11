@@ -196,6 +196,30 @@ INSERT [GAME_OF_QUERYS].[rol_funcionalidad] ([rol_id], [funcionalidad_id]) VALUE
 INSERT [GAME_OF_QUERYS].[rol_funcionalidad] ([rol_id], [funcionalidad_id]) VALUES (3, 6)
 
 
+/*Trigger para controlar funcionalidades de cada rol
+ABM de Rol: Exclusivo del administrador general
+ABM de Hotel y ABM de Usuario: exclusivos del administrador o administrador general
+*/
+GO
+CREATE TRIGGER GAME_OF_QUERYS.TrigInsRolFuncionalidad
+ON GAME_OF_QUERYS.rol_funcionalidad
+INSTEAD OF INSERT AS
+
+BEGIN
+DECLARE @idRol int, @idFuncionalidad int
+SELECT @idFuncionalidad = funcionalidad_id, @idRol = rol_id FROM inserted
+
+IF((@idFuncionalidad IN (2,9) AND @idRol NOT IN (1, 4)) OR (@idFuncionalidad = 1 AND @idRol != 4))
+BEGIN
+RAISERROR('No se puede asignar funcionalidad a rol', 10, 1)
+RETURN
+END
+
+INSERT INTO GAME_OF_QUERYS.rol_funcionalidad(rol_id, funcionalidad_id) VALUES(@idRol, @idFuncionalidad)
+END
+GO
+
+
 --cargar estado_id en reserva
 --reservas que tienen estadia --> estado: 6 - con ingreso
 update GAME_OF_QUERYS.reserva set estado_id = 
