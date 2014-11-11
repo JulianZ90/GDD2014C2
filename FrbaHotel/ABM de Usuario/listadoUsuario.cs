@@ -57,7 +57,9 @@ namespace FrbaHotel.ABM_de_Usuario
             query.Append("select distinct usuario.*, tipo_identidad.nombre as tipo from GAME_OF_QUERYS.usuario ");
             query.Append(" left join GAME_OF_QUERYS.tipo_identidad on tipo_identidad.id = usuario.tipo_identidad_id ");
             query.Append(" left join GAME_OF_QUERYS.hotel_usuario_rol on hotel_usuario_rol.usuario_id= usuario.id ");
-            query.Append(" where 1=1 ");
+            query.Append(" where hotel_usuario_rol.hotel_id =" + ((FrmPrincipal)this.MdiParent).Log.Hotel_Id);
+
+            
 
             if (textBox1.Text != "")
                 query.Append("and usuario.username like '%" + textBox1.Text + "%'");
