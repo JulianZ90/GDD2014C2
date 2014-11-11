@@ -130,6 +130,12 @@
     <Compile Include="consumible.cs" />
     <Compile Include="EstadoReserva.cs" />
     <Compile Include="Factura.cs" />
+    <Compile Include="FrmConsultas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmConsultas.Designer.cs">
+      <DependentUpon>FrmConsultas.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmGuest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -219,6 +225,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Usuario\listadoUsuario.resx">
       <DependentUpon>listadoUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmConsultas.resx">
+      <DependentUpon>FrmConsultas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmGuest.resx">
       <DependentUpon>FrmGuest.cs</DependentUpon>

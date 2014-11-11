@@ -231,5 +231,26 @@ namespace FrbaHotel
             childForm.MdiParent = this;
             childForm.Show();
         }
+
+        private void habitacionesOcupadasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form childForm = new FrmConsultas(1, Log);
+            childForm.MdiParent = this;
+            childForm.Show();
+        }
+
+        private void habitacionesDeUnaEstadiaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form childForm = new FrmConsultas(2, Log);
+            childForm.MdiParent = this;
+            childForm.Show();
+        }
+
+        private void codigoDeReservaDeUnaHabitacionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form childForm = new FrmConsultas(3, Log);
+            childForm.MdiParent = this;
+            childForm.Show();
+        }
     }
 }
