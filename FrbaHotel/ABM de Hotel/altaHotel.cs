@@ -96,13 +96,6 @@ namespace FrbaHotel.ABM_de_Hotel
                 return;
             }
 
-            if (!hotel.regimenesEnUso())
-            {
-                MessageBox.Show("Modificacion no permitida. Un regimen que desea eliminar se necesita para una futura reserva.");
-                return;
-            }
-
-
             if (hotel.id < 1)
             {
                 // no tiene id todavia, es un alta
@@ -113,6 +106,11 @@ namespace FrbaHotel.ABM_de_Hotel
             }
             else
             {
+                if (!hotel.regimenesEnUso())
+                {
+                    MessageBox.Show("Modificacion no permitida. Un regimen que desea eliminar se necesita para una futura reserva.");
+                    return;
+                }
                 hotel.update();
                 MessageBox.Show("Hotel id=" + hotel.id.ToString() + " modificado");
                 this.Close();
