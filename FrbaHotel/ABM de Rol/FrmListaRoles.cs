@@ -30,7 +30,6 @@ namespace FrbaHotel.ABM_de_Rol
             {
                 Rol Item = new Rol();
                 Item.Id = (int)objReader["id"];
-                if (Item.Id != 3 && Item.Id != 4)   //no muestro los usuarios guest y admin porque no son modificables
                 Item.Descripcion = (string)objReader["descripcion"];
                 Item.Estado = (bool)objReader["estado"];
                 LstRoles.Add(Item);
