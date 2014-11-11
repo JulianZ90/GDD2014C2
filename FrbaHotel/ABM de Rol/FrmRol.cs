@@ -17,6 +17,7 @@ namespace FrbaHotel.ABM_de_Rol
         List<Funcionalidad> LstCheckedFunc = new List<Funcionalidad>();
         bool Nuevo = false;  //flag para ver si ingresa un rol nuevo o si es para modificar/eliminar
         Rol Rol = null;
+        bool funcInvalida = false;
 
 
         public FrmRol()
@@ -93,6 +94,9 @@ namespace FrbaHotel.ABM_de_Rol
 
                     foreach (Funcionalidad Item in LstCheckedFunc)
                     {
+                        if (((Item.Id == 2 || Item.Id == 9) && (idRol != 1 && idRol != 4)) || (Item.Id == 1 && idRol != 4))
+                            funcInvalida = true;
+
                         query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.rol_funcionalidad (rol_id, funcionalidad_id) VALUES (@idRol, @idFunc)", objConexion);    
                         query.Parameters.AddWithValue("@idRol", idRol);                                                                                             
                         query.Parameters.AddWithValue("@idFunc", Item.Id);
@@ -122,6 +126,9 @@ namespace FrbaHotel.ABM_de_Rol
 
                 foreach (Funcionalidad Item in LstCheckedFunc)
                 {
+                    if (((Item.Id == 2 || Item.Id == 9) && (Rol.Id != 1 && Rol.Id != 4)) || (Item.Id == 1 && Rol.Id != 4))
+                        funcInvalida = true;
+
                     query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.rol_funcionalidad (rol_id, funcionalidad_id) VALUES (@idRol, @idFunc)", objConexion);    
                     query.Parameters.AddWithValue("@idRol", Rol.Id);                                                                                             
                     query.Parameters.AddWithValue("@idFunc", Item.Id);
@@ -131,7 +138,10 @@ namespace FrbaHotel.ABM_de_Rol
                 }
 
             }
-   
+
+            if (funcInvalida)
+                MessageBox.Show("No se asignaron las funcionalidades que son exclusivas de otros roles");
+
             this.Close();
        
         }
