@@ -105,6 +105,7 @@ namespace FrbaHotel.ABM_de_Rol
 
             else    //modificacion - eliminacion de un rol
             {
+                
                 query = new SqlCommand("UPDATE GAME_OF_QUERYS.rol SET descripcion = @newName, estado = @newState WHERE id = @idRol", objConexion);
                 query.Parameters.AddWithValue("@newName", this.txtBxRol.Text);
                 query.Parameters.AddWithValue("@newState", this.checkBxEstado.Checked);
