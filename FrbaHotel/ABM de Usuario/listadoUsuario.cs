@@ -269,7 +269,7 @@ namespace FrbaHotel.ABM_de_Usuario
         }
         private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsLetter(e.KeyChar)) //Al pulsar un numero
+            if (Char.IsLetter(e.KeyChar) | (e.KeyChar == ' ')) //Al pulsar una letra o espacio
             {
                 e.Handled = false; //Se acepta
             }
@@ -284,7 +284,7 @@ namespace FrbaHotel.ABM_de_Usuario
         }
         private void textBox4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsLetter(e.KeyChar)) //Al pulsar un numero
+            if (Char.IsLetter(e.KeyChar) | (e.KeyChar == ' ')) //Al pulsar una letra o espacio
             {
                 e.Handled = false; //Se acepta
             }

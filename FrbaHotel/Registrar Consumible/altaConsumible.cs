@@ -85,7 +85,7 @@ namespace FrbaHotel.Registrar_Consumible
             {
                 e.Handled = false; //Se acepta
             }
-            else if (Char.IsControl(e.KeyChar)) //Al pulsar teclas como Borrar y eso.
+            else if (Char.IsControl(e.KeyChar) | (e.KeyChar == ' ')) //Al pulsar teclas como Borrar y eso.
             {
                 e.Handled = false; //Se acepta 
             }

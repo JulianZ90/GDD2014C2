@@ -196,7 +196,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsLetter(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            if (Char.IsLetter(e.KeyChar) | (e.KeyChar == ' ')) //Al pulsar una letra o espacio
             {
                 e.Handled = false; //Se acepta
             }
@@ -211,7 +211,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
         private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsLetter(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            if (Char.IsLetter(e.KeyChar) | (e.KeyChar == ' ')) //Al pulsar una letra o espacio
             {
                 e.Handled = false; //Se acepta
             }
@@ -226,7 +226,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
         private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero
             {
                 e.Handled = false; //Se acepta
             }
@@ -241,7 +241,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
         private void textBox4_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsLetter(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            if (Char.IsLetter(e.KeyChar) | (e.KeyChar == ' ')) //Al pulsar una letra o espacio
             {
                 e.Handled = false; //Se acepta
             }
@@ -256,7 +256,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
         private void textBox5_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero
             {
                 e.Handled = false; //Se acepta
             }
@@ -271,7 +271,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
         private void textBox6_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero
             {
                 e.Handled = false; //Se acepta
             }
@@ -286,7 +286,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
         private void textBox8_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero o coma o punto 
+            if (Char.IsDigit(e.KeyChar)) //Al pulsar un numero
             {
                 e.Handled = false; //Se acepta
             }
