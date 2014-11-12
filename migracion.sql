@@ -220,28 +220,22 @@ END
 GO
 
 
---cargar estado_id en reserva
+--cargar estado_id en reserva	se tiene en cuenta que la maxima fecha de check out en la tabla maestra es 31-12-2016, por lo que tomamos como 'dia de hoy' a 01-01-2017
 --reservas que tienen estadia --> estado: 6 - con ingreso
 update GAME_OF_QUERYS.reserva set estado_id = 
 (select id from GAME_OF_QUERYS.estado_reserva where descripcion='con ingreso')
-where fecha_inicio <= (select MAX(check_out) from GAME_OF_QUERYS.reserva)		--tomo todas las reservas que ingresaron hasta el 'dia de hoy'
+where fecha_inicio <= (select MAX(check_out) from GAME_OF_QUERYS.reserva)
 and reserva.check_in is not null
 
 --reservas viejas que no aparecen en la tabla de estadia --> estado: 5 - cancelada por no-show
 update GAME_OF_QUERYS.reserva set estado_id = (select id from GAME_OF_QUERYS.estado_reserva where descripcion='cancelada por No-Show')
-where fecha_inicio < (select MAX(check_out) from GAME_OF_QUERYS.reserva)	--max(check_out) es la maxima fecha que aparece, entoces la tomo como el 'dia de hoy'
+where fecha_inicio <= (select MAX(check_out) from GAME_OF_QUERYS.reserva)	--max(check_out) es la maxima fecha que aparece
 and reserva.check_in is null
 
 --reservas proximas --> estado: 1 - correcta (por ahora no hay ninguna)
 update GAME_OF_QUERYS.reserva set estado_id = (select id from GAME_OF_QUERYS.estado_reserva where descripcion='correcta')
-where fecha_inicio >= (select MAX(check_out) from GAME_OF_QUERYS.reserva)	--las reservas del dia de hoy todavia pueden ingresar mas tarde
+where fecha_inicio > (select MAX(check_out) from GAME_OF_QUERYS.reserva)
 and reserva.check_in is null
-
-/*falta que al final de cada dia ponga como 'Canceladas por no-show' las que no se concretaron
-update GAME_OF_QUERYS.reserva set estado_id = (select id from GAME_OF_QUERYS.estado_reserva where descripcion='cancelada por No-Show')
-where fecha_inicio = (select MAX(check_out) from GAME_OF_QUERYS.reserva)
-and reserva.check_in is null
-*/
 
 
 
