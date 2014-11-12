@@ -46,6 +46,7 @@ namespace FrbaHotel.Registrar_Estadia
             panel3.Hide();
             panel4.Hide();
             label17.Hide();
+            button2.Enabled = false;
         }
 
         public frmEstadia(string s)
@@ -65,6 +66,7 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void button1_Click(object sender, EventArgs e)
         {
+            reserva = null;
             //chekcin
             if (textBox1.Text == "") return;
             getReserva(Int32.Parse(textBox1.Text));
@@ -72,6 +74,20 @@ namespace FrbaHotel.Registrar_Estadia
             if (reserva == null)
             {
                 MessageBox.Show("No se encontró la reserva");
+                this.dataGridView1.Rows.Clear();
+                this.dataGridView2.Rows.Clear();
+                this.dataGridView3.Rows.Clear();
+                this.textBox1.Text = string.Empty;
+                this.textBox2.Text = string.Empty;
+                this.textBox12.Text = string.Empty;
+                this.textBox11.Text = string.Empty;
+                this.textBox3.Text = string.Empty;
+                this.textBox4.Text = string.Empty;
+                this.textBox7.Text = string.Empty;
+                this.textBox5.Text = string.Empty;
+                this.textBox8.Text = string.Empty;
+                this.textBox9.Text = string.Empty;
+                this.button2.Enabled = false;
                 return;
             }
             completarFormConReserva();
@@ -83,8 +99,19 @@ namespace FrbaHotel.Registrar_Estadia
                 button5.Enabled = true;
             }
 
-            if(ingresoInvalido())
+            if (reserva.tieneIngreso())
+            {
+                MessageBox.Show("Esta reserva ya tiene ingreso");
+                button2.Enabled = false;
+                label7.Hide();
+                return;
+            }
+
+            if (ingresoInvalido())
+            {
                 label17.Show();
+                this.button2.Enabled = false;
+            }
             else
                 label17.Hide();
 
