@@ -67,6 +67,9 @@ namespace FrbaHotel.Registrar_Estadia
         private void button1_Click(object sender, EventArgs e)
         {
             reserva = null;
+            textBox4.BackColor = Color.Empty;
+            cancel = false;
+
             //chekcin
             if (textBox1.Text == "") return;
             getReserva(Int32.Parse(textBox1.Text));
