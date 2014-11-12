@@ -19,7 +19,7 @@ namespace FrbaHotel
       
             public decimal importe()
             {
-                return cant*precio;
+                return ((decimal)cant)*precio;
             }
         }
 
@@ -46,7 +46,7 @@ namespace FrbaHotel
                 double cantidadDeNochesEfectivamenteAlojados = ((DateTime)reserva.checkout - reserva.FechaInicio).TotalDays;
                 
                 item.cant = (int)cantidadDeNochesEfectivamenteAlojados;
-                item.precio = item.cant * precioPorDia;
+                item.precio = precioPorDia;
 
                 item.desc = string.Format("Habitación {0}",hab.Tipo.ToString());
                 items.Add(item);
@@ -56,10 +56,9 @@ namespace FrbaHotel
                     Item item2 = new Item();
                     double cantidadDeNochesSinUsar = (reserva.FechaFin - (DateTime)reserva.checkout).TotalDays;
                     item2.cant = (int)cantidadDeNochesSinUsar;
-                    item2.precio = item2.cant * precioPorDia;
+                    item2.precio = precioPorDia;
                     item2.desc = string.Format("No Usada: Habitación {0}", hab.Tipo.ToString());
                     items.Add(item2);
-
                 }
             }
 

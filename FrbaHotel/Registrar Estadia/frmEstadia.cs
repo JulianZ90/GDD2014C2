@@ -565,9 +565,13 @@ namespace FrbaHotel.Registrar_Estadia
                 {
                     reserva.consumibles.ElementAt(counter).cantidad = int.Parse(dataGridView3.Rows[counter].Cells["Cant"].Value.ToString());
 
+                    consumible r = reserva.consumibles.ElementAt(counter);
                     int hab_nro = int.Parse(dataGridView3.Rows[counter].Cells["Habitac"].Value.ToString());
                     if (reserva.Habitaciones.Any(hab => hab.Numero == hab_nro))
-                        reserva.consumibles.ElementAt(counter).habitacion.Numero = hab_nro;
+                    {
+                        Habitacion hab = reserva.Habitaciones.Find(x => x.Numero == hab_nro);
+                        reserva.consumibles.ElementAt(counter).habitacion = hab;
+                    }
                     else
                         MessageBox.Show("Elija una habitacion que pertenezca a esta reserva");
                 }

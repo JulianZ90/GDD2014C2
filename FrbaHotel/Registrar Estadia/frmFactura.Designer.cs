@@ -83,7 +83,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(336, 296);
+            this.button1.Location = new System.Drawing.Point(336, 392);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(107, 23);
             this.button1.TabIndex = 7;
@@ -153,7 +153,7 @@
             this.txtDetalles.Multiline = true;
             this.txtDetalles.Name = "txtDetalles";
             this.txtDetalles.ReadOnly = true;
-            this.txtDetalles.Size = new System.Drawing.Size(348, 222);
+            this.txtDetalles.Size = new System.Drawing.Size(348, 318);
             this.txtDetalles.TabIndex = 14;
             // 
             // dataGridView1
@@ -183,14 +183,14 @@
             this.dataGridView1.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.dataGridView1.RowTemplate.Height = 18;
             this.dataGridView1.RowTemplate.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(342, 173);
+            this.dataGridView1.Size = new System.Drawing.Size(342, 266);
             this.dataGridView1.TabIndex = 15;
             // 
             // frmFactura
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(449, 324);
+            this.ClientSize = new System.Drawing.Size(449, 427);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.txtDetalles);
             this.Controls.Add(this.panel1);
