@@ -25,6 +25,16 @@ namespace FrbaHotel
             Log = IdLog;
             this.MostrarFuncionalidades();
             setStatus("Fecha actual de hoy " + ConfigurationSettings.AppSettings["fechaHoy"]);
+            cancelarPorNoShow();
+        }
+
+        public void cancelarPorNoShow()
+        {
+            SqlCommand query = new SqlCommand("UPDATE GAME_OF_QUERYS.reserva SET estado_id = 5 WHERE estado_id IN (1,2) AND fecha_inicio < @fechaHoy", objConexion);
+            query.Parameters.AddWithValue("@fechaHoy", DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]));
+            objConexion.Open();
+            query.ExecuteNonQuery();
+            objConexion.Close();
         }
 
         private void MostrarFuncionalidades()
