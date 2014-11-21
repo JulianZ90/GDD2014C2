@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Globalization;
 
 
 namespace FrbaHotel.Generar_Modificar_Reserva
@@ -241,18 +242,22 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void dataGridViewRegimen_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (this.lstHabitacionesReserva.Count > 0)  //ya hay habtaciones en la reserva
+            DataGridViewRow row = dataGridViewRegimen.Rows[e.RowIndex];
+
+            if (this.lstHabitacionesReserva.Count > 0 && (int)row.Cells["id"].Value != RegimenId)  //ya hay habtaciones en la reserva
             {
                 MessageBox.Show("No se puede elegir distintos régimenes en una reserva. Si desea comenzar de nuevo haga click en 'Eliminar todas las habitaciones'");
                 foreach (Regimen Item in lstRegimenes)
                 {
                     if (Item.id == RegimenId)
+                    {
                         this.txtBxRegimen.Text = Item.descripcion;
+                        break;
+                    }
                 }
             }
             else
             {
-                DataGridViewRow row = dataGridViewRegimen.Rows[e.RowIndex];
                 this.txtBxRegimen.Text = (string)row.Cells["descripcion"].Value;
 
                 if (((TipoHabitacion)this.cmbBxTipoHab.SelectedItem).Id != 0)
@@ -339,10 +344,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             {
                 foreach (Regimen Item in lstRegimenes)
                 {
-                    if (Item.descripcion == txtBxRegimen.Text)
+                    if(string.Compare(Item.descripcion, txtBxRegimen.Text, CultureInfo.CurrentCulture, CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase) == 0)
                     {
                         valido = true;
                         precioBase = Item.precio_base;
+                        break;
                     }
                 }
             }
@@ -390,6 +396,33 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 if (modificacion)
                     habitacionesModificadas = true;
 
+                if (this.lstHabitacionesReserva.Count > 0)  //ya hay habtaciones en la reserva
+                {
+                    foreach (Regimen Item in lstRegimenes)
+                    {
+                        if (string.Compare(Item.descripcion, txtBxRegimen.Text, CultureInfo.CurrentCulture, CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase) == 0)
+                        {
+                            if (Item.id == RegimenId)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                MessageBox.Show("No se puede elegir distintos régimenes en una reserva. Si desea comenzar de nuevo haga click en 'Eliminar todas las habitaciones'");
+                                foreach (Regimen Regimen in lstRegimenes)
+                                {
+                                    if (Regimen.id == RegimenId)
+                                    {
+                                        this.txtBxRegimen.Text = Regimen.descripcion;
+                                        break;
+                                    }
+                                }
+                                return;
+                            }
+                        }
+                    }                   
+                }
+
                 this.txtBxDetalle.Text = txtBxDetalle.Text + "Tipo de Habitación: " + ((TipoHabitacion)this.cmbBxTipoHab.SelectedItem).Descripcion + "  -   Costo Diario: " + txtBxCostoDiario.Text + " ; \r\n";
                 lstHabitacionesReserva.Add((TipoHabitacion)this.cmbBxTipoHab.SelectedItem);     //agrego la habitacion a las que se quiere en la reserva
                 sumCostoDiario = sumCostoDiario + Convert.ToDecimal(txtBxCostoDiario.Text);
@@ -397,7 +430,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 this.cmbBxTipoHab.SelectedValue = 0;
                 foreach (Regimen Item in lstRegimenes)
                 {
-                    if (Item.descripcion == this.txtBxRegimen.Text)
+                    if(string.Compare(Item.descripcion, txtBxRegimen.Text, CultureInfo.CurrentCulture, CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase) == 0)
                         RegimenId = Item.id;
                 }
                 if (guest)
@@ -585,7 +618,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             foreach (Regimen Item in lstRegimenes)
             {
-                if (Item.descripcion == this.txtBxRegimen.Text)
+                if (string.Compare(Item.descripcion, txtBxRegimen.Text, CultureInfo.CurrentCulture, CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase) == 0)
                     RegimenId = Item.id;
             }
 
