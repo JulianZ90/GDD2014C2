@@ -96,8 +96,13 @@ namespace FrbaHotel.ABM_de_Habitacion
             //no se puede borrar todos los handlers asociados. Asi que trato de quitar el handler viejo aunque no este.
             dataGridView.CellClick -= new DataGridViewCellEventHandler(dataGridView_CellClick);
             dataGridView.CellClick += new DataGridViewCellEventHandler(dataGridView_CellClick);
-            
-            
+
+            this.Buscar();           
+
+        }
+
+        public void Buscar()
+        {
             List<Habitacion> lstHabitaciones = new List<Habitacion>();
 
             StringBuilder SBquery = new StringBuilder();
@@ -150,7 +155,7 @@ namespace FrbaHotel.ABM_de_Habitacion
                 TipoHabitacion.Descripcion = (string)objReader["tipo"];
 
                 habitacion.Tipo = TipoHabitacion;
-                
+
                 lstHabitaciones.Add(habitacion);
             }
 
@@ -160,7 +165,6 @@ namespace FrbaHotel.ABM_de_Habitacion
 
             dataGridView.Columns["Id"].Visible = false;
             dataGridView.Columns["Hotel"].Visible = false;
-
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
@@ -198,8 +202,10 @@ namespace FrbaHotel.ABM_de_Habitacion
             if (e.ColumnIndex == dataGridView.Columns[0].Index)   //Boton modificar
             {
                 new ABM_de_Habitacion.FrmHabitacion(habitacion_id).ShowDialog();
-                //this.Close();
-                
+
+                //actualizo el data grid con lo que cambio
+                this.Buscar();
+
             }
             if (e.ColumnIndex == dataGridView.Columns[1].Index)     //Boton eliminar
             {

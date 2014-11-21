@@ -210,7 +210,7 @@ namespace FrbaHotel.ABM_de_Habitacion
                         query.ExecuteNonQuery();
                         objConexion.Close();
 
-                        MessageBox.Show("Modificacion realizada. Por favor vuelva a oprimir 'Buscar' si desea actualizar el listado de habitaciones con las modificaciones realizadas");
+                        MessageBox.Show("Modificacion realizada.");
 
                     }
 
