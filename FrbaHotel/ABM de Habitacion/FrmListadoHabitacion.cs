@@ -203,6 +203,19 @@ namespace FrbaHotel.ABM_de_Habitacion
             }
             if (e.ColumnIndex == dataGridView.Columns[1].Index)     //Boton eliminar
             {
+                //hay reservas o estadias ya tengan asignadas esta habitacion?
+                query = new SqlCommand("select count(reserva_id) from GAME_OF_QUERYS.reserva_habitacion join GAME_OF_QUERYS.reserva on (reserva.id = reserva_habitacion.reserva_id) where habitacion_id = @habitacionId and estado_id in (1, 2, 6) and fecha_fin>= @fechaHoy", objConexion);
+                query.Parameters.AddWithValue("@habitacionId", (int)dataGridView.Rows[e.RowIndex].Cells["id"].Value);
+                query.Parameters.AddWithValue("@fechaHoy", DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]));
+                objConexion.Open();
+                int cantidad = (int)query.ExecuteScalar();
+                objConexion.Close();
+                if (cantidad != 0)  //hay reservas o estadias que usan esta habitacion, no se puede deshabilitar
+                {
+                    MessageBox.Show("Esta habitacion ya esta asignada a una estadia o reserva, imposible dar de baja.");
+                    return;
+                }
+
                 query = new SqlCommand("update GAME_OF_QUERYS.habitacion set estado_habitacion = 0 where id = @habId", objConexion);
                 query.Parameters.AddWithValue("@habId", (int)dataGridView.Rows[e.RowIndex].Cells["id"].Value);
                 objConexion.Open();
