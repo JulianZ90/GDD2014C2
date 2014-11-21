@@ -241,8 +241,9 @@ namespace FrbaHotel
         {
             List<Regimen> lstRegimenesNecesarios = new List<Regimen>();
 
-            SqlCommand query = new SqlCommand("SELECT DISTINCT regimen_id FROM GAME_OF_QUERYS.reserva WHERE fecha_fin > @fechaHoy AND estado_id IN (1, 2, 6)", connect);
+            SqlCommand query = new SqlCommand("SELECT DISTINCT regimen_id FROM GAME_OF_QUERYS.reserva WHERE fecha_fin > @fechaHoy AND estado_id IN (1, 2, 6) AND hotel_id = @hotelId", connect);
             query.Parameters.AddWithValue("@fechaHoy", DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]));
+            query.Parameters.AddWithValue("@hotelId", this.id);
             connect.Open();
             SqlDataReader objReader = query.ExecuteReader();
             while (objReader.Read())
