@@ -198,7 +198,7 @@ namespace FrbaHotel.ABM_de_Habitacion
             if (e.ColumnIndex == dataGridView.Columns[0].Index)   //Boton modificar
             {
                 new ABM_de_Habitacion.FrmHabitacion(habitacion_id).ShowDialog();
-                this.Close();
+                //this.Close();
                 
             }
             if (e.ColumnIndex == dataGridView.Columns[1].Index)     //Boton eliminar
@@ -222,6 +222,7 @@ namespace FrbaHotel.ABM_de_Habitacion
                 query.ExecuteNonQuery();
                 objConexion.Close();
 
+                MessageBox.Show("Habitacion inhabilitada");
                 dataGridView.Rows[e.RowIndex].Cells["Estado"].Value = false;
                 
             }

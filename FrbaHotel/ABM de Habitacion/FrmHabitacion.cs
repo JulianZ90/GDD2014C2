@@ -115,7 +115,6 @@ namespace FrbaHotel.ABM_de_Habitacion
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-
             if (txtBxNroHab.Text != string.Empty && txtBxPiso.Text != string.Empty)     //campos obligatorios completos?
             {
               query = new SqlCommand("SELECT COUNT(*) AS cantidad FROM GAME_OF_QUERYS.habitacion WHERE hotel_id = @idHotel AND nro = @nroHab", objConexion);
@@ -171,9 +170,28 @@ namespace FrbaHotel.ABM_de_Habitacion
                         objConexion.Open();
                         query.ExecuteNonQuery();
                         objConexion.Close();
+
+                        MessageBox.Show("Habitacion creada");
                     }
                     else    //modificar la habitacion
                     {
+                        if (this.checkBxDisponible.Checked == false)
+                        {
+                            //hay reservas o estadias ya tengan asignadas esta habitacion?
+                            query = new SqlCommand("select count(reserva_id) from GAME_OF_QUERYS.reserva_habitacion join GAME_OF_QUERYS.reserva on (reserva.id = reserva_habitacion.reserva_id) where habitacion_id = @habitacionId and estado_id in (1, 2, 6) and fecha_fin>= @fechaHoy", objConexion);
+                            query.Parameters.AddWithValue("@habitacionId", IdHabitacion);
+                            query.Parameters.AddWithValue("@fechaHoy", DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]));
+                            objConexion.Open();
+                            int cantidad = (int)query.ExecuteScalar();
+                            objConexion.Close();
+                            if (cantidad != 0)  //hay reservas o estadias que usan esta habitacion, no se puede deshabilitar
+                            {
+                                MessageBox.Show("Esta habitacion ya esta asignada a una estadia o reserva, imposible dar de baja.");
+                                this.checkBxDisponible.Checked = true;
+                                return;
+                            } 
+                        }
+
                         query = new SqlCommand("UPDATE GAME_OF_QUERYS.habitacion SET nro = @nroHab, piso = @pisoHab, ubicacion = @ubicHab, descripcion = @descHab, estado_habitacion = @estadoHab WHERE id = @idHab", objConexion);
                         query.Parameters.AddWithValue("@nroHab", this.txtBxNroHab.Text);
                         query.Parameters.AddWithValue("@pisoHab", this.txtBxPiso.Text);
@@ -191,6 +209,8 @@ namespace FrbaHotel.ABM_de_Habitacion
                         objConexion.Open();
                         query.ExecuteNonQuery();
                         objConexion.Close();
+
+                        MessageBox.Show("Modificacion realizada. Por favor vuelva a oprimir 'Buscar' si desea actualizar el listado de habitaciones con las modificaciones realizadas");
 
                     }
 
