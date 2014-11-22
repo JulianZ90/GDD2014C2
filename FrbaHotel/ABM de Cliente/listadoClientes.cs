@@ -175,6 +175,11 @@ namespace FrbaHotel.ABM_de_Cliente
             }
             connect.Close();
             dataGridView1.DataSource = lista;
+
+            dataGridView1.Columns["tipo_identidad"].DisplayIndex = 6;
+            dataGridView1.Columns["nro_identidad"].DisplayIndex = 6;
+            dataGridView1.Columns["pais"].DisplayIndex = 9;
+            dataGridView1.Columns["ciudad"].DisplayIndex = 10;
         }
 
         void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
