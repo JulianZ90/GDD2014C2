@@ -46,7 +46,7 @@ namespace FrbaHotel
                 this.apellido = objReader["apellido"] as string;
                 this.fecha_nac = objReader["fecha_nac"] as DateTime?;
                 this.mail = objReader["mail"] as string;
-                this.tel = objReader["tel"] as int?;
+                this.tel = objReader["tel"] as long?;
                 this.calle = objReader["calle"] as string;
                 this.nro_calle = objReader["nro_calle"] as int?;
                 this.piso = objReader["piso"] as int?;
@@ -56,7 +56,7 @@ namespace FrbaHotel
                     this.depto = null;
                 this.ciudad = objReader["ciudad"] as string;
                 this.nacionalidad = objReader["nacionalidad"] as string;
-                this.nro_identidad = objReader["nro_identidad"] as int?;
+                this.nro_identidad = objReader["nro_identidad"] as long?;
                 this.permitido_ingreso = (bool)objReader["permitido_ingreso"];
 
                 if (objReader["tipo_identidad_id"] != DBNull.Value)

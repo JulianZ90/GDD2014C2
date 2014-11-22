@@ -152,14 +152,14 @@ namespace FrbaHotel.ABM_de_Cliente
                 cliente.apellido = objReader["apellido"] as string;
                 cliente.fecha_nac = objReader["fecha_nac"] as DateTime?;
                 cliente.mail = objReader["mail"] as string;
-                cliente.tel = objReader["tel"] as int?;
+                cliente.tel = objReader["tel"] as long?;
                 cliente.calle = objReader["calle"] as string;
                 cliente.nro_calle = objReader["nro_calle"] as int?;
                 cliente.piso = objReader["piso"] as int?;
                 cliente.depto = objReader["depto"].ToString();
                 cliente.ciudad = objReader["ciudad"] as string;
                 cliente.nacionalidad = objReader["nacionalidad"] as string;
-                cliente.nro_identidad = objReader["nro_identidad"] as int?;
+                cliente.nro_identidad = objReader["nro_identidad"] as long?;
                 cliente.permitido_ingreso = (bool)objReader["permitido_ingreso"];
 
                 TipoIdentidad tipo = new TipoIdentidad();
