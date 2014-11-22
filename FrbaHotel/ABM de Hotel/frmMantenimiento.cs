@@ -77,6 +77,11 @@ namespace FrbaHotel.ABM_de_Hotel
             mant.fecha_fin = dateTimePicker2.Value.Date;
             mant.descripcion = textBox1.Text;
 
+            if (mant.fecha_inicio > mant.fecha_fin)
+            {
+                MessageBox.Show("Fechas invalidas");
+                return;
+            }
 
             if (mant.fecha_inicio >= DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]))
             {
