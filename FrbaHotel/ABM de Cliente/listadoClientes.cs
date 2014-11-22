@@ -160,6 +160,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 cliente.ciudad = objReader["ciudad"] as string;
                 cliente.nacionalidad = objReader["nacionalidad"] as string;
                 cliente.nro_identidad = objReader["nro_identidad"] as int?;
+                cliente.permitido_ingreso = (bool)objReader["permitido_ingreso"];
 
                 TipoIdentidad tipo = new TipoIdentidad();
                 tipo.nombre = objReader["tipo"] as string;
@@ -167,6 +168,7 @@ namespace FrbaHotel.ABM_de_Cliente
 
                 Pais pais = new Pais();
                 pais.id = (int)objReader["pais_origen_id"];
+                pais.nombre = (string)objReader["pais"];
                 cliente.pais = pais;
 
                 lista.Add(cliente);

@@ -57,6 +57,7 @@ namespace FrbaHotel
                 this.ciudad = objReader["ciudad"] as string;
                 this.nacionalidad = objReader["nacionalidad"] as string;
                 this.nro_identidad = objReader["nro_identidad"] as int?;
+                this.permitido_ingreso = (bool)objReader["permitido_ingreso"];
 
                 if (objReader["tipo_identidad_id"] != DBNull.Value)
                 {
