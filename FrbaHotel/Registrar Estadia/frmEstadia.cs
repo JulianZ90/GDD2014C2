@@ -61,6 +61,7 @@ namespace FrbaHotel.Registrar_Estadia
             this.button2.Enabled = false;
             button3.Hide();
             label17.Hide();
+            this.dateTimePicker1.Enabled = false;
 
         }
 
