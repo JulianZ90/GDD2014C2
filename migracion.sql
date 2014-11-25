@@ -101,57 +101,44 @@ from gd_esquema.Maestra
 where Consumible_Codigo is not null
 set identity_insert GD2C2014.GAME_OF_QUERYS.consumible off	
 
-/*cargar checkin checkout (89603)*/
-merge into GAME_OF_QUERYS.reserva
-using ( 
-select distinct 
-cast(m.Estadia_Fecha_Inicio as date) as checkin,
-DATEADD (day ,m.estadia_Cant_Noches , cast(m.estadia_Fecha_Inicio as Date) ) as checkout, 
-m.Reserva_Codigo as reserva
-from gd_esquema.Maestra m
+/*cargar estadia (89603)*/
+
+insert into GAME_OF_QUERYS.estadia (check_in, check_out, reserva_id)
+select distinct cast(Estadia_Fecha_Inicio as date),
+			 DATEADD (day ,estadia_Cant_Noches , cast(estadia_Fecha_Inicio as Date) ),Reserva_Codigo
+from gd_esquema.Maestra
 where Estadia_Fecha_Inicio is not null
-) e
-on (reserva.id = e.reserva) 
-when matched then
-	update set reserva.check_in=e.checkin, reserva.check_out=e.checkout;
-	
 
+/*cargar consumible_estadia (207341)*/
 
-
-/*cargar consumible_reserva (207341)*/
-
-insert into GAME_OF_QUERYS.consumible_reserva (consumible_id,reserva_id,cantidad, habitacion_id)
-select distinct c.id, m.Reserva_Codigo, COUNT(m.Consumible_Descripcion), r.habitacion_id
-from gd_esquema.Maestra m 
-join GAME_OF_QUERYS.consumible c	on m.Consumible_Codigo= c.id
-join GAME_OF_QUERYS.reserva_habitacion r on r.reserva_id = m.Reserva_Codigo
-group by c.id,m.Reserva_Codigo, r.habitacion_id
-
+insert into GAME_OF_QUERYS.consumible_estadia (consumible_id,estadia_id,cantidad)
+select distinct c.id, e.id, COUNT(m.Consumible_Descripcion)
+from gd_esquema.Maestra m join GAME_OF_QUERYS.consumible c on m.Consumible_Codigo= c.id
+							join GAME_OF_QUERYS.estadia e on m.Reserva_Codigo=e.reserva_id
+group by c.id,e.id
 
 
 /* cargar cliente_estadia (89603) */
-/* cargar cliente_reserva (100740)  ahora son mas porque antes no se consideraba al que reservo como
- huesped de la habitacion */
-insert into GAME_OF_QUERYS.cliente_reserva (cliente_id,reserva_id)
-select distinct c.id, m.Reserva_Codigo
-from gd_esquema.Maestra m 
-join GAME_OF_QUERYS.cliente c on m.cliente_pasaporte_nro=c.nro_identidad and m.Cliente_Mail=c.mail
 
-
+insert into GAME_OF_QUERYS.cliente_estadia (cliente_id,estadia_id)
+select distinct c.id, e.id
+from gd_esquema.Maestra m join GAME_OF_QUERYS.cliente c 
+							on m.cliente_pasaporte_nro=c.nro_identidad and
+														m.Cliente_Mail=c.mail
+						join GAME_OF_QUERYS.estadia e on m.Reserva_Codigo=e.reserva_id
 
 /*cargar medios de pago*/
 insert into GAME_OF_QUERYS.medio_de_pago(nombre) values ('Efectivo')
 insert into GAME_OF_QUERYS.medio_de_pago(nombre) values ('Tarjeta de credito')
 
-
 /*cargar factura (89603)*/
 set identity_insert GD2C2014.GAME_OF_QUERYS.factura on
-insert into GAME_OF_QUERYS.factura (id,fecha,reserva_id, medio_de_pago_id)
-select distinct m.Factura_Nro, CAST(m.Factura_Fecha as DATE), r.id, (select id from GAME_OF_QUERYS.medio_de_pago where nombre='Efectivo')
-from gd_esquema.Maestra m 
-join GAME_OF_QUERYS.reserva r on m.Reserva_Codigo=r.id
-where m.Factura_Nro is not null
+insert into GAME_OF_QUERYS.factura (fecha,estadia_id,medio_de_pago_id)
+select distinct m.Factura_Nro,CAST(m.Factura_Fecha as DATE), e.id,(select id from GAME_OF_QUERYS.medio_de_pago where nombre='Efectivo')
+from gd_esquema.Maestra m join GAME_OF_QUERYS.estadia e on m.Reserva_Codigo=e.reserva_id
+where m.Factura_Fecha is not null
 set identity_insert GD2C2014.GAME_OF_QUERYS.factura off	
+
 
 /* ESTA PARTE LA ARREGLO DESPUÉS QUE SE CAMBIE LO DE ESTADIA
 --Inserto en tabla items todas las estadias, en la tabla maestra no hay check outs antes de fecha_fin
