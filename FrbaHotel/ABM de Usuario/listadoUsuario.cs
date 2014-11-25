@@ -14,13 +14,27 @@ namespace FrbaHotel.ABM_de_Usuario
     public partial class listadoUsuario : Form
     {
         SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        LoginId Log = null;
+        bool asignarRol = false;
 
-        public listadoUsuario()
+        public listadoUsuario(LoginId Login)
         {
             InitializeComponent();
             llenarComboIdentidad();
-            llenarComboHotel();
             llenarComboRol();
+            Log = Login;
+        }
+
+        public listadoUsuario(LoginId Login, bool existe)
+        {
+            InitializeComponent();
+            llenarComboIdentidad();
+            llenarComboRol();
+            Log = Login;
+            label12.Visible = false;
+            comboBox3.Visible = false;
+            checkBox5.Visible = false;
+            asignarRol = true;            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -58,10 +72,15 @@ namespace FrbaHotel.ABM_de_Usuario
             query.Append(" left join GAME_OF_QUERYS.tipo_identidad on tipo_identidad.id = usuario.tipo_identidad_id ");
             query.Append(" left join GAME_OF_QUERYS.hotel_usuario_rol on hotel_usuario_rol.usuario_id= usuario.id ");
 
-            if (((FrmPrincipal)this.MdiParent).Log.Rol_Id == 4)
-                query.Append(" where 1=1 ");
-            else
-                query.Append(" where hotel_usuario_rol.hotel_id =" + ((FrmPrincipal)this.MdiParent).Log.Hotel_Id);
+            if (!asignarRol)
+            {
+                //no importa si es admin o administrador, solo se le listan los usuarios del hotel de la sesion actual
+                query.Append(" where hotel_usuario_rol.hotel_id =" + Log.Hotel_Id);
+            }
+            else //listo los usuarios de los otros hoteles para asignarles roles
+            {
+                query.Append(" where hotel_usuario_rol.hotel_id !=" + Log.Hotel_Id);
+            }
 
             if (textBox1.Text != "")
                 query.Append("and usuario.username like '%" + textBox1.Text + "%'");
@@ -92,9 +111,6 @@ namespace FrbaHotel.ABM_de_Usuario
 
             if (textBox9.Text != "")
                 query.Append("and usuario.nro_identidad like '%" + textBox9.Text + "%'");
-
-            if (checkBox4.Checked)
-                query.Append("and hotel_usuario_rol.hotel_id = '" + ((Hotel)comboBox2.SelectedItem).id + "'");
 
             if (checkBox5.Checked)
                 query.Append("and hotel_usuario_rol.rol_id = '" + ((Rol)comboBox3.SelectedItem).Id + "'");
@@ -149,12 +165,26 @@ namespace FrbaHotel.ABM_de_Usuario
 
             if (e.ColumnIndex == dataGridView1.Columns["mODIFICAR"].Index)
             {
-                ABM_de_Usuario.altaUsuario modif  = new ABM_de_Usuario.altaUsuario(user_id);
-                modif.Owner = this;
-                modif.ShowDialog();
+                if (!asignarRol)
+                {
+                    ABM_de_Usuario.altaUsuario modif = new ABM_de_Usuario.altaUsuario(user_id, Log);
+                    modif.Owner = this;
+                    modif.ShowDialog();
+                }
+                else
+                {
+                    ABM_de_Usuario.altaUsuario modif = new ABM_de_Usuario.altaUsuario(user_id, Log, asignarRol);
+                    modif.Owner = this;
+                    modif.ShowDialog();
+                }
             }
             if (e.ColumnIndex == dataGridView1.Columns["bAJA"].Index)
             {
+                if (asignarRol)
+                {
+                    MessageBox.Show("Imposible dar de baja a un usuario de otro hotel");
+                    return;
+                }
                 string query = "update GAME_OF_QUERYS.usuario set estado=0 where id=@user_id ";
                 SqlCommand command = new SqlCommand(query,connect);
                 command.Parameters.AddWithValue("@user_id", user_id);
@@ -202,30 +232,6 @@ namespace FrbaHotel.ABM_de_Usuario
             comboBox1.DataSource = lista;
         }
 
-        private void llenarComboHotel()
-        {
-            comboBox2.DisplayMember = "nombre";
-            comboBox2.ValueMember = "id";
-
-            List<Hotel> lista = new List<Hotel>();
-
-            SqlCommand query = new SqlCommand("select id, nombre from GAME_OF_QUERYS.hotel", connect);
-
-            connect.Open();
-            SqlDataReader objReader = query.ExecuteReader();
-
-            while (objReader.Read())
-            {
-                Hotel Item = new Hotel();
-                Item.id = (int)objReader["id"];
-                Item.nombre = (string)objReader["nombre"];
-                lista.Add(Item);
-            }
-
-            connect.Close();
-            comboBox2.DataSource = lista;
-        }
-
 
         private void llenarComboRol()
         {
@@ -262,13 +268,6 @@ namespace FrbaHotel.ABM_de_Usuario
                 comboBox1.Enabled = false;
         }
 
-        private void checkBox4_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBox4.Checked)
-                comboBox2.Enabled = true;
-            else
-                comboBox2.Enabled = false;
-        }
 
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
@@ -351,12 +350,10 @@ namespace FrbaHotel.ABM_de_Usuario
             this.textBox9.Text = string.Empty;
             this.dataGridView1.Columns.Clear();       
             this.comboBox1.SelectedValue = 0;
-            this.comboBox2.SelectedValue = 0;
             this.comboBox3.SelectedValue = 0;
             this.checkBox1.Checked = false;
             this.checkBox2.Checked = false;
             this.checkBox3.Checked = false;
-            this.checkBox4.Checked = false;
             this.checkBox5.Checked = false;
         }
 

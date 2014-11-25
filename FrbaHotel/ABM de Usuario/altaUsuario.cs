@@ -16,28 +16,98 @@ namespace FrbaHotel.ABM_de_Usuario
     {
         Usuario user = null;
         SqlConnection connect = new SqlConnection(ConfigurationSettings.AppSettings["conexionString"]);
+        LoginId Log = null;
+        bool AsignarRol = false;
 
         // alta
-        public altaUsuario()
+        public altaUsuario(LoginId Login)
         {
             InitializeComponent();
             llenarCombo(comboBox1);
-            llenarHoteles();
             llenarRoles();
             user = new Usuario();
+            Log = Login;
             textBox2.ReadOnly = false;
+            textBox8.ReadOnly = true;
+            SqlCommand query = new SqlCommand("SELECT nombre FROM GAME_OF_QUERYS.hotel WHERE id = @hotelId", connect);
+            query.Parameters.AddWithValue("@hotelId", Log.Hotel_Id);
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+            if (objReader.Read())
+            {
+                textBox8.Text = (string)objReader["nombre"];
+            }
+            connect.Close();
+            Hotel HotelUser = new Hotel();
+            HotelUser.id = Login.Hotel_Id;
+            HotelUser.nombre = textBox8.Text;
+            user.hotel = HotelUser;
         }
 
         //modificacion
-        public altaUsuario(int usr_id)
+        public altaUsuario(int usr_id, LoginId Login)
         {
             InitializeComponent();
             button1.Text = "Modificar";
             llenarCombo(comboBox1);
-            llenarHoteles();
             llenarRoles();
-            user = new Usuario(usr_id);
+            Log = Login;
+            user = new Usuario(usr_id, Log.Hotel_Id);
+            textBox8.ReadOnly = true;
+            SqlCommand query = new SqlCommand("SELECT nombre FROM GAME_OF_QUERYS.hotel WHERE id = @hotelId", connect);
+            query.Parameters.AddWithValue("@hotelId", Log.Hotel_Id);
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+            if (objReader.Read())
+            {
+                textBox8.Text = (string)objReader["nombre"];
+            }
+            connect.Close();
+            Hotel HotelUser = new Hotel();
+            HotelUser.id = Login.Hotel_Id;
+            HotelUser.nombre = textBox8.Text;
+            user.hotel = HotelUser;
             cargarConUsuario(user);
+        }
+
+        //asignar rol a un usuario que ya trabaja en otro hotel
+        public altaUsuario(int usr_id, LoginId Login, bool Existente)
+        {
+            InitializeComponent();
+            button1.Text = "Asignar roles a un usuario de otro hotel de la cadena";
+            llenarCombo(comboBox1);
+            llenarRoles();
+            Log = Login;
+            AsignarRol = true;
+            user = new Usuario(usr_id, Log.Hotel_Id);
+            SqlCommand query = new SqlCommand("SELECT nombre FROM GAME_OF_QUERYS.hotel WHERE id = @hotelId", connect);
+            query.Parameters.AddWithValue("@hotelId", Log.Hotel_Id);
+            connect.Open();
+            SqlDataReader objReader = query.ExecuteReader();
+            if (objReader.Read())
+            {
+                textBox8.Text = (string)objReader["nombre"];
+            }
+            connect.Close();
+            Hotel HotelUser = new Hotel();
+            HotelUser.id = Login.Hotel_Id;
+            HotelUser.nombre = textBox8.Text;
+            user.hotel = HotelUser;
+            cargarConUsuario(user);
+            textBox1.ReadOnly = true;
+            textBox3.ReadOnly = true;
+            textBox4.ReadOnly = true;
+            textBox5.ReadOnly = true;
+            textBox6.ReadOnly = true;
+            textBox7.ReadOnly = true;
+            textBox8.ReadOnly = true;
+            textBox9.ReadOnly = true;
+            dateTimePicker1.Enabled = false;
+            checkBox2.Enabled = false;
+            comboBox1.Enabled = false;
+            checkBox3.Enabled = false;
+            checkBox1.Enabled = false;
+            MessageBox.Show("Desde aqui solo podra asignar roles a este usuario. Si desea modificar cualquiera de sus campos debera buscarlo en 'Usuarios de este hotel' una vez asignados sus roles");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -68,8 +138,13 @@ namespace FrbaHotel.ABM_de_Usuario
             if (textBox9.Text != "") user.nro_identidad = long.Parse(textBox9.Text);
             user.estado = checkBox1.Checked;
 
-            user.hoteles = listBox1.SelectedItems.Cast<Hotel>().ToList();
             user.roles = listBox2.SelectedItems.Cast<Rol>().ToList();
+
+            if (user.roles.Count == 0)
+            {
+                MessageBox.Show("Debe asignar al menos un rol");
+                return;
+            }
 
             if (user.id<1)
             {
@@ -79,7 +154,14 @@ namespace FrbaHotel.ABM_de_Usuario
             }
             else
             {
-                user.update();
+                if (!AsignarRol)
+                {
+                    user.update();
+                }
+                else
+                {
+                    user.asignarRoles();
+                }
             }
         }
 
@@ -122,31 +204,7 @@ namespace FrbaHotel.ABM_de_Usuario
             combo.SelectedIndex = 0;
         }
 
-        private void llenarHoteles()
-        {
-            listBox1.DisplayMember = "nombre";
-            listBox1.ValueMember = "id";
-
-            List<Hotel> lista = new List<Hotel>();
-
-            SqlCommand query = new SqlCommand("select id, nombre from GAME_OF_QUERYS.hotel", connect);
-
-            connect.Open();
-            SqlDataReader objReader = query.ExecuteReader();
-
-            while (objReader.Read())
-            {
-                Hotel Item = new Hotel();
-                Item.id = (int)objReader["id"];
-                Item.nombre = (string)objReader["nombre"];
-                lista.Add(Item);
-            }
-
-            connect.Close();
-            listBox1.DataSource = lista;
-        
-       }
-
+ 
         private void llenarRoles()
         {
             listBox2.DisplayMember = "Descripcion";
@@ -211,15 +269,6 @@ namespace FrbaHotel.ABM_de_Usuario
             {
                 comboBox1.Enabled = false;
                 checkBox3.Checked = false;
-            }
-
-            //selecciono los hoteles que tiene el user
-            for (int i = 0; i < listBox1.Items.Count; i++)
-            {
-                if (u.hoteles.Exists(x => (x.id == ((Hotel)listBox1.Items[i]).id)))
-                    listBox1.SetSelected(i, true);
-                else
-                    listBox1.SetSelected(i, false);
             }
 
             // selecciono los roles que tiene el user

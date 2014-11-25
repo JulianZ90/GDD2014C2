@@ -64,15 +64,16 @@
             this.viewMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.habitacionesOcupadasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.habitacionesDeUnaEstadiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.codigoDeReservaDeUnaHabitacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.habitacionesOcupadasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.habitacionesDeUnaEstadiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.codigoDeReservaDeUnaHabitacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.asignarRolAUsuarioExistenteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -145,8 +146,9 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem3,
             this.toolStripMenuItem2,
-            this.toolStripMenuItem3});
+            this.asignarRolAUsuarioExistenteToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(181, 22);
             this.toolStripMenuItem1.Text = "Usuarios";
@@ -154,15 +156,15 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(155, 22);
-            this.toolStripMenuItem2.Text = "Listar Usuarios";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(231, 22);
+            this.toolStripMenuItem2.Text = "Usuarios de este hotel";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(155, 22);
-            this.toolStripMenuItem3.Text = "Alta Usuario";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(231, 22);
+            this.toolStripMenuItem3.Text = "Nuevo Usuario";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // toolStripMenuItem5
@@ -364,37 +366,6 @@
             this.statusBarToolStripMenuItem.Text = "&Barra de estado";
             this.statusBarToolStripMenuItem.Click += new System.EventHandler(this.StatusBarToolStripMenuItem_Click);
             // 
-            // windowsMenu
-            // 
-            this.windowsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.closeAllToolStripMenuItem});
-            this.windowsMenu.Name = "windowsMenu";
-            this.windowsMenu.Size = new System.Drawing.Size(64, 20);
-            this.windowsMenu.Text = "&Ventanas";
-            // 
-            // closeAllToolStripMenuItem
-            // 
-            this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
-            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.closeAllToolStripMenuItem.Text = "C&errar todo";
-            this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.CloseAllToolStripMenuItem_Click);
-            // 
-            // statusStrip
-            // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 403);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(582, 22);
-            this.statusStrip.TabIndex = 2;
-            this.statusStrip.Text = "StatusStrip";
-            // 
-            // toolStripStatusLabel
-            // 
-            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(40, 17);
-            this.toolStripStatusLabel.Text = "Estado";
-            // 
             // consultasToolStripMenuItem
             // 
             this.consultasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -425,6 +396,44 @@
             this.codigoDeReservaDeUnaHabitacionToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
             this.codigoDeReservaDeUnaHabitacionToolStripMenuItem.Text = "Codigo de reserva de una habitacion";
             this.codigoDeReservaDeUnaHabitacionToolStripMenuItem.Click += new System.EventHandler(this.codigoDeReservaDeUnaHabitacionToolStripMenuItem_Click);
+            // 
+            // windowsMenu
+            // 
+            this.windowsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.closeAllToolStripMenuItem});
+            this.windowsMenu.Name = "windowsMenu";
+            this.windowsMenu.Size = new System.Drawing.Size(64, 20);
+            this.windowsMenu.Text = "&Ventanas";
+            // 
+            // closeAllToolStripMenuItem
+            // 
+            this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
+            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.closeAllToolStripMenuItem.Text = "C&errar todo";
+            this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.CloseAllToolStripMenuItem_Click);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 403);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(582, 22);
+            this.statusStrip.TabIndex = 2;
+            this.statusStrip.Text = "StatusStrip";
+            // 
+            // toolStripStatusLabel
+            // 
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(40, 17);
+            this.toolStripStatusLabel.Text = "Estado";
+            // 
+            // asignarRolAUsuarioExistenteToolStripMenuItem
+            // 
+            this.asignarRolAUsuarioExistenteToolStripMenuItem.Name = "asignarRolAUsuarioExistenteToolStripMenuItem";
+            this.asignarRolAUsuarioExistenteToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.asignarRolAUsuarioExistenteToolStripMenuItem.Text = "Asignar rol a usuario existente";
+            this.asignarRolAUsuarioExistenteToolStripMenuItem.Click += new System.EventHandler(this.asignarRolAUsuarioExistenteToolStripMenuItem_Click);
             // 
             // FrmPrincipal
             // 
@@ -494,6 +503,7 @@
         private System.Windows.Forms.ToolStripMenuItem habitacionesOcupadasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem habitacionesDeUnaEstadiaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem codigoDeReservaDeUnaHabitacionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem asignarRolAUsuarioExistenteToolStripMenuItem;
     }
 }
 

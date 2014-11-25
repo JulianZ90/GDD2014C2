@@ -25,15 +25,13 @@ namespace FrbaHotel
         public bool estado { get; set; }
         public long? nro_identidad { get; set; }
         public TipoIdentidad tipo_identidad { get; set; }
-
-        public List<Hotel> hoteles { get; set; }
+        public Hotel hotel { get; set; }
         public List<Rol> roles { get; set; }
 
         public Usuario() { }
 
-        public Usuario(int id)
+        public Usuario(int id, int hotelId)
         {
-            hoteles = new List<Hotel>();
             roles = new List<Rol>();
             this.id = id;
 
@@ -69,20 +67,9 @@ namespace FrbaHotel
             }
             objReader.Close();
 
-            query = new SqlCommand("select distinct hotel_id from GAME_OF_QUERYS.hotel_usuario_rol where usuario_id=@user_id", connect);
+            query = new SqlCommand("select distinct rol_id from GAME_OF_QUERYS.hotel_usuario_rol where usuario_id=@user_id and hotel_id = @hotel_id", connect);
             query.Parameters.AddWithValue("user_id", id);
-            objReader = query.ExecuteReader();
-
-            while (objReader.Read())
-            {
-                Hotel hot = new Hotel();
-                hot.id = (int)objReader["hotel_id"];
-                hoteles.Add(hot);
-            }
-            objReader.Close();
-
-            query = new SqlCommand("select distinct rol_id from GAME_OF_QUERYS.hotel_usuario_rol where usuario_id=@user_id", connect);
-            query.Parameters.AddWithValue("user_id", id);
+            query.Parameters.AddWithValue("@hotel_id", hotelId);
             objReader = query.ExecuteReader();
             
             while (objReader.Read())
@@ -143,19 +130,16 @@ namespace FrbaHotel
             }
             
            
-            // por cada hotel le agrego todos los roles asignados. 
-            // la idea es que despues seleccionemos que roles a que hotel
-            foreach (Hotel hotel in hoteles)
+            // agrego los roles asignados
+            foreach (Rol rol in roles)
             {
-                foreach (Rol rol in roles)
-                {
-                    query = new SqlCommand("insert into GAME_OF_QUERYS.hotel_usuario_rol (hotel_id, rol_id, usuario_id) values (@hotel, @rol,@usuario)", connect);
-                    query.Parameters.AddWithValue("hotel", hotel.id);
-                    query.Parameters.AddWithValue("rol", rol.Id);
-                    query.Parameters.AddWithValue("usuario", user_id);
-                    query.ExecuteNonQuery();
-                }
+                query = new SqlCommand("insert into GAME_OF_QUERYS.hotel_usuario_rol (hotel_id, rol_id, usuario_id) values (@hotel, @rol,@usuario)", connect);
+                query.Parameters.AddWithValue("hotel", this.hotel.id);
+                query.Parameters.AddWithValue("rol", rol.Id);
+                query.Parameters.AddWithValue("usuario", user_id);
+                query.ExecuteNonQuery();
             }
+            
             connect.Close();
 
             MessageBox.Show("Usuario creado");
@@ -193,21 +177,35 @@ namespace FrbaHotel
 
             query.ExecuteNonQuery();
 
-            foreach (Hotel hotel in hoteles)
+            foreach (Rol rol in roles)
             {
-                foreach (Rol rol in roles)
-                {
-                    query = new SqlCommand("insert into GAME_OF_QUERYS.hotel_usuario_rol (hotel_id, rol_id, usuario_id) values (@hotel, @rol,@usuario)", connect);
-                    query.Parameters.AddWithValue("hotel", hotel.id);
-                    query.Parameters.AddWithValue("rol", rol.Id);
-                    query.Parameters.AddWithValue("usuario", this.id);
-                    query.ExecuteNonQuery();
-                }
+                query = new SqlCommand("insert into GAME_OF_QUERYS.hotel_usuario_rol (hotel_id, rol_id, usuario_id) values (@hotel, @rol,@usuario)", connect);
+                query.Parameters.AddWithValue("hotel", this.hotel.id);
+                query.Parameters.AddWithValue("rol", rol.Id);
+                query.Parameters.AddWithValue("usuario", this.id);
+                query.ExecuteNonQuery();
             }
+            
             
             connect.Close();
 
             MessageBox.Show("Usuario con id=" + id.ToString() + " modificado");
+        }
+
+        public void asignarRoles()
+        {
+            connect.Open();
+            foreach (Rol rol in roles)
+            {
+                SqlCommand query = new SqlCommand("insert into GAME_OF_QUERYS.hotel_usuario_rol (hotel_id, rol_id, usuario_id) values (@hotel, @rol,@usuario)", connect);
+                query.Parameters.AddWithValue("hotel", this.hotel.id);
+                query.Parameters.AddWithValue("rol", rol.Id);
+                query.Parameters.AddWithValue("usuario", this.id);
+                query.ExecuteNonQuery();
+            }
+            connect.Close();
+
+            MessageBox.Show("Usuario con id=" + id.ToString() + " asignado al hotel actual");
         }
 
     }

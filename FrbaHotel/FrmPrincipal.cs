@@ -99,7 +99,7 @@ namespace FrbaHotel
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
             //alta usuario form
-            Form childForm = new ABM_de_Usuario.altaUsuario();
+            Form childForm = new ABM_de_Usuario.altaUsuario(Log);
             childForm.MdiParent = this;
             childForm.Show();
 
@@ -108,7 +108,7 @@ namespace FrbaHotel
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             //listar usuarios
-            Form childForm = new ABM_de_Usuario.listadoUsuario();
+            Form childForm = new ABM_de_Usuario.listadoUsuario(Log);
             childForm.MdiParent = this;
             childForm.Show();
         }
@@ -259,6 +259,14 @@ namespace FrbaHotel
         private void codigoDeReservaDeUnaHabitacionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form childForm = new FrmConsultas(3, Log);
+            childForm.MdiParent = this;
+            childForm.Show();
+        }
+
+        private void asignarRolAUsuarioExistenteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //listar usuarios
+            Form childForm = new ABM_de_Usuario.listadoUsuario(Log, true);
             childForm.MdiParent = this;
             childForm.Show();
         }
