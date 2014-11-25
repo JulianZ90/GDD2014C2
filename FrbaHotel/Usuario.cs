@@ -147,8 +147,9 @@ namespace FrbaHotel
          }
 
         public void update(){
-            SqlCommand query = new SqlCommand("delete from GAME_OF_QUERYS.hotel_usuario_rol where usuario_id=@usuario", connect);
+            SqlCommand query = new SqlCommand("delete from GAME_OF_QUERYS.hotel_usuario_rol where usuario_id=@usuario and hotel_id = @hotelId", connect);
             query.Parameters.AddWithValue("usuario", this.id);
+            query.Parameters.AddWithValue("@hotelId", this.hotel.id);
             connect.Open();
             query.ExecuteNonQuery();
 

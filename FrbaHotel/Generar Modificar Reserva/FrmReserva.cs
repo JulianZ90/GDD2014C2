@@ -495,7 +495,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
 
             if (fechasValidas && hayHabitaciones)
-            {
+            {                
                 //selecciona las haitaciones de un determinado hotel que esten disponibles
                 StringBuilder SBquery = new StringBuilder();
 
