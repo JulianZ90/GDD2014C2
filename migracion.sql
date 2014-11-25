@@ -154,7 +154,7 @@ where m.Factura_Nro is not null
 set identity_insert GD2C2014.GAME_OF_QUERYS.factura off	
 
 /* ESTA PARTE LA ARREGLO DESPUÉS QUE SE CAMBIE LO DE ESTADIA
-/*Inserto en tabla items todas las estadias, en la tabla maestra no hay check outs antes de fecha_fin*/
+--Inserto en tabla items todas las estadias, en la tabla maestra no hay check outs antes de fecha_fin
 INSERT INTO GAME_OF_QUERYS.item(factura_id, cant, descripcion, precio)
 (SELECT factura.id,  DATEDIFF(DAY, check_in, check_out), 'Habitación '+tipo_habitacion.descripcion, (precio_base*porcentual + cantidad_estrella*recarga_estrella) from GAME_OF_QUERYS.factura
 JOIN GAME_OF_QUERYS.reserva ON (factura.reserva_id = reserva.id)
@@ -166,7 +166,7 @@ JOIN GAME_OF_QUERYS.hotel ON (hotel.id = reserva.hotel_id)
 WHERE check_in is not null AND check_out is not null)
 
 
-/*Inserto todos los items de consumibles*/
+--Inserto todos los items de consumibles
 INSERT INTO GAME_OF_QUERYS.item(factura_id, cant, descripcion, precio)
 (SELECT factura.id, consumible_reserva.cantidad, consumible.descripcion, consumible.precio FROM GAME_OF_QUERYS.factura
 JOIN GAME_OF_QUERYS.consumible_reserva ON (consumible_reserva.reserva_id = factura.reserva_id)
@@ -182,7 +182,7 @@ JOIN GAME_OF_QUERYS.reserva ON (reserva.id = factura.reserva_id)
 where reserva.regimen_id = 3 --AND reserva.id = 10007
 GROUP BY factura.id
 
-/*Inserto el total de las facturas*/
+--Inserto el total de las facturas
 UPDATE GAME_OF_QUERYS.factura SET total =(SELECT SUM(cant*precio) FROM GAME_OF_QUERYS.item WHERE item.factura_id = factura.id)
 */
 
