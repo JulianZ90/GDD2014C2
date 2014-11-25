@@ -1,4 +1,4 @@
-/*MIGRACION*/
+ /*MIGRACION*/
 
 /*cargar argentina en pais, hotel (16) y regimen (4) */
 insert into GAME_OF_QUERYS.pais (nombre) values ('Argentina')
@@ -153,10 +153,10 @@ join GAME_OF_QUERYS.reserva r on m.Reserva_Codigo=r.id
 where m.Factura_Nro is not null
 set identity_insert GD2C2014.GAME_OF_QUERYS.factura off	
 
-
+/* ESTA PARTE LA ARREGLO DESPUÃ‰S QUE SE CAMBIE LO DE ESTADIA
 /*Inserto en tabla items todas las estadias, en la tabla maestra no hay check outs antes de fecha_fin*/
 INSERT INTO GAME_OF_QUERYS.item(factura_id, cant, descripcion, precio)
-(SELECT factura.id,  DATEDIFF(DAY, check_in, check_out), 'Habitación '+tipo_habitacion.descripcion, (precio_base*porcentual + cantidad_estrella*recarga_estrella) from GAME_OF_QUERYS.factura
+(SELECT factura.id,  DATEDIFF(DAY, check_in, check_out), 'HabitaciÃ³n '+tipo_habitacion.descripcion, (precio_base*porcentual + cantidad_estrella*recarga_estrella) from GAME_OF_QUERYS.factura
 JOIN GAME_OF_QUERYS.reserva ON (factura.reserva_id = reserva.id)
 JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva.id = reserva_habitacion.reserva_id)
 JOIN GAME_OF_QUERYS.habitacion ON (reserva_habitacion.habitacion_id = habitacion.id)
@@ -175,7 +175,7 @@ JOIN GAME_OF_QUERYS.consumible ON (consumible.id = consumible_reserva.consumible
 
 --Inserto los descuentos por regimen all inclusive
 INSERT INTO GAME_OF_QUERYS.item(factura_id, cant, descripcion, precio)
-SELECT factura.id, 1, 'Descuento por régimen All Inclusive', 0- SUM(consumible.precio * consumible_reserva.cantidad) FROM GAME_OF_QUERYS.factura
+SELECT factura.id, 1, 'Descuento por rÃ©gimen All Inclusive', 0- SUM(consumible.precio * consumible_reserva.cantidad) FROM GAME_OF_QUERYS.factura
 JOIN GAME_OF_QUERYS.consumible_reserva ON (consumible_reserva.reserva_id = factura.reserva_id)
 JOIN GAME_OF_QUERYS.consumible ON (consumible.id = consumible_reserva.consumible_id)
 JOIN GAME_OF_QUERYS.reserva ON (reserva.id = factura.reserva_id)
@@ -184,7 +184,7 @@ GROUP BY factura.id
 
 /*Inserto el total de las facturas*/
 UPDATE GAME_OF_QUERYS.factura SET total =(SELECT SUM(cant*precio) FROM GAME_OF_QUERYS.item WHERE item.factura_id = factura.id)
-
+*/
 
 /*cargar rol (4)*/
 insert into GAME_OF_QUERYS.rol (descripcion, estado) values ('Administrador',1)
@@ -268,7 +268,7 @@ SELECT id, 2, 4
 FROM inserted
 END
 
-
+/*ESTO LO CAMBIO CUANDO SE CAMBIE LO DE LA ESTADIA
 --cargar estado_id en reserva	se tiene en cuenta que la maxima fecha de check out en la tabla maestra es 31-12-2016, por lo que tomamos como 'dia de hoy' a 01-01-2017
 --reservas que tienen estadia --> estado: 6 - con ingreso
 update GAME_OF_QUERYS.reserva set estado_id = 
@@ -285,6 +285,7 @@ and reserva.check_in is null
 update GAME_OF_QUERYS.reserva set estado_id = (select id from GAME_OF_QUERYS.estado_reserva where descripcion='correcta')
 where fecha_inicio > (select MAX(check_out) from GAME_OF_QUERYS.reserva)
 and reserva.check_in is null
+*/
 
 
 
@@ -300,6 +301,7 @@ GROUP BY hotel_id, nombre
 ORDER BY cantidad DESC
 GO
 
+/*
 -- Hoteles con mayor cantidad de consumibles falcturados
 CREATE PROCEDURE GAME_OF_QUERYS.mayoresConsumibles @year int, @trimestreInicio int, @trimestreFin int
 AS
@@ -310,8 +312,9 @@ WHERE check_in IS NOT NULL AND check_out IS NOT NULL AND(MONTH(check_in) BETWEEN
 GROUP BY hotel_id, nombre
 ORDER BY cantidad DESC
 GO
+*/
 
--- Hoteles con mayor cantidad de días fuera de servicio
+-- Hoteles con mayor cantidad de dÃ­as fuera de servicio
 CREATE PROCEDURE GAME_OF_QUERYS.mayoresMantenimiento @year int, @trimestreInicio int, @trimestreFin int
 AS
 SELECT TOP 5 hotel_id, nombre AS 'nombre del hotel', SUM(DATEDIFF(DAY, fecha_inicio, fecha_fin)) AS cantidad FROM GAME_OF_QUERYS.mantenimiento
@@ -321,7 +324,8 @@ GROUP BY hotel_id, nombre
 ORDER BY cantidad DESC
 GO
 
--- Habitaciones con mayor cantidad de días que fueron ocupadas
+/*
+-- Habitaciones con mayor cantidad de dÃ­as que fueron ocupadas
 CREATE PROCEDURE GAME_OF_QUERYS.habitacionesOcupadas @year int, @trimestreInicio int, @trimestreFin int
 AS
 SELECT TOP 5 nombre AS 'nombre de hotel', reserva.hotel_id, nro AS 'nro de habitacion', SUM(DATEDIFF(DAY, check_in, check_out)) AS cantidad FROM GAME_OF_QUERYS.reserva
@@ -353,3 +357,4 @@ AND (MONTH(check_in) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(check_
 group by cliente_id, cliente.nombre, cliente.apellido
 order by puntos DESC
 GO
+*/
