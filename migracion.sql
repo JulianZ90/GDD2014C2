@@ -1,5 +1,4 @@
  /*MIGRACION*/
-
 /*cargar argentina en pais, hotel (16) y regimen (4) */
 insert into GAME_OF_QUERYS.pais (nombre) values ('Argentina')
 insert into GAME_OF_QUERYS.pais(nombre) values ('Uruguay')
