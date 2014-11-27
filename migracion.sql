@@ -110,11 +110,12 @@ where Estadia_Fecha_Inicio is not null
 
 /*cargar consumible_estadia (207341)*/
 
-insert into GAME_OF_QUERYS.consumible_estadia (consumible_id,estadia_id,cantidad)
-select distinct c.id, e.id, COUNT(m.Consumible_Descripcion)
+insert into GAME_OF_QUERYS.consumible_estadia (consumible_id,estadia_id,cantidad,habitacion_id)
+select distinct c.id, e.id, COUNT(m.Consumible_Descripcion), r.habitacion_id
 from gd_esquema.Maestra m join GAME_OF_QUERYS.consumible c on m.Consumible_Codigo= c.id
 							join GAME_OF_QUERYS.estadia e on m.Reserva_Codigo=e.reserva_id
-group by c.id,e.id
+							join GAME_OF_QUERYS.reserva_habitacion r on r.reserva_id = m.Reserva_Codigo
+group by c.id,e.id,r.habitacion_id
 
 
 /* cargar cliente_estadia (89603) */
@@ -132,18 +133,19 @@ insert into GAME_OF_QUERYS.medio_de_pago(nombre) values ('Tarjeta de credito')
 
 /*cargar factura (89603)*/
 set identity_insert GD2C2014.GAME_OF_QUERYS.factura on
-insert into GAME_OF_QUERYS.factura (fecha,estadia_id,medio_de_pago_id)
+insert into GAME_OF_QUERYS.factura (id,fecha,estadia_id,medio_de_pago_id)
 select distinct m.Factura_Nro,CAST(m.Factura_Fecha as DATE), e.id,(select id from GAME_OF_QUERYS.medio_de_pago where nombre='Efectivo')
 from gd_esquema.Maestra m join GAME_OF_QUERYS.estadia e on m.Reserva_Codigo=e.reserva_id
 where m.Factura_Fecha is not null
 set identity_insert GD2C2014.GAME_OF_QUERYS.factura off	
 
 
-/* ESTA PARTE LA ARREGLO DESPUÉS QUE SE CAMBIE LO DE ESTADIA
---Inserto en tabla items todas las estadias, en la tabla maestra no hay check outs antes de fecha_fin
+/* Inserto en tabla items todas las estadias */
 INSERT INTO GAME_OF_QUERYS.item(factura_id, cant, descripcion, precio)
-(SELECT factura.id,  DATEDIFF(DAY, check_in, check_out), 'Habitación '+tipo_habitacion.descripcion, (precio_base*porcentual + cantidad_estrella*recarga_estrella) from GAME_OF_QUERYS.factura
-JOIN GAME_OF_QUERYS.reserva ON (factura.reserva_id = reserva.id)
+(SELECT factura.id,  DATEDIFF(DAY, check_in, check_out), 'Habitación '+tipo_habitacion.descripcion, (precio_base*porcentual + cantidad_estrella*recarga_estrella) 
+FROM GAME_OF_QUERYS.factura
+JOIN GAME_OF_QUERYS.estadia ON (factura.estadia_id = estadia.id)
+JOIN GAME_OF_QUERYS.reserva ON (estadia.reserva_id = reserva.id)
 JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva.id = reserva_habitacion.reserva_id)
 JOIN GAME_OF_QUERYS.habitacion ON (reserva_habitacion.habitacion_id = habitacion.id)
 JOIN GAME_OF_QUERYS.tipo_habitacion ON (tipo_habitacion.id = habitacion.tipo_hab_id)
@@ -152,25 +154,30 @@ JOIN GAME_OF_QUERYS.hotel ON (hotel.id = reserva.hotel_id)
 WHERE check_in is not null AND check_out is not null)
 
 
---Inserto todos los items de consumibles
+/* Inserto todos los items de consumibles */
 INSERT INTO GAME_OF_QUERYS.item(factura_id, cant, descripcion, precio)
-(SELECT factura.id, consumible_reserva.cantidad, consumible.descripcion, consumible.precio FROM GAME_OF_QUERYS.factura
-JOIN GAME_OF_QUERYS.consumible_reserva ON (consumible_reserva.reserva_id = factura.reserva_id)
-JOIN GAME_OF_QUERYS.consumible ON (consumible.id = consumible_reserva.consumible_id))
+(SELECT factura.id, consumible_estadia.cantidad, consumible.descripcion, consumible.precio
+FROM GAME_OF_QUERYS.factura
+JOIN GAME_OF_QUERYS.consumible_estadia ON (consumible_estadia.estadia_id = factura.estadia_id)
+JOIN GAME_OF_QUERYS.consumible ON (consumible.id = consumible_estadia.consumible_id))
 
 
---Inserto los descuentos por regimen all inclusive
+/* Inserto los descuentos por regimen all inclusive */
 INSERT INTO GAME_OF_QUERYS.item(factura_id, cant, descripcion, precio)
-SELECT factura.id, 1, 'Descuento por régimen All Inclusive', 0- SUM(consumible.precio * consumible_reserva.cantidad) FROM GAME_OF_QUERYS.factura
-JOIN GAME_OF_QUERYS.consumible_reserva ON (consumible_reserva.reserva_id = factura.reserva_id)
-JOIN GAME_OF_QUERYS.consumible ON (consumible.id = consumible_reserva.consumible_id)
-JOIN GAME_OF_QUERYS.reserva ON (reserva.id = factura.reserva_id)
-where reserva.regimen_id = 3 --AND reserva.id = 10007
+SELECT factura.id, 1, 'Descuento por régimen All Inclusive', 0- SUM(consumible.precio * consumible_estadia.cantidad)
+FROM GAME_OF_QUERYS.factura
+JOIN GAME_OF_QUERYS.estadia ON (factura.estadia_id = estadia.id)
+JOIN GAME_OF_QUERYS.consumible_estadia ON (consumible_estadia.estadia_id = factura.estadia_id)
+JOIN GAME_OF_QUERYS.consumible ON (consumible.id = consumible_estadia.consumible_id)
+JOIN GAME_OF_QUERYS.reserva ON (reserva.id = estadia.reserva_id)
+where reserva.regimen_id = 3
 GROUP BY factura.id
 
---Inserto el total de las facturas
+
+/* Inserto el total de las facturas */
 UPDATE GAME_OF_QUERYS.factura SET total =(SELECT SUM(cant*precio) FROM GAME_OF_QUERYS.item WHERE item.factura_id = factura.id)
-*/
+
+
 
 /*cargar rol (4)*/
 insert into GAME_OF_QUERYS.rol (descripcion, estado) values ('Administrador',1)
@@ -244,6 +251,7 @@ INSERT INTO GAME_OF_QUERYS.rol_funcionalidad(rol_id, funcionalidad_id) VALUES(@i
 END
 GO
 
+
 /*Trigger para que cada vez que se crea un hotel se le asigne el usuario 'admin' al hotel*/
 CREATE TRIGGER GAME_OF_QUERYS.TrigAsignarAdmin
 ON GAME_OF_QUERYS.Hotel
@@ -254,24 +262,30 @@ SELECT id, 2, 4
 FROM inserted
 END
 
-/*ESTO LO CAMBIO CUANDO SE CAMBIE LO DE LA ESTADIA
---cargar estado_id en reserva	se tiene en cuenta que la maxima fecha de check out en la tabla maestra es 31-12-2016, por lo que tomamos como 'dia de hoy' a 01-01-2017
+
+
+/* cargar estado_id en reserva se tiene en cuenta que la maxima fecha de check out en la tabla maestra es 31-12-2016, por lo que tomamos como 'dia de hoy' a 01-01-2017 */
 --reservas que tienen estadia --> estado: 6 - con ingreso
-update GAME_OF_QUERYS.reserva set estado_id = 
-(select id from GAME_OF_QUERYS.estado_reserva where descripcion='con ingreso')
-where fecha_inicio <= (select MAX(check_out) from GAME_OF_QUERYS.reserva)
-and reserva.check_in is not null
+update GAME_OF_QUERYS.reserva set estado_id = (select id from GAME_OF_QUERYS.estado_reserva where descripcion='con ingreso')
+where fecha_inicio <= (select MAX(check_out) from GAME_OF_QUERYS.estadia)
+and id in (select reserva_id from GAME_OF_QUERYS.estadia)
+
 
 --reservas viejas que no aparecen en la tabla de estadia --> estado: 5 - cancelada por no-show
 update GAME_OF_QUERYS.reserva set estado_id = (select id from GAME_OF_QUERYS.estado_reserva where descripcion='cancelada por No-Show')
-where fecha_inicio <= (select MAX(check_out) from GAME_OF_QUERYS.reserva)	--max(check_out) es la maxima fecha que aparece
-and reserva.check_in is null
+where fecha_inicio <= (select MAX(check_out) from GAME_OF_QUERYS.estadia)	--max(check_out) es la maxima fecha que aparece
+and id not in (select reserva_id from GAME_OF_QUERYS.estadia)
 
 --reservas proximas --> estado: 1 - correcta (por ahora no hay ninguna)
 update GAME_OF_QUERYS.reserva set estado_id = (select id from GAME_OF_QUERYS.estado_reserva where descripcion='correcta')
-where fecha_inicio > (select MAX(check_out) from GAME_OF_QUERYS.reserva)
-and reserva.check_in is null
-*/
+where fecha_inicio > (select MAX(check_out) from GAME_OF_QUERYS.estadia)
+and id in (select reserva_id from GAME_OF_QUERYS.estadia where check_in is null)
+
+
+
+/* Inserto los registros en cancelacion_reserva, asumimos que es por No-Show y se registra la cancelacion al dia siguiente del inicio de la reserva*/
+insert into GAME_OF_QUERYS.cancelacion_reserva(cancel_fecha, cancel_motivo, reserva_id)
+select DATEADD(dd, 1, fecha_inicio) fecha, 'No se presentó', id from GAME_OF_QUERYS.reserva where estado_id = 5
 
 
 
@@ -287,18 +301,19 @@ GROUP BY hotel_id, nombre
 ORDER BY cantidad DESC
 GO
 
-/*
--- Hoteles con mayor cantidad de consumibles falcturados
+
+-- Hoteles con mayor cantidad de consumibles facturados
 CREATE PROCEDURE GAME_OF_QUERYS.mayoresConsumibles @year int, @trimestreInicio int, @trimestreFin int
 AS
-SELECT TOP 5 hotel_id, nombre AS 'nombre del hotel', COUNT(consumible_id) AS cantidad FROM GAME_OF_QUERYS.consumible_reserva
-JOIN GAME_OF_QUERYS.reserva ON (consumible_reserva.reserva_id = reserva.id)
+SELECT TOP 5 hotel_id, nombre AS 'nombre del hotel', COUNT(consumible_id) AS cantidad FROM GAME_OF_QUERYS.consumible_estadia
+JOIN GAME_OF_QUERYS.estadia ON (consumible_estadia.estadia_id = estadia.id)
+JOIN GAME_OF_QUERYS.reserva ON (estadia.reserva_id = reserva.id)
 JOIN GAME_OF_QUERYS.hotel ON (hotel.id = reserva.hotel_id)
 WHERE check_in IS NOT NULL AND check_out IS NOT NULL AND(MONTH(check_in) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(check_in) = @year
 GROUP BY hotel_id, nombre
 ORDER BY cantidad DESC
 GO
-*/
+
 
 -- Hoteles con mayor cantidad de días fuera de servicio
 CREATE PROCEDURE GAME_OF_QUERYS.mayoresMantenimiento @year int, @trimestreInicio int, @trimestreFin int
@@ -310,26 +325,28 @@ GROUP BY hotel_id, nombre
 ORDER BY cantidad DESC
 GO
 
-/*
--- Habitaciones con mayor cantidad de días que fueron ocupadas
+
+-- Habitaciones con mayor cantidad de días y veces que fueron ocupadas
 CREATE PROCEDURE GAME_OF_QUERYS.habitacionesOcupadas @year int, @trimestreInicio int, @trimestreFin int
 AS
-SELECT TOP 5 nombre AS 'nombre de hotel', reserva.hotel_id, nro AS 'nro de habitacion', SUM(DATEDIFF(DAY, check_in, check_out)) AS cantidad FROM GAME_OF_QUERYS.reserva
+SELECT TOP 5 nombre AS 'nombre de hotel', reserva.hotel_id, nro AS 'nro de habitacion', SUM(DATEDIFF(DAY, fecha_inicio, fecha_fin)) AS 'cantidad de dias', COUNT(estadia.reserva_id) as 'cantidad de veces'
+FROM GAME_OF_QUERYS.estadia
+JOIN GAME_OF_QUERYS.reserva ON (estadia.reserva_id = reserva.id)
 JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva.id = reserva_habitacion.reserva_id)
 JOIN GAME_OF_QUERYS.habitacion ON (reserva_habitacion.habitacion_id = habitacion.id)
 JOIN GAME_OF_QUERYS.hotel ON (hotel.id = reserva.hotel_id)
 WHERE check_in IS NOT NULL AND check_out IS NOT NULL AND (MONTH(check_in) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(check_in) = @year
 GROUP BY reserva.hotel_id, nombre, nro
-ORDER BY cantidad DESC
+ORDER BY 4 DESC, 5 DESC
 GO
 
-
+/* ME FALTA ARREGLAR ESTE LISTADO
 -- Puntos de los clientes: 1 por cada $10 de estadia y 1 por cada $5 de consumibles
-
 CREATE PROCEDURE GAME_OF_QUERYS.puntosCliente @year int, @trimestreInicio int, @trimestreFin int
 AS
 SELECT TOP 5 cliente_id, cliente.nombre + ' ' + cliente.apellido AS 'nombre y apellido', ROUND(CAST((SUM(DISTINCT((precio_base*porcentual + cantidad_estrella*recarga_estrella) * (DATEDIFF(DAY, check_in, check_out))))/10 + SUM(cantidad*precio)/5) AS FLOAT), 0, 1) AS puntos
-FROM GAME_OF_QUERYS.reserva
+FROM GAME_OF_QUERYS.estadia
+JOIN GAME_OF_QUERYS.reserva ON (estadia.reserva_id = reserva.id)
 JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva.id = reserva_habitacion.reserva_id)
 JOIN GAME_OF_QUERYS.consumible_reserva ON (reserva.id = consumible_reserva.reserva_id)
 JOIN GAME_OF_QUERYS.consumible ON (consumible.id = consumible_reserva.consumible_id)
