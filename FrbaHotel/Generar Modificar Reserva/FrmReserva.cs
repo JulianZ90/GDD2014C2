@@ -501,6 +501,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                 SBquery.Append("SELECT id, tipo_hab_id FROM GAME_OF_QUERYS.habitacion WHERE hotel_id = @hotelId AND estado_habitacion = 1 AND id NOT IN ");
                 SBquery.Append("(SELECT DISTINCT habitacion_id FROM GAME_OF_QUERYS.reserva_habitacion JOIN GAME_OF_QUERYS.reserva ON (reserva.id = reserva_habitacion.reserva_id) ");
+                SBquery.Append("JOIN GAME_OF_QUERYS.estadia ON (reserva.id = estadia.reserva_id) ");
                 SBquery.Append("WHERE hotel_id = @hotelId AND ((estado_id IN (1, 2) AND ((fecha_inicio <= @fechaInicio AND @fechaInicio <= fecha_fin) OR (fecha_inicio <= @fechaFin AND @fechaFin <= fecha_fin))) ");
                 SBquery.Append("OR (estado_id = 6 AND check_in IS NOT NULL AND check_out IS NULL AND (check_in <= @fechaInicio AND @fechaInicio <= fecha_fin))))");
 
@@ -693,6 +694,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                         SBquery.Append("SELECT id, tipo_hab_id FROM GAME_OF_QUERYS.habitacion WHERE hotel_id = @hotelId AND estado_habitacion = 1 AND id NOT IN ");
                         SBquery.Append("(SELECT DISTINCT habitacion_id FROM GAME_OF_QUERYS.reserva_habitacion JOIN GAME_OF_QUERYS.reserva ON (reserva.id = reserva_habitacion.reserva_id) ");
+                        SBquery.Append("JOIN GAME_OF_QUERYS.estadia ON (reserva.id = estadia.reserva_id) ");
                         SBquery.Append("WHERE hotel_id = @hotelId AND ((estado_id IN (1, 2) AND ((fecha_inicio <= @fechaInicio AND @fechaInicio <= fecha_fin) OR (fecha_inicio <= @fechaFin AND @fechaFin <= fecha_fin))) ");
                         SBquery.Append("OR (estado_id = 6 AND check_in IS NOT NULL AND check_out IS NULL AND (check_in <= @fechaInicio AND @fechaInicio <= fecha_fin))))");
 

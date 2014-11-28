@@ -43,6 +43,7 @@ namespace FrbaHotel
                         StringBuilder SBquery = new StringBuilder();
                         SBquery.Append("SELECT nro FROM GAME_OF_QUERYS.reserva JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva.id = reserva_habitacion.reserva_id) ");
                         SBquery.Append("JOIN GAME_OF_QUERYS.habitacion ON (reserva_habitacion.habitacion_id = habitacion.id) ");
+                        SBquery.Append("JOIN GAME_OF_QUERYS.estadia ON (estadia.reserva_id = reserva.id) ");
                         SBquery.Append("WHERE estado_id = 6 AND check_in IS NOT NULL AND check_out IS NULL AND reserva.hotel_id = @hotel");
 
                         query = new SqlCommand(SBquery.ToString(), objConexion);
@@ -106,6 +107,7 @@ namespace FrbaHotel
                 StringBuilder SBquery = new StringBuilder();
                 SBquery.Append("SELECT nro FROM GAME_OF_QUERYS.reserva JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva.id = reserva_habitacion.reserva_id) ");
                 SBquery.Append("JOIN GAME_OF_QUERYS.habitacion ON (reserva_habitacion.habitacion_id = habitacion.id) ");
+                SBquery.Append("JOIN GAME_OF_QUERYS.estadia ON (estadia.reserva_id = reserva.id) ");
                 SBquery.Append("WHERE estado_id = 6 AND check_in IS NOT NULL AND check_out IS NULL AND reserva.hotel_id = @hotel AND reserva.id = @reserva");
 
                 query = new SqlCommand(SBquery.ToString(), objConexion);
@@ -132,6 +134,7 @@ namespace FrbaHotel
                 StringBuilder SBquery = new StringBuilder();
                 SBquery.Append("SELECT reserva.id FROM GAME_OF_QUERYS.reserva JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva.id = reserva_habitacion.reserva_id) ");
                 SBquery.Append("JOIN GAME_OF_QUERYS.habitacion ON (habitacion.id = reserva_habitacion.habitacion_id) ");
+                SBquery.Append("JOIN GAME_OF_QUERYS.estadia ON (estadia.reserva_id = reserva.id) ");
                 SBquery.Append("WHERE estado_id = 6 AND check_in IS NOT NULL AND check_out IS NULL AND reserva.hotel_id = @hotel AND nro = @nro");
 
                 query = new SqlCommand(SBquery.ToString(), objConexion);

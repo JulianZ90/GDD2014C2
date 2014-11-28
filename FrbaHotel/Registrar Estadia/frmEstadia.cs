@@ -25,7 +25,8 @@ namespace FrbaHotel.Registrar_Estadia
                 cliente.calle, cliente.nro_calle, cliente.piso, cliente.depto,cliente.ciudad,
                 
                 usuario.username,
-                hotel.cantidad_estrella, hotel.recarga_estrella
+                hotel.cantidad_estrella, hotel.recarga_estrella, 
+                cancelacion_reserva.cancel_fecha, cancelacion_reserva.cancel_motivo
 
                 from GAME_OF_QUERYS.reserva
                 join GAME_OF_QUERYS.regimen on reserva.regimen_id = regimen.id
@@ -33,7 +34,7 @@ namespace FrbaHotel.Registrar_Estadia
                 join GAME_OF_QUERYS.cliente on reserva.cliente_id = cliente.id
                 join GAME_OF_QUERYS.tipo_identidad on cliente.tipo_identidad_id = tipo_identidad.id
                 left join GAME_OF_QUERYS.usuario on reserva.usuario_ultima_modif_id = usuario.id
-                
+                left join GAME_OF_QUERYS.cancelacion_reserva on (cancelacion_reserva.reserva_id = reserva.id)
                 join GAME_OF_QUERYS.hotel on reserva.hotel_id = hotel.id
                 ";
 
@@ -151,6 +152,8 @@ namespace FrbaHotel.Registrar_Estadia
 
             completarFormConReserva();
 
+            reserva.estadia_id = reserva.obtenerEstadia(reserva.Id);
+
             button5.Enabled = true;
             button2.Enabled = true;
         }
@@ -173,6 +176,7 @@ namespace FrbaHotel.Registrar_Estadia
         {
             string query_str = consultaBase + @"join GAME_OF_QUERYS.reserva_habitacion on reserva.id = reserva_habitacion.reserva_id
                                                 join GAME_OF_QUERYS.habitacion on reserva_habitacion.habitacion_id = habitacion.id
+                                                join GAME_OF_QUERYS.estadia on estadia.reserva_id = reserva.id
                                                 where reserva.id=(
 					                                select MAX(reserva.id) from GAME_OF_QUERYS.reserva 
 					                                join GAME_OF_QUERYS.reserva_habitacion on reserva.id = reserva_habitacion.reserva_id
@@ -495,13 +499,28 @@ namespace FrbaHotel.Registrar_Estadia
         private void getHuespedes()
         {
             string query_str = @"select tipo_identidad.nombre as tipo, cliente.nro_identidad, cliente.nombre, cliente.apellido
-                                from GAME_OF_QUERYS.cliente_reserva
-                                join GAME_OF_QUERYS.cliente on cliente.id = cliente_reserva.cliente_id
+                                from GAME_OF_QUERYS.cliente_estadia
+                                join GAME_OF_QUERYS.cliente on cliente.id = cliente_estadia.cliente_id
                                 join GAME_OF_QUERYS.tipo_identidad on cliente.tipo_identidad_id = tipo_identidad.id
-                                where cliente_reserva.reserva_id = @reserva";
+                                where cliente_estadia.estadia_id = @estadia";
             SqlCommand query = new SqlCommand(query_str, connect);
             string q = query.CommandText;
-            query.Parameters.AddWithValue("reserva", reserva.Id);
+            if(checkout)
+                query.Parameters.AddWithValue("@estadia", reserva.estadia_id);
+            else
+                query.Parameters.AddWithValue("@estadia", 0);   //con esto me devuelve cero huespedes
+            
+            /*else
+            {
+                string query_str = @"select tipo_identidad.nombre as tipo, cliente.nro_identidad, cliente.nombre, cliente.apellido
+                                from GAME_OF_QUERYS.reserva
+                                join GAME_OF_QUERYS.cliente on cliente.id = reserva.cliente_id
+                                join GAME_OF_QUERYS.tipo_identidad on cliente.tipo_identidad_id = tipo_identidad.id
+                                where reserva.id = @reserva";
+                query = new SqlCommand(query_str, connect);
+                string q = query.CommandText;
+                query.Parameters.AddWithValue("reserva", reserva.Id);
+            }*/
             connect.Open();
             SqlDataReader objReader = query.ExecuteReader();
 
@@ -528,12 +547,13 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void getConsumibles()
         {
-            string query_str = @"select consumible_reserva.*, consumible.*, habitacion.id as hab_id, 
+            string query_str = @"select consumible_estadia.*, consumible.*, habitacion.id as hab_id, 
                     habitacion.nro as hab_nro
-                    from GAME_OF_QUERYS.consumible_reserva 
-                    join GAME_OF_QUERYS.consumible on consumible.id = consumible_reserva.consumible_id
-                    join GAME_OF_QUERYS.habitacion on consumible_reserva.habitacion_id = habitacion.id
-                    where consumible_reserva.reserva_id = @reserva";
+                    from GAME_OF_QUERYS.consumible_estadia 
+                    join GAME_OF_QUERYS.consumible on consumible.id = consumible_estadia.consumible_id
+                    join GAME_OF_QUERYS.estadia on estadia.id = consumible_estadia.estadia_id
+                    join GAME_OF_QUERYS.habitacion on consumible_estadia.habitacion_id = habitacion.id
+                    where estadia.reserva_id = @reserva";
             SqlCommand query = new SqlCommand(query_str, connect);
             string q = query.CommandText;
             query.Parameters.AddWithValue("reserva", reserva.Id);

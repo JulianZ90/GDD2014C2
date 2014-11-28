@@ -218,17 +218,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            query = new SqlCommand("update GAME_OF_QUERYS.reserva set estado_id = @estadoId, cancel_motivo = @motivo, cancel_fecha = @fecha, usuario_ultima_modif_id = @usuarioId where id = @Id", objConexion);
+            query = new SqlCommand("update GAME_OF_QUERYS.reserva set estado_id = @estadoId, usuario_ultima_modif_id = @usuarioId where id = @Id", objConexion);
             query.Parameters.AddWithValue("@Id", idReserva);
             if (guest)
                 query.Parameters.AddWithValue("@estadoId", 4);
             else
                 query.Parameters.AddWithValue("@estadoId", 3);
-            if (this.txtBxMotivos.Text == string.Empty)
-                query.Parameters.AddWithValue("@motivo", DBNull.Value);
-            else
-                query.Parameters.AddWithValue("@motivo", this.txtBxMotivos.Text);
-            query.Parameters.AddWithValue("@fecha", DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]));
             if (guest)
                 query.Parameters.AddWithValue("@usuarioId", UserId);
             else
@@ -237,6 +232,20 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             objConexion.Open();
             query.ExecuteNonQuery();
             objConexion.Close();
+
+
+            query = new SqlCommand("insert into GAME_OF_QUERYS.cancelacion_reserva(cancel_fecha, cancel_motivo, reserva_id) values (@fecha, @motivo, @reserva)", objConexion);
+            query.Parameters.AddWithValue("@reserva", idReserva);
+            if (this.txtBxMotivos.Text == string.Empty)
+                query.Parameters.AddWithValue("@motivo", DBNull.Value);
+            else
+                query.Parameters.AddWithValue("@motivo", this.txtBxMotivos.Text);
+            query.Parameters.AddWithValue("@fecha", DateTime.Parse(ConfigurationSettings.AppSettings["fechaHoy"]));
+
+            objConexion.Open();
+            query.ExecuteNonQuery();
+            objConexion.Close();
+
             this.Close();
         }
 

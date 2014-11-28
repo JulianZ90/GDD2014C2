@@ -94,10 +94,10 @@ namespace FrbaHotel
 
         public void insert() 
         {
-            SqlCommand query = new SqlCommand("insert into GAME_OF_QUERYS.factura (fecha, medio_de_pago_id, reserva_id, tarjeta, total) values(@fecha, @medio, @reserva_id, @tarjeta, @total); SELECT SCOPE_IDENTITY()", connect);
+            SqlCommand query = new SqlCommand("insert into GAME_OF_QUERYS.factura (fecha, medio_de_pago_id, estadia_id, tarjeta, total) values(@fecha, @medio, @estadia, @tarjeta, @total); SELECT SCOPE_IDENTITY()", connect);
             query.Parameters.AddWithValue("fecha", fecha);
             query.Parameters.AddWithValue("medio", medios_de_pagos.id);
-            query.Parameters.AddWithValue("reserva_id", reserva.Id);
+            query.Parameters.AddWithValue("@estadia", reserva.estadia_id);
             query.Parameters.AddWithValue("tarjeta", tarjeta);
             query.Parameters.AddWithValue("total", totalAPagar);
 

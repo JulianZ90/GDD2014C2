@@ -86,11 +86,12 @@ namespace FrbaHotel.Registrar_Consumible
             else
             {
                 StringBuilder SBquery = new StringBuilder();
-                SBquery.Append("SELECT reserva_id, habitacion_id FROM GAME_OF_QUERYS.reserva_habitacion JOIN GAME_OF_QUERYS.reserva ON (reserva.id = reserva_habitacion.reserva_id) ");
+                SBquery.Append("SELECT estadia.id, habitacion_id FROM GAME_OF_QUERYS.reserva_habitacion JOIN GAME_OF_QUERYS.reserva ON (reserva.id = reserva_habitacion.reserva_id) ");
+                SBquery.Append("JOIN GAME_OF_QUERYS.estadia ON (estadia.reserva_id = reserva.id) ");
                 SBquery.Append("JOIN GAME_OF_QUERYS.habitacion ON (habitacion.id = reserva_habitacion.habitacion_id) ");
                 SBquery.Append("WHERE reserva.hotel_id = @hotel AND estado_id = 6 AND check_in IS NOT NULL AND check_out IS NULL AND nro = @habitacion");
 
-                query = new SqlCommand(SBquery.ToString(), objConexion);    //primero busco el id de la reserva y de la habitacion
+                query = new SqlCommand(SBquery.ToString(), objConexion);    //primero busco el id de la estadia y de la habitacion
                 query.Parameters.AddWithValue("@hotel", Log.Hotel_Id);
                 query.Parameters.AddWithValue("@habitacion", this.txtBxHabitacion.Text);
 
@@ -99,13 +100,13 @@ namespace FrbaHotel.Registrar_Consumible
                 if (objReader.Read())
                 {
                     int HabaitacionId = (int)objReader["habitacion_id"];
-                    int ReservaId = (int)objReader["reserva_id"];
+                    int EstadiaId = (int)objReader["id"];
                     objConexion.Close();
 
                     //inserto el registro del consumible
-                    query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.consumible_reserva(consumible_id, reserva_id, cantidad, habitacion_id) VALUES (@consumible, @reserva, @cantidad, @habitacion)", objConexion);
+                    query = new SqlCommand("INSERT INTO GAME_OF_QUERYS.consumible_estadia(consumible_id, estadia_id, cantidad, habitacion_id) VALUES (@consumible, @estadia, @cantidad, @habitacion)", objConexion);
                     query.Parameters.AddWithValue("@consumible", (int)cmbBxConsumibles.SelectedValue);
-                    query.Parameters.AddWithValue("@reserva", ReservaId);
+                    query.Parameters.AddWithValue("@estadia", EstadiaId);
                     query.Parameters.AddWithValue("@cantidad", this.numUpDownCantidad.Value);
                     query.Parameters.AddWithValue("@habitacion", HabaitacionId);
                     objConexion.Open();

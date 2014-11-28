@@ -229,7 +229,7 @@
             this.panel1.Controls.Add(this.dataGridViewRegimen);
             this.panel1.Location = new System.Drawing.Point(38, 208);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(184, 117);
+            this.panel1.Size = new System.Drawing.Size(278, 117);
             this.panel1.TabIndex = 8;
             // 
             // dataGridViewRegimen
@@ -238,7 +238,7 @@
             this.dataGridViewRegimen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewRegimen.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewRegimen.Name = "dataGridViewRegimen";
-            this.dataGridViewRegimen.Size = new System.Drawing.Size(184, 117);
+            this.dataGridViewRegimen.Size = new System.Drawing.Size(278, 117);
             this.dataGridViewRegimen.TabIndex = 0;
             this.dataGridViewRegimen.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRegimen_CellClick);
             // 
