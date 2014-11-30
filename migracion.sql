@@ -340,24 +340,44 @@ GROUP BY reserva.hotel_id, nombre, nro
 ORDER BY 4 DESC, 5 DESC
 GO
 
-/* ME FALTA ARREGLAR ESTE LISTADO
+
 -- Puntos de los clientes: 1 por cada $10 de estadia y 1 por cada $5 de consumibles
-CREATE PROCEDURE GAME_OF_QUERYS.puntosCliente @year int, @trimestreInicio int, @trimestreFin int
-AS
-SELECT TOP 5 cliente_id, cliente.nombre + ' ' + cliente.apellido AS 'nombre y apellido', ROUND(CAST((SUM(DISTINCT((precio_base*porcentual + cantidad_estrella*recarga_estrella) * (DATEDIFF(DAY, check_in, check_out))))/10 + SUM(cantidad*precio)/5) AS FLOAT), 0, 1) AS puntos
-FROM GAME_OF_QUERYS.estadia
-JOIN GAME_OF_QUERYS.reserva ON (estadia.reserva_id = reserva.id)
+
+--Primero creo dos vistas para hacer un poco mas performante el stored procedure
+create view GAME_OF_QUERYS.vEstadiasCliente
+as
+select cliente_id, check_in, check_out, SUM(precio_base*porcentual + cantidad_estrella*recarga_estrella) * DATEDIFF(DAY, fecha_inicio, fecha_fin) as costoEstadia
+from GAME_OF_QUERYS.reserva
+join GAME_OF_QUERYS.estadia on (estadia.reserva_id = reserva.id)
 JOIN GAME_OF_QUERYS.reserva_habitacion ON (reserva.id = reserva_habitacion.reserva_id)
-JOIN GAME_OF_QUERYS.consumible_reserva ON (reserva.id = consumible_reserva.reserva_id)
-JOIN GAME_OF_QUERYS.consumible ON (consumible.id = consumible_reserva.consumible_id)
 JOIN GAME_OF_QUERYS.regimen ON (reserva.regimen_id = regimen.id)
 JOIN GAME_OF_QUERYS.hotel ON (reserva.hotel_id = hotel.id)
 JOIN GAME_OF_QUERYS.habitacion ON (reserva_habitacion.habitacion_id = habitacion.id)
 JOIN GAME_OF_QUERYS.tipo_habitacion ON (tipo_habitacion.id = habitacion.tipo_hab_id)
-JOIN GAME_OF_QUERYS.cliente ON (cliente.id = reserva.cliente_id)
-WHERE check_in IS NOT NULL AND check_out IS NOT NULL
-AND (MONTH(check_in) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(check_in) = @year
-group by cliente_id, cliente.nombre, cliente.apellido
-order by puntos DESC
+where estado_id=6 and check_out is not null
+GROUP BY cliente_id, estadia.id, check_in, check_out, fecha_inicio, fecha_fin
+go
+
+create view GAME_OF_QUERYS.vConsumiblesCliente
+as
+select cliente_id, check_in, check_out, SUM(consumible_estadia.cantidad*consumible.precio) costoConsumible from GAME_OF_QUERYS.consumible_estadia
+join GAME_OF_QUERYS.consumible on (consumible.id = consumible_estadia.consumible_id)
+join GAME_OF_QUERYS.estadia on (consumible_estadia.estadia_id=estadia.id)
+join GAME_OF_QUERYS.reserva on (reserva.id=estadia.reserva_id)
+where estado_id=6 and check_in is not null and check_out is not null
+GROUP BY cliente_id, estadia.id, check_in, check_out
+go
+
+--ahora el listado
+CREATE PROCEDURE GAME_OF_QUERYS.puntosCliente @year int, @trimestreInicio int, @trimestreFin int
+AS
+select TOP 5 e.cliente_id, cliente.nombre + ' ' + cliente.apellido AS 'nombre y apellido', ROUND(CAST((SUM(distinct costoEstadia)/10 + SUM(distinct costoConsumible)/5) AS FLOAT), 0, 1) AS puntos
+from GAME_OF_QUERYS.vEstadiasCliente e 
+left join GAME_OF_QUERYS.vConsumiblesCliente c on (e.cliente_id = c.cliente_id)
+join GAME_OF_QUERYS.cliente on (cliente.id = e.cliente_id)
+where (MONTH(e.check_in) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(e.check_in) = @year
+and (MONTH(c.check_in) BETWEEN @trimestreInicio AND @trimestreFin) AND YEAR(c.check_in) = @year
+group by e.cliente_id, cliente.nombre, cliente.apellido
+order by puntos desc
 GO
-*/
+
